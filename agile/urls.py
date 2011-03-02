@@ -1,10 +1,7 @@
 from django.conf.urls.defaults import *
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
-
-urlpatterns = patterns('',
+urlpatterns = patterns('agile.views',
+    (r'^$', 'index'),
     # Example:
     # (r'^django_agile/', include('django_agile.foo.urls')),
 
