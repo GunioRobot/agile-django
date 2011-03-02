@@ -12,7 +12,7 @@
 .svn
 defaults.json
 erl_crash.dump
-#local_settings.py
+local_settings.py
 nohup.out
 bmanage.py
 *.un~
