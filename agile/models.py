@@ -19,6 +19,7 @@ class Column(models.Model):
 class Story(models.Model):
     #project = models.ForeignKey('Project', related_name='stories') # Unnecesary?
     column = models.ForeignKey('Column', related_name='stories')
+    number = models.PositiveIntegerField()
     name = models.CharField(max_length=100)
     description = models.TextField()
     creator = models.ForeignKey(User, related_name='created_stories')
