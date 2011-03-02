@@ -13,4 +13,9 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
+    (
+        r'^%s(?P<path>.*)$' % settings.MEDIA_URL[1:], # remove the slash at the begining
+        'django.views.static.serve',
+        {'document_root': settings.MEDIA_ROOT, 'show_indexes': True},
+    ),
 )
