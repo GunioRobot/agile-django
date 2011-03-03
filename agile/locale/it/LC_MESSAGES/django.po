@@ -1,0 +1,163 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-03-03 11:56-0600\n"
+"PO-Revision-Date: 2011-03-03 10:32\n"
+"Last-Translator: <asd@asd.vom>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Translated-Using: django-rosetta 0.5.6\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: models.py:9 models.py:21 models.py:33 models.py:84
+msgid "name"
+msgstr ""
+
+#: models.py:10 models.py:34 models.py:48
+msgid "description"
+msgstr ""
+
+#: models.py:11 models.py:36
+msgid "owner"
+msgstr ""
+
+#: models.py:12
+msgid "members"
+msgstr ""
+
+#: models.py:15 models.py:19
+#, fuzzy
+msgid "project"
+msgstr "Progetto"
+
+#: models.py:16
+#, fuzzy
+msgid "projects"
+msgstr "Progetti"
+
+#: models.py:20 models.py:46
+msgid "index"
+msgstr ""
+
+#: models.py:24 models.py:31
+#, fuzzy
+msgid "column"
+msgstr "Colonna"
+
+#: models.py:25
+#, fuzzy
+msgid "columns"
+msgstr "Colonne"
+
+#: models.py:32
+msgid "number"
+msgstr ""
+
+#: models.py:35
+msgid "creator"
+msgstr ""
+
+#: models.py:37
+msgid "created at"
+msgstr ""
+
+#: models.py:39
+msgid "color"
+msgstr ""
+
+#: models.py:42 models.py:47 models.py:57 models.py:67
+#, fuzzy
+msgid "story"
+msgstr "Storia"
+
+#: models.py:43
+#, fuzzy
+msgid "stories"
+msgstr "Storie"
+
+#: models.py:49
+msgid "finished at"
+msgstr ""
+
+#: models.py:52
+#, fuzzy
+msgid "task"
+msgstr "Task"
+
+#: models.py:53
+#, fuzzy
+msgid "tasks"
+msgstr "Compiti"
+
+#: models.py:56 models.py:66 models.py:76 models.py:83
+msgid "user"
+msgstr ""
+
+#: models.py:58 models.py:68
+msgid "datetime"
+msgstr ""
+
+#: models.py:59
+msgid "text"
+msgstr ""
+
+#: models.py:62
+#, fuzzy
+msgid "comment"
+msgstr "Commenta"
+
+#: models.py:63
+#, fuzzy
+msgid "comments"
+msgstr "Commenti"
+
+#: models.py:72
+#, fuzzy
+msgid "attachment"
+msgstr "Attaccamento"
+
+#: models.py:73
+#, fuzzy
+msgid "attachments"
+msgstr "Allegati"
+
+#: models.py:79
+#, fuzzy
+msgid "user profile"
+msgstr "Profilo Utente"
+
+#: models.py:80
+#, fuzzy
+msgid "user profiles"
+msgstr "Profili utente"
+
+#: models.py:85
+msgid "query"
+msgstr ""
+
+#: models.py:86
+msgid "shared"
+msgstr ""
+
+#: models.py:89
+#, fuzzy
+msgid "filter"
+msgstr "Filtro"
+
+#: models.py:90
+#, fuzzy
+msgid "filters"
+msgstr "Filtri"
+
+#: templates/index.html:4
+msgid "Home"
+msgstr "Home"
