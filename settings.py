@@ -94,13 +94,18 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     #'django.contrib.sites',
     #'django.contrib.messages',
-    'django_extensions',
     'agile',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+if DEBUG:
+    INSTALLED_APPS += (
+        'django_extensions',
+        'rosetta',
+    )
 
 AUTH_PROFILE_MODULE = 'agile.UserProfile'
 
