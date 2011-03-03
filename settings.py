@@ -102,6 +102,8 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 )
 
+AUTH_PROFILE_MODULE = 'agile.UserProfile'
+
 try:
     from local_settings import *
 except ImportError:
