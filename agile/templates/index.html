@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Home' %} - {{ block.super }}{% endblock %}
 
 {% block content %}
-First page
+
 {% endblock %}
