@@ -16,6 +16,7 @@ def index(request):
 
 def login(request):
     form = AuthenticationForm()
+    message = False
     if request.method == 'POST':
         form = AuthenticationForm(request.POST)
         assert form.is_valid, form.errors
@@ -26,8 +27,12 @@ def login(request):
         if user:
             auth_login(request, user)
             return HttpResponseRedirect(reverse('agile_index'))
+        else:
+            message = True
+        
     return render_to_response('login.html', RequestContext(request, {
         'form': form,
+        'error': message,
     }))
     
 def logout(request):

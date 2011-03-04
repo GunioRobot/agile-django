@@ -6,6 +6,21 @@
 {% block content %}
 <div id="login">
 <form method="post">
+{% if error %}
+<span class="error" style="display:none;">{% trans 'Incorrect username and/or password.' %}</span>
+<script type="text/javascript">
+/*
+    Show and hide script
+*/
+$(document).ready(function(){
+    function hide_span(){
+        $('.error').hide('fast');
+    }
+    $('.error').show('slow');
+    setTimeout(hide_span,1000*5);
+});
+</script>
+{% endif %}
 {% csrf_token %}
 {{ form.as_p }}
 <input type="submit">
