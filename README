@@ -9,3 +9,5 @@ django-admin.py makemessages -l it
 
 
 $('.suggest').click();$(':checked').click()
+
+python manage.py dumpdata --indent=1 -e sessions -e admin -e contenttypes > agile/fixtures/initial_data.json

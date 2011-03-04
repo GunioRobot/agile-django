@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as __, ugettext_lazy as _
 
 # Create your models here.
 
@@ -18,20 +18,20 @@ class Project(models.Model):
     def __unicode__(self):
         return '%s' % self.name
     
-class Column(models.Model):
+class Process(models.Model):
     project = models.ForeignKey('Project', verbose_name=_(u'project'), related_name='columns')
     index = models.PositiveIntegerField(_(u'index'))
     name = models.CharField(_(u'name'), max_length=100)
     
     class Meta:
-        verbose_name = _(u'column')
-        verbose_name_plural = _(u'columns')
+        verbose_name = _(u'process')
+        verbose_name_plural = _(u'processes')
 
 #class Sprint(models.Model):    
 	
 class Story(models.Model):
     #project = models.ForeignKey('Project', related_name='stories') # Unnecesary?
-    column = models.ForeignKey('Column', verbose_name=_(u'column'), related_name='stories')
+    process = models.ForeignKey('Process', verbose_name=_(u'process'), related_name='stories')
     number = models.PositiveIntegerField(_(u'number'))
     name = models.CharField(_(u'name'), max_length=100)
     description = models.TextField(_(u'description'), blank=True)
@@ -95,5 +95,38 @@ class Filter(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile(user=instance).save()
+        
+def create_project(sender, instance, created, **kwargs):
+    if created:
+        Process(
+            project=instance,
+            index=0,
+            name=__(u'Backlog'),
+        ).save()
+        
+        Process(
+            project=instance,
+            index=1,
+            name=__(u'Ready'),
+        ).save()
+        
+        Process(
+            project=instance,
+            index=2,
+            name=__(u'Working'),
+        ).save()
+        
+        Process(
+            project=instance,
+            index=3,
+            name=__(u'Complete'),
+        ).save()
+        
+        Process(
+            project=instance,
+            index=4,
+            name=__(u'Archive'),
+        ).save()
 
 post_save.connect(create_user_profile, sender=User)
+post_save.connect(create_project, sender=Project)

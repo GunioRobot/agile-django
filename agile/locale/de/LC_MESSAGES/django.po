@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-04 12:43-0300\n"
-"PO-Revision-Date: 2011-03-04 09:48\n"
-"Last-Translator: <nahir.95@gmail.com>\n"
+"POT-Creation-Date: 2011-03-04 13:22-0600\n"
+"PO-Revision-Date: 2011-03-04 13:23\n"
+"Last-Translator: <srpoder@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,12 +47,12 @@ msgid "index"
 msgstr "Index"
 
 #: models.py:27 models.py:34
-msgid "column"
-msgstr "Spalte"
+msgid "process"
+msgstr "Prozess"
 
 #: models.py:28
-msgid "columns"
-msgstr "Spalten"
+msgid "processes"
+msgstr "Prozesse"
 
 #: models.py:35
 msgid "number"
@@ -142,6 +142,26 @@ msgstr "Filter"
 msgid "filters"
 msgstr "Filter"
 
+#: models.py:104
+msgid "Backlog"
+msgstr "Rückstand"
+
+#: models.py:110
+msgid "Ready"
+msgstr "Bereit"
+
+#: models.py:116
+msgid "Working"
+msgstr "Arbeiten"
+
+#: models.py:122
+msgid "Complete"
+msgstr "Vollständige"
+
+#: models.py:128
+msgid "Archive"
+msgstr "Archiv"
+
 #: templates/base.html:15 templates/index.html:4 templates/login.html:4
 msgid "Home"
 msgstr "Startseite"
@@ -165,3 +185,9 @@ msgstr "Abmelden"
 #: templates/login.html:15
 msgid "Incorrect username and/or password."
 msgstr "Falscher Benutzername und / oder Passwort."
+
+#~ msgid "column"
+#~ msgstr "Spalte"
+
+#~ msgid "columns"
+#~ msgstr "Spalten"

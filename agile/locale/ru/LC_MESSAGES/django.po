@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-04 12:43-0300\n"
-"PO-Revision-Date: 2011-03-04 09:50\n"
-"Last-Translator: <nahir.95@gmail.com>\n"
+"POT-Creation-Date: 2011-03-04 13:22-0600\n"
+"PO-Revision-Date: 2011-03-04 13:24\n"
+"Last-Translator: <srpoder@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,12 +47,12 @@ msgid "index"
 msgstr "индекс"
 
 #: models.py:27 models.py:34
-msgid "column"
-msgstr "столбец"
+msgid "process"
+msgstr "процесс"
 
 #: models.py:28
-msgid "columns"
-msgstr "столбцы"
+msgid "processes"
+msgstr "процессов"
 
 #: models.py:35
 msgid "number"
@@ -142,6 +142,26 @@ msgstr "Фильтр"
 msgid "filters"
 msgstr "фильтры"
 
+#: models.py:104
+msgid "Backlog"
+msgstr "Отставание"
+
+#: models.py:110
+msgid "Ready"
+msgstr "Готовы"
+
+#: models.py:116
+msgid "Working"
+msgstr "Рабочая"
+
+#: models.py:122
+msgid "Complete"
+msgstr "Полный"
+
+#: models.py:128
+msgid "Archive"
+msgstr "Архив"
+
 #: templates/base.html:15 templates/index.html:4 templates/login.html:4
 msgid "Home"
 msgstr "Главная"
@@ -165,3 +185,9 @@ msgstr "Выйти"
 #: templates/login.html:15
 msgid "Incorrect username and/or password."
 msgstr "Неправильное имя пользователя и / или пароль."
+
+#~ msgid "column"
+#~ msgstr "столбец"
+
+#~ msgid "columns"
+#~ msgstr "столбцы"
