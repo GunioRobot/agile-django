@@ -19,7 +19,6 @@ def login(request):
     message = False
     if request.method == 'POST':
         form = AuthenticationForm(request.POST)
-        assert form.is_valid, form.errors
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
 
@@ -41,7 +40,6 @@ def logout(request):
 
 @login_required
 def projects(request):
-    print reverse('agile_login')
     form = ProjectForm()
     if request.method == 'POST':
         form = ProjectForm(request.POST)
