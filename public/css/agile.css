@@ -18,9 +18,13 @@ body {
     color: blue;
     text-shadow: #fff 0px 1px 0, #000 0 -1px 0;
     font-size: 24px;
+    display: inline;
 }
+/*
+    TODO: Fix menu position.
+*/
 ul#menu {
-	padding: 5px 15px;
+	/*padding: 5px 15px;*/
 	list-style: none;
 	float: right;
 }
@@ -29,4 +33,48 @@ ul#menu li {
 	padding: 0 2px;
 	margin: 0 2px;
 	float: left;
+}
+
+#content {
+    padding: 12px;
+    font-family: "Lucida Grande", Verdana, Helvetica, Arial, Tahoma, sans-serif;
+}
+#login {
+    margin-top: -13px;
+    text-align: center;
+}
+form {
+    margin: 0 auto;
+    width: 300px;
+    padding-top: 70px;
+    padding-bottom: 80px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border: 1px solid #CCC;
+    background-color: #F5F5EF;
+    -moz-border-radius-bottomright: 50px;
+    border-bottom-right-radius: 50px;
+    -moz-border-radius-bottomleft: 50px;
+    border-bottom-left-radius: 50px;
+}
+form label {
+    margin-top: 10px;
+    padding-bottom: 2px;
+    color: #000;
+    display: block;
+    font-size: 12px;
+    text-align:left;
+}
+form input[type="text"],input[type="password"] {
+    width: 100%;
+    /*margin-top: 9px;*/
+    border: 2px solid #F0F0F0;
+    font-size: 17px;
+    height: 35px;
+    padding: 3px;
+}
+input[type="submit"] {
+    margin-top: 30px;
+    width: 75px;
+    float:right;
 }

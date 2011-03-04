@@ -25,6 +25,7 @@ def login(request):
         user = authenticate(username=username, password=password)
         if user:
             auth_login(request, user)
+            return HttpResponseRedirect(reverse('agile_index'))
     return render_to_response('login.html', RequestContext(request, {
         'form': form,
     }))
