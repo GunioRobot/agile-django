@@ -10,8 +10,9 @@ body {
 
 #header {
 	padding: 14px 21px;
-	height: 32px;
-	background: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#d0d0d0));
+	height: 18px;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#d0d0d0));
+    background-image: -moz-linear-gradient(270deg, #f7f7f7, #d0d0d0);
 }
 
 #name {
@@ -52,10 +53,10 @@ form {
     padding-right: 30px;
     border: 1px solid #CCC;
     background-color: #F5F5EF;
-    -moz-border-radius-bottomright: 50px;
-    border-bottom-right-radius: 50px;
-    -moz-border-radius-bottomleft: 50px;
-    border-bottom-left-radius: 50px;
+    -moz-border-radius-bottomright: 30px;
+    border-bottom-right-radius: 30px;
+    -moz-border-radius-bottomleft: 30px;
+    border-bottom-left-radius: 30px;
 }
 form label {
     margin-top: 10px;
