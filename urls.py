@@ -8,7 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Example:
     # (r'^django_agile/', include('django_agile.foo.urls')),
-    (r'^$', include('agile.urls')),
+    (r'^', include('agile.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),

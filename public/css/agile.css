@@ -1,0 +1,32 @@
+body {
+	background: #f0f0f0;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	outline: none;
+}
+
+#header {
+	padding: 14px 21px;
+	height: 32px;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#d0d0d0));
+}
+
+#name {
+    color: blue;
+    text-shadow: #fff 0px 1px 0, #000 0 -1px 0;
+    font-size: 24px;
+}
+ul#menu {
+	padding: 5px 15px;
+	list-style: none;
+	float: right;
+}
+
+ul#menu li {
+	padding: 0 2px;
+	margin: 0 2px;
+	float: left;
+}
