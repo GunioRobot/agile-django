@@ -41,11 +41,16 @@ def logout(request):
 @login_required
 def projects(request):
     form = ProjectForm()
+    message = False
     if request.method == 'POST':
         form = ProjectForm(request.POST)
         if form.is_valid():
             form.save()
+            message = False
+        else:
+            error = True
             
-    return render_to_response('login.html', RequestContext(request, {
+    return render_to_response('project/add.html', RequestContext(request, {
         'form': form,
+        'error': message,
     }))
