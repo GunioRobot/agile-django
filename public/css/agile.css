@@ -10,7 +10,7 @@ body {
 
 #header {
 	padding: 14px 21px;
-	height: 18px;
+	height: 24px;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#d0d0d0));
     background-image: -moz-linear-gradient(270deg, #f7f7f7, #d0d0d0);
 }
@@ -34,6 +34,12 @@ ul#menu li {
 	padding: 0 2px;
 	margin: 0 2px;
 	float: left;
+}
+
+ul#menu img {
+    border: 1px solid #000;
+    margin-top: -12px;
+    margin-left: 10px;
 }
 
 #content {
