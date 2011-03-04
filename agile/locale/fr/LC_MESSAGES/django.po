@@ -2,15 +2,15 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-03 11:56-0600\n"
-"PO-Revision-Date: 2011-03-03 11:45\n"
-"Last-Translator: <asd@asd.vom>\n"
+"POT-Creation-Date: 2011-03-03 19:40-0600\n"
+"PO-Revision-Date: 2011-03-03 19:44\n"
+"Last-Translator: <srpoder@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,23 +18,23 @@ msgstr ""
 "X-Translated-Using: django-rosetta 0.5.6\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 
-#: models.py:9 models.py:21 models.py:33 models.py:84
+#: models.py:9 models.py:24 models.py:36 models.py:87
 msgid "name"
-msgstr ""
+msgstr "nom"
 
-#: models.py:10 models.py:34 models.py:48
+#: models.py:10 models.py:37 models.py:51
 msgid "description"
-msgstr ""
+msgstr "description"
 
-#: models.py:11 models.py:36
+#: models.py:11 models.py:39
 msgid "owner"
-msgstr ""
+msgstr "propriétaire"
 
 #: models.py:12
 msgid "members"
-msgstr ""
+msgstr "membres"
 
-#: models.py:15 models.py:19
+#: models.py:15 models.py:22
 msgid "project"
 msgstr "projet"
 
@@ -42,106 +42,122 @@ msgstr "projet"
 msgid "projects"
 msgstr "projets"
 
-#: models.py:20 models.py:46
+#: models.py:23 models.py:49
 msgid "index"
-msgstr ""
+msgstr "index"
 
-#: models.py:24 models.py:31
+#: models.py:27 models.py:34
 msgid "column"
 msgstr "colonne"
 
-#: models.py:25
+#: models.py:28
 msgid "columns"
 msgstr "colonnes"
 
-#: models.py:32
-msgid "number"
-msgstr ""
-
 #: models.py:35
+msgid "number"
+msgstr "nombre"
+
+#: models.py:38
 msgid "creator"
-msgstr ""
+msgstr "créateur"
 
-#: models.py:37
+#: models.py:40
 msgid "created at"
-msgstr ""
+msgstr "créé au"
 
-#: models.py:39
+#: models.py:42
 msgid "color"
-msgstr ""
+msgstr "couleur"
 
-#: models.py:42 models.py:47 models.py:57 models.py:67
+#: models.py:45 models.py:50 models.py:60 models.py:70
 msgid "story"
 msgstr "histoire"
 
-#: models.py:43
+#: models.py:46
 msgid "stories"
 msgstr "histoires"
 
-#: models.py:49
-msgid "finished at"
-msgstr ""
-
 #: models.py:52
+msgid "finished at"
+msgstr "terminé à"
+
+#: models.py:55
 msgid "task"
 msgstr "tâche"
 
-#: models.py:53
+#: models.py:56
 msgid "tasks"
 msgstr "tâches"
 
-#: models.py:56 models.py:66 models.py:76 models.py:83
+#: models.py:59 models.py:69 models.py:79 models.py:86
 msgid "user"
-msgstr ""
+msgstr "l'utilisateur"
 
-#: models.py:58 models.py:68
+#: models.py:61 models.py:71
 msgid "datetime"
-msgstr ""
-
-#: models.py:59
-msgid "text"
-msgstr ""
+msgstr "datetime"
 
 #: models.py:62
+msgid "text"
+msgstr "texte"
+
+#: models.py:65
 msgid "comment"
 msgstr "commentaire"
 
-#: models.py:63
+#: models.py:66
 msgid "comments"
 msgstr "commentaires"
 
-#: models.py:72
+#: models.py:75
 msgid "attachment"
 msgstr "pièce jointe"
 
-#: models.py:73
+#: models.py:76
 msgid "attachments"
 msgstr "pièces jointes"
 
-#: models.py:79
+#: models.py:82
 msgid "user profile"
 msgstr "profil de l'utilisateur"
 
-#: models.py:80
+#: models.py:83
 msgid "user profiles"
 msgstr "profils d'utilisateurs"
 
-#: models.py:85
+#: models.py:88
 msgid "query"
-msgstr ""
-
-#: models.py:86
-msgid "shared"
-msgstr ""
+msgstr "requête"
 
 #: models.py:89
+msgid "shared"
+msgstr "partagé"
+
+#: models.py:92
 msgid "filter"
 msgstr "filtre"
 
-#: models.py:90
+#: models.py:93
 msgid "filters"
 msgstr "filtres"
 
-#: templates/index.html:4
+#: templates/base.html:15 templates/index.html:4 templates/login.html:4
 msgid "Home"
 msgstr "Accueil"
+
+#: templates/base.html:17
+msgid "Login"
+msgstr "Connectez-vous"
+
+#: templates/base.html:18
+msgid "Signup"
+msgstr "S'inscrire"
+
+#: templates/base.html:20
+msgid "Projects"
+msgstr "Projets"
+
+#: templates/base.html:21
+msgid "Logout"
+msgstr "Déconnexion"

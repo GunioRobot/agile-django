@@ -15,6 +15,9 @@ class Project(models.Model):
         verbose_name = _(u'project')
         verbose_name_plural = _(u'projects')
     
+    def __unicode__(self):
+        return '%s' % self.name
+    
 class Column(models.Model):
     project = models.ForeignKey('Project', verbose_name=_(u'project'), related_name='columns')
     index = models.PositiveIntegerField(_(u'index'))

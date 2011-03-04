@@ -2,147 +2,162 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-03 11:56-0600\n"
-"PO-Revision-Date: 2011-03-03 10:23\n"
-"Last-Translator: <asd@asd.com>\n"
+"POT-Creation-Date: 2011-03-03 19:40-0600\n"
+"PO-Revision-Date: 2011-03-03 19:43\n"
+"Last-Translator: <srpoder@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Translated-Using: django-rosetta 0.5.6\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: models.py:9 models.py:21 models.py:33 models.py:84
+#: models.py:9 models.py:24 models.py:36 models.py:87
 msgid "name"
-msgstr ""
+msgstr "имя"
 
-#: models.py:10 models.py:34 models.py:48
+#: models.py:10 models.py:37 models.py:51
 msgid "description"
-msgstr ""
+msgstr "описание"
 
-#: models.py:11 models.py:36
+#: models.py:11 models.py:39
 msgid "owner"
-msgstr ""
+msgstr "владелец"
 
 #: models.py:12
 msgid "members"
-msgstr ""
+msgstr "Члены"
 
-#: models.py:15 models.py:19
+#: models.py:15 models.py:22
 msgid "project"
-msgstr ""
+msgstr "проект"
 
 #: models.py:16
 msgid "projects"
-msgstr ""
+msgstr "проекты"
 
-#: models.py:20 models.py:46
+#: models.py:23 models.py:49
 msgid "index"
-msgstr ""
+msgstr "индекс"
 
-#: models.py:24 models.py:31
+#: models.py:27 models.py:34
 msgid "column"
-msgstr ""
+msgstr "столбец"
 
-#: models.py:25
+#: models.py:28
 msgid "columns"
-msgstr ""
-
-#: models.py:32
-msgid "number"
-msgstr ""
+msgstr "столбцы"
 
 #: models.py:35
+msgid "number"
+msgstr "число"
+
+#: models.py:38
 msgid "creator"
-msgstr ""
+msgstr "создатель"
 
-#: models.py:37
+#: models.py:40
 msgid "created at"
-msgstr ""
+msgstr "создана в"
 
-#: models.py:39
+#: models.py:42
 msgid "color"
-msgstr ""
+msgstr "цвет"
 
-#: models.py:42 models.py:47 models.py:57 models.py:67
+#: models.py:45 models.py:50 models.py:60 models.py:70
 msgid "story"
-msgstr ""
+msgstr "история"
 
-#: models.py:43
+#: models.py:46
 msgid "stories"
-msgstr ""
-
-#: models.py:49
-msgid "finished at"
-msgstr ""
+msgstr "истории"
 
 #: models.py:52
+msgid "finished at"
+msgstr "закончил в"
+
+#: models.py:55
 msgid "task"
-msgstr ""
+msgstr "Задача"
 
-#: models.py:53
+#: models.py:56
 msgid "tasks"
-msgstr ""
+msgstr "задачи"
 
-#: models.py:56 models.py:66 models.py:76 models.py:83
+#: models.py:59 models.py:69 models.py:79 models.py:86
 msgid "user"
-msgstr ""
+msgstr "Пользователь"
 
-#: models.py:58 models.py:68
+#: models.py:61 models.py:71
 msgid "datetime"
-msgstr ""
-
-#: models.py:59
-msgid "text"
-msgstr ""
+msgstr "DateTime"
 
 #: models.py:62
+msgid "text"
+msgstr "текст"
+
+#: models.py:65
 msgid "comment"
-msgstr ""
+msgstr "комментарий"
 
-#: models.py:63
+#: models.py:66
 msgid "comments"
-msgstr ""
+msgstr "Комментарии"
 
-#: models.py:72
+#: models.py:75
 msgid "attachment"
-msgstr ""
+msgstr "привязанность"
 
-#: models.py:73
+#: models.py:76
 msgid "attachments"
-msgstr ""
+msgstr "вложения"
 
-#: models.py:79
+#: models.py:82
 msgid "user profile"
-msgstr ""
+msgstr "профиль пользователя"
 
-#: models.py:80
+#: models.py:83
 msgid "user profiles"
-msgstr ""
+msgstr "профили пользователей"
 
-#: models.py:85
+#: models.py:88
 msgid "query"
-msgstr ""
-
-#: models.py:86
-msgid "shared"
-msgstr ""
+msgstr "запрос"
 
 #: models.py:89
+msgid "shared"
+msgstr "общий"
+
+#: models.py:92
 msgid "filter"
-msgstr ""
+msgstr "Фильтр"
 
-#: models.py:90
+#: models.py:93
 msgid "filters"
-msgstr ""
+msgstr "фильтры"
 
-#: templates/index.html:4
+#: templates/base.html:15 templates/index.html:4 templates/login.html:4
 msgid "Home"
 msgstr "Главная"
+
+#: templates/base.html:17
+msgid "Login"
+msgstr "Войти"
+
+#: templates/base.html:18
+msgid "Signup"
+msgstr "Зарегистрироваться"
+
+#: templates/base.html:20
+msgid "Projects"
+msgstr "Проекты"
+
+#: templates/base.html:21
+msgid "Logout"
+msgstr "Выйти"

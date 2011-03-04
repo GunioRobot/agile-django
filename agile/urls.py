@@ -1,7 +1,10 @@
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('agile.views',
-    (r'^$', 'index'),
+    url(r'^$', 'index', name='agile_index'),
+    url(r'^login/?$', 'login', name='agile_login'),
+    url(r'^logout/?$', 'logout', name='agile_logout'),
+    url(r'^projects/?$', 'projects', name='agile_projects'),
     # Example:
     # (r'^django_agile/', include('django_agile.foo.urls')),
 
