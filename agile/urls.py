@@ -4,6 +4,7 @@ urlpatterns = patterns('agile.views',
     url(r'^$', 'index', name='agile_index'),
     url(r'^login/?$', 'login', name='agile_login'),
     url(r'^logout/?$', 'logout', name='agile_logout'),
+    url(r'^signup/?$', 'signup', name='agile_signup'),
     url(r'^projects/?$', 'projects', name='agile_projects'),
     # Example:
     # (r'^django_agile/', include('django_agile.foo.urls')),

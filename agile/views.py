@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -33,6 +33,22 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return HttpResponseRedirect(reverse('agile_index'))
+
+def signup(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('agile_index'))
+    form = UserCreationForm()
+    
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            #auth_login(request, user)
+            return HttpResponseRedirect(reverse('agile_index'))
+        
+    return render_to_response('signup.html', RequestContext(request, {
+        'form': form,
+    }))
 
 @login_required
 def projects(request):
