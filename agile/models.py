@@ -25,6 +25,10 @@ class Project(models.Model):
     def get_url(self):
         return 'project/%s' % self.id
     
+    @property
+    def stories(self):
+        return Story.objects.filter(phase__project=self) 
+    
 class Phase(models.Model):
     project = models.ForeignKey('Project', verbose_name=_(u'project'), related_name='phases')
     name = models.CharField(_(u'name'), max_length=100)
@@ -43,7 +47,6 @@ class Phase(models.Model):
 #class Sprint(models.Model):    
 	
 class Story(models.Model):
-    #project = models.ForeignKey('Project', related_name='stories') # Unnecesary?
     phase = models.ForeignKey('Phase', verbose_name=_(u'phase'), related_name='stories')
     number = models.PositiveIntegerField(_(u'number'))
     name = models.CharField(_(u'name'), max_length=100)
@@ -57,6 +60,10 @@ class Story(models.Model):
     class Meta:
         verbose_name = _(u'story')
         verbose_name_plural = _(u'stories')
+        
+    @property
+    def project(self):
+        return self.phase.project
     
 class Tag(models.Model):
     story = models.ForeignKey('Story', verbose_name=_(u'story'), related_name='tags')
