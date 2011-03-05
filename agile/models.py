@@ -18,6 +18,9 @@ class Project(models.Model):
     def __unicode__(self):
         return '%s' % self.name
     
+    def get_url(self):
+        return 'project/%s' % self.id
+    
 class Process(models.Model):
     project = models.ForeignKey('Project', verbose_name=_(u'project'), related_name='columns')
     index = models.PositiveIntegerField(_(u'index'))

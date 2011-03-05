@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.template import RequestContext
 
 from agile.forms import *
+from agile.models import *
 
 # Create your views here.
 
@@ -15,23 +16,18 @@ def index(request):
     return render_to_response('index.html', RequestContext(request))
 
 def login(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('agile_index'))
     form = AuthenticationForm()
-    message = False
+    
     if request.method == 'POST':
-        form = AuthenticationForm(request.POST)
-        username = request.POST.get('username', '')
-        password = request.POST.get('password', '')
-
-        user = authenticate(username=username, password=password)
-        if user:
-            auth_login(request, user)
+        form = AuthenticationForm(None, request.POST)
+        if form.is_valid():
+            auth_login(request, form.get_user())
             return HttpResponseRedirect(reverse('agile_index'))
-        else:
-            message = True
         
     return render_to_response('login.html', RequestContext(request, {
         'form': form,
-        'error': message,
     }))
     
 def logout(request):
@@ -41,16 +37,15 @@ def logout(request):
 @login_required
 def projects(request):
     form = ProjectForm()
-    message = False
     if request.method == 'POST':
         form = ProjectForm(request.POST)
         if form.is_valid():
-            form.save()
-            message = False
-        else:
-            error = True
-            
+            project = form.save(commit=False)
+            project.owner = request.user
+            project.save()
+    
+    projects = request.user.projects.all()
     return render_to_response('project/add.html', RequestContext(request, {
         'form': form,
-        'error': message,
+        'projects': projects
     }))

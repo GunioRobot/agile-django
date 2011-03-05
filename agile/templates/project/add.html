@@ -12,12 +12,13 @@
 {% block content %}
 <div id="project">
 <form method="post">
-{% if error %}
-<span class="error" style="display:none;">{% trans 'Incorrect data.' %}</span>
-{% endif %}
 {% csrf_token %}
 {{ form.as_p }}
-<input type="submit" value="{% trans 'Login' %}">
+<input type="submit" value="{% trans 'Submit' %}">
 </form>
+{% for project in projects %}
+{{ project.name }} - {{ project.owner }} - {{ project.get_url }}<br/>
+
+{% endfor %}
 </div>
 {% endblock %}
