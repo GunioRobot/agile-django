@@ -1,10 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_delete
 from django.utils.translation import ugettext as __, ugettext_lazy as _
 
-# Create your models here.
+class AgileModelException(Exception):
+    pass
 
+################################################################################
+## Models
+################################################################################
 class Project(models.Model):
     name = models.CharField(_(u'name'), max_length=100)
     description = models.TextField(_(u'description'), blank=True)
@@ -21,32 +25,42 @@ class Project(models.Model):
     def get_url(self):
         return 'project/%s' % self.id
     
-class Process(models.Model):
-    project = models.ForeignKey('Project', verbose_name=_(u'project'), related_name='columns')
-    index = models.PositiveIntegerField(_(u'index'))
+class Phase(models.Model):
+    project = models.ForeignKey('Project', verbose_name=_(u'project'), related_name='phases')
     name = models.CharField(_(u'name'), max_length=100)
+    index = models.PositiveIntegerField(_(u'index'))
+    description = models.TextField(_(u'description'), blank=True)
+    limit = models.PositiveIntegerField(_(u'limit'), blank=True, null=True)
+    deletable = models.BooleanField(_(u'deletable'), default=True)
     
     class Meta:
-        verbose_name = _(u'process')
-        verbose_name_plural = _(u'processes')
+        verbose_name = _(u'phase')
+        verbose_name_plural = _(u'phases')
+    
+    def __unicode__(self):
+        return 'project: %s , phase: %s' % (self.project, self.name)
 
 #class Sprint(models.Model):    
 	
 class Story(models.Model):
     #project = models.ForeignKey('Project', related_name='stories') # Unnecesary?
-    process = models.ForeignKey('Process', verbose_name=_(u'process'), related_name='stories')
+    phase = models.ForeignKey('Phase', verbose_name=_(u'phase'), related_name='stories')
     number = models.PositiveIntegerField(_(u'number'))
     name = models.CharField(_(u'name'), max_length=100)
     description = models.TextField(_(u'description'), blank=True)
     creator = models.ForeignKey(User, verbose_name=_(u'creator'), related_name='created_stories', blank=True, null=True)
     owner = models.ForeignKey(User, verbose_name=_(u'owner'), related_name='owned_stories', blank=True, null=True)
     created_at = models.DateTimeField(_(u'created at'), auto_now_add=True)
-    blocked = models.CharField(max_length=100)
+    blocked = models.CharField(max_length=100, blank=True, null=True)
     color = models.CharField(_(u'color'), max_length=6, default='ffffff')
     
     class Meta:
         verbose_name = _(u'story')
         verbose_name_plural = _(u'stories')
+    
+class Tag(models.Model):
+    story = models.ForeignKey('Story', verbose_name=_(u'story'), related_name='tags')
+    name = models.CharField(_(u'name'), max_length=100)
     
 class Task(models.Model):
     index = models.PositiveIntegerField(_(u'index'))
@@ -94,42 +108,49 @@ class Filter(models.Model):
     class Meta:
         verbose_name = _(u'filter')
         verbose_name_plural = _(u'filters')
-	
+
+################################################################################
+## Signals
+################################################################################
+
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile(user=instance).save()
+
+post_save.connect(create_user_profile, sender=User)
         
 def create_project(sender, instance, created, **kwargs):
     if created:
-        Process(
-            project=instance,
+        instance.phases.create(
             index=0,
             name=__(u'Backlog'),
-        ).save()
-        
-        Process(
-            project=instance,
+            deletable=False,
+        )
+        instance.phases.create(
             index=1,
             name=__(u'Ready'),
-        ).save()
-        
-        Process(
-            project=instance,
+        )
+        instance.phases.create(
             index=2,
             name=__(u'Working'),
-        ).save()
-        
-        Process(
-            project=instance,
+        )
+        instance.phases.create(
             index=3,
             name=__(u'Complete'),
-        ).save()
-        
-        Process(
-            project=instance,
+        )
+        instance.phases.create(
             index=4,
             name=__(u'Archive'),
-        ).save()
-
-post_save.connect(create_user_profile, sender=User)
+            deletable=False,
+        )
+        
 post_save.connect(create_project, sender=Project)
+
+def delete_phase(sender, instance, **kwargs):
+    if not instance.deletable:
+        raise AgileModelException('This instance is not deletable')
+    
+    if instance.stories.all().exists():
+        raise AgileModelException('This instance has stories')
+
+pre_delete.connect(delete_phase, sender=Phase)

@@ -414,7 +414,7 @@
    "is_active": true, 
    "is_superuser": true, 
    "is_staff": true, 
-   "last_login": "2011-03-04 13:04:04", 
+   "last_login": "2011-03-04 20:00:58", 
    "groups": [], 
    "user_permissions": [], 
    "password": "sha1$30c75$b7cc017b2a168db3281c26c2735738ebd1865a12", 
@@ -506,47 +506,62 @@
  }, 
  {
   "pk": 1, 
-  "model": "agile.process", 
+  "model": "agile.phase", 
   "fields": {
-   "project": 1, 
    "index": 0, 
-   "name": "Backlog"
+   "name": "Backlog", 
+   "project": 1, 
+   "limit": null, 
+   "deletable": false, 
+   "description": ""
   }
  }, 
  {
   "pk": 2, 
-  "model": "agile.process", 
+  "model": "agile.phase", 
   "fields": {
-   "project": 1, 
    "index": 1, 
-   "name": "Ready"
+   "name": "Ready", 
+   "project": 1, 
+   "limit": null, 
+   "deletable": true, 
+   "description": ""
   }
  }, 
  {
   "pk": 3, 
-  "model": "agile.process", 
+  "model": "agile.phase", 
   "fields": {
-   "project": 1, 
    "index": 2, 
-   "name": "Working"
+   "name": "Working", 
+   "project": 1, 
+   "limit": null, 
+   "deletable": true, 
+   "description": ""
   }
  }, 
  {
   "pk": 4, 
-  "model": "agile.process", 
+  "model": "agile.phase", 
   "fields": {
-   "project": 1, 
    "index": 3, 
-   "name": "Complete"
+   "name": "Complete", 
+   "project": 1, 
+   "limit": null, 
+   "deletable": true, 
+   "description": ""
   }
  }, 
  {
   "pk": 5, 
-  "model": "agile.process", 
+  "model": "agile.phase", 
   "fields": {
-   "project": 1, 
    "index": 4, 
-   "name": "Archive"
+   "name": "Archive", 
+   "project": 1, 
+   "limit": null, 
+   "deletable": false, 
+   "description": ""
   }
  }, 
  {

@@ -43,6 +43,7 @@ def projects(request):
             project = form.save(commit=False)
             project.owner = request.user
             project.save()
+            form = ProjectForm()
     
     projects = request.user.projects.all()
     return render_to_response('project/add.html', RequestContext(request, {
