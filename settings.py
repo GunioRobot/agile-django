@@ -122,6 +122,8 @@ if DEBUG:
 
 AUTH_PROFILE_MODULE = 'agile.UserProfile'
 
+GRAVATAR_DEFAULT_IMAGE = 'identicon'
+
 try:
     from local_settings import *
 except ImportError:
