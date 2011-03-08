@@ -120,7 +120,7 @@ if DEBUG:
         'rosetta',
     )
 
-AUTH_PROFILE_MODULE = 'agile.UserProfile'
+#AUTH_PROFILE_MODULE = 'agile.UserProfile'
 
 GRAVATAR_DEFAULT_IMAGE = 'identicon'
 

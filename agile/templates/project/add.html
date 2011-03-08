@@ -1,12 +1,10 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans 'Home' %} - {{ block.super }}{% endblock %}
+{% block title %}{% trans 'Projects' %} - {{ block.super }}{% endblock %}
 
 {% block head %}
 {{ block.super }}
-<script type="text/javascript" src="{{ MEDIA_URL }}js/login.js"></script>
-<link rel="stylesheet" href="{{ MEDIA_URL }}css/projects.css" />
 {% endblock %}
 
 {% block content %}
@@ -17,7 +15,7 @@
 <input type="submit" value="{% trans 'Submit' %}">
 </form>
 {% for project in projects %}
-{{ project.name }} - {{ project.owner }} - {{ project.get_url }}<br/>
+{{ project.name }} - {{ project.owner }} - <a href="{{ project.get_url }}">Go</a><br/>
 
 {% endfor %}
 </div>

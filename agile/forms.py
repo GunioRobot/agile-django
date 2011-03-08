@@ -4,7 +4,7 @@ from django import forms
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        exclude = ('owner',)
+        exclude = ('owner', 'is_active',)
         
 class StoryForm(forms.ModelForm):
     class Meta:

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{{ project.name }} - Details - {{ block.super }}{% endblock %}
+
+{% block head %}
+{{ block.super }}
+{% endblock %}
+
+{% block content %}
+Name: {{ project.name }}<br/>
+Description: {{ project.description }}<br/>
+Owner: {{ project.owner }}<br/>
+{% for member in project.members.all %}
+    Member: {{ member }}<br/>
+{% endfor %}
+{% endblock %}

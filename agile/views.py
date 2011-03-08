@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.template import RequestContext
 
@@ -43,7 +43,6 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            #auth_login(request, user)
             return HttpResponseRedirect(reverse('agile_index'))
         
     return render_to_response('signup.html', RequestContext(request, {
@@ -59,10 +58,20 @@ def projects(request):
             project = form.save(commit=False)
             project.owner = request.user
             project.save()
+            form.save_m2m()
             form = ProjectForm()
+            return HttpResponseRedirect(reverse('agile_projects'))
     
-    projects = request.user.projects.all()
+    projects = request.user.projects
     return render_to_response('project/add.html', RequestContext(request, {
         'form': form,
         'projects': projects
     }))
+    
+@login_required
+def project(request, project_id):
+    project = get_object_or_404(request.user.projects, id=project_id)
+    return render_to_response('project/details.html', RequestContext(request, {
+        'project': project,
+    }))
+    

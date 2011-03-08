@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save, pre_delete
 from django.utils.translation import ugettext as __, ugettext_lazy as _
 
@@ -9,11 +10,13 @@ class AgileModelException(Exception):
 ################################################################################
 ## Models
 ################################################################################
+
 class Project(models.Model):
     name = models.CharField(_(u'name'), max_length=100)
     description = models.TextField(_(u'description'), blank=True)
-    owner = models.ForeignKey(User, verbose_name=_(u'owner'), related_name='projects')
-    members = models.ManyToManyField(User, verbose_name=_(u'members'), blank=True)
+    owner = models.ForeignKey(User, verbose_name=_(u'owner'), related_name='own_projects')
+    members = models.ManyToManyField(User, verbose_name=_(u'members'), related_name='member_projects', blank=True)
+    is_active = models.BooleanField(default=True)
     
     class Meta:
         verbose_name = _(u'project')
@@ -23,7 +26,7 @@ class Project(models.Model):
         return '%s' % self.name
     
     def get_url(self):
-        return 'project/%s' % self.id
+        return reverse('agile_project', args=[self.id])
     
     @property
     def stories(self):
@@ -52,7 +55,7 @@ class Story(models.Model):
     name = models.CharField(_(u'name'), max_length=100)
     description = models.TextField(_(u'description'), blank=True)
     creator = models.ForeignKey(User, verbose_name=_(u'creator'), related_name='created_stories', blank=True, null=True)
-    owner = models.ForeignKey(User, verbose_name=_(u'owner'), related_name='owned_stories', blank=True, null=True)
+    owner = models.ForeignKey(User, verbose_name=_(u'owner'), related_name='own_stories', blank=True, null=True)
     created_at = models.DateTimeField(_(u'created at'), auto_now_add=True)
     blocked = models.CharField(max_length=100, blank=True, null=True)
     color = models.CharField(_(u'color'), max_length=6, default='ffffff')
@@ -100,7 +103,7 @@ class Attachment(models.Model):
         verbose_name_plural = _(u'attachments')
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, verbose_name=_(u'user'))
+    user = models.OneToOneField(User, verbose_name=_(u'user'), related_name='agile_userprofile')
         
     class Meta:
         verbose_name = _(u'user profile')
@@ -115,6 +118,9 @@ class Filter(models.Model):
     class Meta:
         verbose_name = _(u'filter')
         verbose_name_plural = _(u'filters')
+
+# Extending User model
+User.projects = property(lambda u: u.own_projects.all() | u.member_projects.all())
 
 ################################################################################
 ## Signals
@@ -155,9 +161,9 @@ post_save.connect(create_project, sender=Project)
 
 def delete_phase(sender, instance, **kwargs):
     if not instance.deletable:
-        raise AgileModelException('This instance is not deletable')
+        raise AgileModelException('This phase is not deletable')
     
     if instance.stories.all().exists():
-        raise AgileModelException('This instance has stories')
+        raise AgileModelException('This phase has stories')
 
 pre_delete.connect(delete_phase, sender=Phase)
