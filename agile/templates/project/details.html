@@ -8,10 +8,18 @@
 {% endblock %}
 
 {% block content %}
+{% for project in user.projects %}
+    <a href="{{ project.get_url }}">{{ project.name }}</a><br/>
+{% endfor %}
 Name: {{ project.name }}<br/>
 Description: {{ project.description }}<br/>
 Owner: {{ project.owner }}<br/>
 {% for member in project.members.all %}
     Member: {{ member }}<br/>
 {% endfor %}
+
+{% for phase in project.phases.all %}
+    Phase: {{ phase.name }}<br/>
+{% endfor %}
+
 {% endblock %}

@@ -11,15 +11,16 @@
     <body>
         <div id="header">
             <span id="name">AgileDjango</span>
-            <ul id="menu">
+            <ul id="topmenu">
                 <li><a href='{% url agile_index %}'>{% trans 'Home' %}</a></li>
                 {% if not user.is_authenticated %}
                 <li><a href='{% url agile_login %}'>{% trans 'Login' %}</a></li>
                 <li><a href='{% url agile_signup %}'>{% trans 'Signup' %}</a></li>
                 {% else %}
                 <li><a href='{% url agile_projects %}'>{% trans 'Projects' %}</a></li>
+                <li><a href='{% url agile_profile %}'>{% trans 'Profile' %}</a></li>
                 <li><a href='{% url agile_logout %}'>{% trans 'Logout' %}</a></li>
-                {% gravatar user 45 %}
+                <li>{% gravatar user 45 %}</li>
                 {% endif %}
             </ul>
         </div>

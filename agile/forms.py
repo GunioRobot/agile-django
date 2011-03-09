@@ -21,3 +21,10 @@ class CommentForm(forms.ModelForm):
 class FilterForm(forms.ModelForm):
     class Meta:
         model = Filter
+        
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        exclude = ('username', 'password', 'is_staff',
+                   'is_active', 'is_superuser', 'last_login',
+                   'date_joined', 'groups', 'user_permissions')

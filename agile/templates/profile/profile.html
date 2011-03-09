@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load gravatar %}
+
+{% block title %}{% trans 'Profile' %} - {{ block.super }}{% endblock %}
+
+{% block head %}
+{{ block.super }}
+{% endblock %}
+
+{% block content %}
+{% gravatar user 100 %}
+<form method="post">
+{% csrf_token %}
+{{ user_form.as_p }}
+<input type="submit" value="{% trans 'Submit' %}">
+</form>
+
+<form method="post">
+{% csrf_token %}
+{{ pass_form.as_p }}
+<input type="submit" value="{% trans 'Submit' %}">
+</form>
+
+
+{% endblock %}

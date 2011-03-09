@@ -6,6 +6,7 @@ body {
 	margin: 0;
 	padding: 0;
 	outline: none;
+    font-family: "Lucida Grande", Verdana, Helvetica, Arial, Tahoma, sans-serif;
 }
 
 #header {
@@ -21,22 +22,31 @@ body {
     font-size: 24px;
     display: inline;
 }
-/*
-    TODO: Fix menu position.
-*/
-ul#menu {
-	/*padding: 5px 15px;*/
+
+ul#topmenu {
 	list-style: none;
-	float: right;
+	position: absolute;
+    top: 14px;
+    right: 0px;
 }
 
-ul#menu li {
-	padding: 0 2px;
-	margin: 0 2px;
-	float: left;
+ul#topmenu li {
+    padding: 0 3px;
+    margin: 0 2px;
+    float: left;
+    font-size: 12px;
 }
 
-ul#menu img {
+ul#topmenu li a:link, ul#topmenu li a:visited {
+    color: #555;
+    text-decoration:none;
+    font-weight: bold;
+}
+ul#topmenu li a:hover {
+    text-decoration:underline;
+}
+
+ul#topmenu img {
     border: 1px solid #000;
     margin-top: -12px;
     margin-left: 10px;
@@ -44,7 +54,6 @@ ul#menu img {
 
 #content {
     padding: 12px;
-    font-family: "Lucida Grande", Verdana, Helvetica, Arial, Tahoma, sans-serif;
 }
 #login {
     margin-top: -13px;
@@ -72,11 +81,11 @@ form label {
     font-size: 12px;
     text-align:left;
 }
-form input[type="text"],form input[type="password"] {
+form input[type="text"], form input[type="password"] {
     width: 100%;
     /*margin-top: 9px;*/
     border: 2px solid #F0F0F0;
-    font-size: 17px;
+    font-size: 15px;
     height: 35px;
     padding: 3px;
 }

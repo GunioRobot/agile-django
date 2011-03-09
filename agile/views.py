@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import (AuthenticationForm, UserCreationForm, 
+                                       PasswordChangeForm)
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
@@ -47,6 +48,30 @@ def signup(request):
         
     return render_to_response('signup.html', RequestContext(request, {
         'form': form,
+    }))
+
+@login_required
+def profile(request):
+    user_form = UserProfileForm(instance=request.user)
+    pass_form = PasswordChangeForm(request.user)
+    
+    if request.method == 'POST':
+        user_form = UserProfileForm(request.POST, instance=request.user)
+        pass_form = PasswordChangeForm(request.user, request.POST)
+        
+        print user_form
+        if pass_form.is_valid():
+            pass_form.save()
+            return HttpResponseRedirect(reverse('agile_index'))
+        
+        if user_form.is_valid():
+            user_form.save()
+            return HttpResponseRedirect(reverse('agile_profile'))
+    
+    return render_to_response('profile/profile.html', RequestContext(request, {
+        'pass_form': pass_form,
+        'user_form': user_form,
+        'projects': projects
     }))
 
 @login_required

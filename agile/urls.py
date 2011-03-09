@@ -7,5 +7,6 @@ urlpatterns = patterns('agile.views',
     url(r'^signup/?$', 'signup', name='agile_signup'),
     url(r'^projects/?$', 'projects', name='agile_projects'),
     url(r'^project/(?P<project_id>\d+)/?$', 'project', name='agile_project'),
+    url(r'^profile/?$', 'profile', name='agile_profile'),
 
 )
