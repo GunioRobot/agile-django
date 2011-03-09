@@ -90,10 +90,8 @@ def projects(request):
             form.save_m2m()
             return HttpResponseRedirect(reverse('agile_projects'))
     
-    projects = request.user.projects
     return render_to_response('project/add.html', RequestContext(request, {
         'form': form,
-        'projects': projects
     }))
     
 @login_required

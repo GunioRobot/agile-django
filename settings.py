@@ -118,7 +118,18 @@ if DEBUG:
     INSTALLED_APPS += (
         'django_extensions',
         'rosetta',
+        'debug_toolbar',
     )
+    
+    MIDDLEWARE_CLASSES += (
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    )
+    
+    DEBUG_TOOLBAR_CONFIG = {
+        'INTERCEPT_REDIRECTS': False,
+    }
+    
+    INTERNAL_IPS = ('127.0.0.1',)
 
 #AUTH_PROFILE_MODULE = 'agile.UserProfile'
 

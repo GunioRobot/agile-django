@@ -119,8 +119,12 @@ class Filter(models.Model):
         verbose_name = _(u'filter')
         verbose_name_plural = _(u'filters')
 
+
 # Extending User model
-User.projects = property(lambda u: (u.own_projects.all() | u.member_projects.all()).distinct())
+@property
+def projects(user):
+    return (user.own_projects.all() | user.member_projects.all()).distinct()
+User.projects = projects
 
 ################################################################################
 ## Signals

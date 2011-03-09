@@ -14,7 +14,7 @@
 {{ form.as_p }}
 <input type="submit" value="{% trans 'Submit' %}">
 </form>
-{% for project in projects %}
+{% for project in user.projects %}
 {{ project.name }} - {{ project.owner }} - <a href="{{ project.get_url }}">Go</a><br/>
 
 {% endfor %}
