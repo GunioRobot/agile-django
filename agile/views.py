@@ -88,7 +88,6 @@ def projects(request):
             project.owner = request.user
             project.save()
             form.save_m2m()
-            form = ProjectForm()
             return HttpResponseRedirect(reverse('agile_projects'))
     
     projects = request.user.projects
