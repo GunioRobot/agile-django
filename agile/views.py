@@ -25,7 +25,7 @@ def login(request):
         form = AuthenticationForm(None, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return HttpResponseRedirect(reverse('agile_index'))
+            return HttpResponseRedirect(request.GET.get('next', reverse('agile_index')))
         
     return render_to_response('login.html', RequestContext(request, {
         'form': form,
