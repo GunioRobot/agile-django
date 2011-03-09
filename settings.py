@@ -135,6 +135,9 @@ if DEBUG:
 
 GRAVATAR_DEFAULT_IMAGE = 'identicon'
 
+LOGIN_URL  = '/login/'
+LOGOUT_URL = '/logout/'
+
 try:
     from local_settings import *
 except ImportError:
