@@ -53,25 +53,29 @@ def signup(request):
 @login_required
 def profile(request):
     user_form = UserProfileForm(instance=request.user)
-    pass_form = PasswordChangeForm(request.user)
+    password_form = PasswordChangeForm(request.user)
+    
+    form_saved = None
     
     if request.method == 'POST':
-        user_form = UserProfileForm(request.POST, instance=request.user)
-        pass_form = PasswordChangeForm(request.user, request.POST)
         
-        print user_form
-        if pass_form.is_valid():
-            pass_form.save()
-            return HttpResponseRedirect(reverse('agile_index'))
+        if request.POST.get('form') == 'user':
+            user_form = UserProfileForm(request.POST, instance=request.user)
+            if user_form.is_valid():
+                user_form.save()
+                form_saved = 'user'
         
-        if user_form.is_valid():
-            user_form.save()
-            return HttpResponseRedirect(reverse('agile_profile'))
+        elif request.POST.get('form') == 'pass':
+            password_form = PasswordChangeForm(request.user, request.POST)
+            if password_form.is_valid():
+                password_form.save()
+                password_form = PasswordChangeForm(request.user)
+                form_saved = 'password'
     
     return render_to_response('profile/profile.html', RequestContext(request, {
-        'pass_form': pass_form,
+        'password_form': password_form,
         'user_form': user_form,
-        'projects': projects
+        'form_saved': form_saved
     }))
 
 @login_required

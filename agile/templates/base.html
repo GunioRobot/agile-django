@@ -5,7 +5,14 @@
         {% block head %}
         <title>{% block title %}AgileDjango{% endblock %}</title>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/smoothness/jquery-ui.css" />
         <link rel="stylesheet" href="{{ MEDIA_URL }}css/agile.css" />
+        <script type="text/javascript">
+            $(function(){
+                $('input[type=submit]').addClass('ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only')
+            })
+        </script>
         {% endblock %}
     </head>
     <body>

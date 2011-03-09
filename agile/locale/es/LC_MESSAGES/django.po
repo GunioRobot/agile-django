@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-04 13:22-0600\n"
-"PO-Revision-Date: 2011-03-04 13:23\n"
-"Last-Translator: <srpoder@gmail.com>\n"
+"POT-Creation-Date: 2011-03-09 08:21-0600\n"
+"PO-Revision-Date: 2011-03-09 08:21\n"
+"Last-Translator: Andres Torres <andres@mydomedia.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,173 +18,208 @@ msgstr ""
 "X-Translated-Using: django-rosetta 0.5.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: models.py:9 models.py:24 models.py:36 models.py:87
+#: models.py:15 models.py:37 models.py:55 models.py:73 models.py:114
 msgid "name"
 msgstr "nombre"
 
-#: models.py:10 models.py:37 models.py:51
+#: models.py:16 models.py:39 models.py:56 models.py:78
 msgid "description"
 msgstr "descripción"
 
-#: models.py:11 models.py:39
+#: models.py:17 models.py:58
 msgid "owner"
 msgstr "propietario"
 
-#: models.py:12
+#: models.py:18
 msgid "members"
 msgstr "miembros"
 
-#: models.py:15 models.py:22
+#: models.py:22 models.py:36
 msgid "project"
 msgstr "proyecto"
 
-#: models.py:16
+#: models.py:23
 msgid "projects"
 msgstr "proyectos"
 
-#: models.py:23 models.py:49
+#: models.py:38 models.py:76
 msgid "index"
 msgstr "índice"
 
-#: models.py:27 models.py:34
-msgid "process"
-msgstr "proceso"
+#: models.py:40
+msgid "limit"
+msgstr "límite"
 
-#: models.py:28
-msgid "processes"
-msgstr "procesos"
+#: models.py:41
+msgid "deletable"
+msgstr "eliminable"
 
-#: models.py:35
+#: models.py:44 models.py:53
+msgid "phase"
+msgstr "fase"
+
+#: models.py:45
+msgid "phases"
+msgstr "fases"
+
+#: models.py:54
 msgid "number"
 msgstr "número"
 
-#: models.py:38
+#: models.py:57
 msgid "creator"
 msgstr "creador"
 
-#: models.py:40
+#: models.py:59
 msgid "created at"
 msgstr "creado en"
 
-#: models.py:42
+#: models.py:61
 msgid "color"
 msgstr "color"
 
-#: models.py:45 models.py:50 models.py:60 models.py:70
+#: models.py:64 models.py:72 models.py:77 models.py:87 models.py:97
 msgid "story"
 msgstr "historia"
 
-#: models.py:46
+#: models.py:65
 msgid "stories"
 msgstr "historias"
 
-#: models.py:52
+#: models.py:79
 msgid "finished at"
 msgstr "terminó en"
 
-#: models.py:55
+#: models.py:82
 msgid "task"
 msgstr "tarea"
 
-#: models.py:56
+#: models.py:83
 msgid "tasks"
 msgstr "tareas"
 
-#: models.py:59 models.py:69 models.py:79 models.py:86
+#: models.py:86 models.py:96 models.py:106 models.py:113
 msgid "user"
 msgstr "usuario"
 
-#: models.py:61 models.py:71
+#: models.py:88 models.py:98
 msgid "datetime"
 msgstr "fecha y hora"
 
-#: models.py:62
+#: models.py:89
 msgid "text"
 msgstr "texto"
 
-#: models.py:65
+#: models.py:92
 msgid "comment"
 msgstr "comentario"
 
-#: models.py:66
+#: models.py:93
 msgid "comments"
 msgstr "comentarios"
 
-#: models.py:75
+#: models.py:102
 msgid "attachment"
 msgstr "archivo adjunto"
 
-#: models.py:76
+#: models.py:103
 msgid "attachments"
 msgstr "archivos adjuntos"
 
-#: models.py:82
+#: models.py:109
 msgid "user profile"
 msgstr "perfil del usuario"
 
-#: models.py:83
+#: models.py:110
 msgid "user profiles"
 msgstr "perfiles de usuario"
 
-#: models.py:88
+#: models.py:115
 msgid "query"
 msgstr "consulta"
 
-#: models.py:89
+#: models.py:116
 msgid "shared"
 msgstr "compartida"
 
-#: models.py:92
+#: models.py:119
 msgid "filter"
 msgstr "filtro"
 
-#: models.py:93
+#: models.py:120
 msgid "filters"
 msgstr "filtros"
 
-#: models.py:104
-msgid "Backlog"
-msgstr "Backlog"
-
-#: models.py:110
-msgid "Ready"
-msgstr "Listo"
-
-#: models.py:116
-msgid "Working"
-msgstr "Trabajando"
-
-#: models.py:122
-msgid "Complete"
-msgstr "Completado"
-
-#: models.py:128
-msgid "Archive"
-msgstr "Archivo"
-
-#: templates/base.html:15 templates/index.html:4 templates/login.html:4
+#: templates/base.html:22 templates/index.html:4
 msgid "Home"
 msgstr "Inicio"
 
-#: templates/base.html:17 templates/login.html:19
+#: templates/base.html:24 templates/login.html:4 templates/login.html.py:19
+#: templates/signup.html:16
 msgid "Login"
 msgstr "Iniciar sesión"
 
-#: templates/base.html:18
+#: templates/base.html:25 templates/signup.html:4
 msgid "Signup"
 msgstr "Registrarse"
 
-#: templates/base.html:20
+#: templates/base.html:27 templates/project/add.html:4
 msgid "Projects"
 msgstr "Proyectos"
 
-#: templates/base.html:21
+#: templates/base.html:28 templates/profile/profile.html:5
+msgid "Profile"
+msgstr "Perfil"
+
+#: templates/base.html:29
 msgid "Logout"
 msgstr "Cerrar sesión"
 
 #: templates/login.html:15
 msgid "Incorrect username and/or password."
 msgstr "Nombre de usuario y/o contraseña incorrecto."
+
+#: templates/profile/profile.html:33
+msgid "User information"
+msgstr "Información del usuario"
+
+#: templates/profile/profile.html:34
+msgid "Change password"
+msgstr "Cambiar la contraseña"
+
+#: templates/profile/profile.html:42 templates/profile/profile.html.py:57
+msgid "Success!"
+msgstr "Éxito!"
+
+#: templates/profile/profile.html:43 templates/profile/profile.html.py:58
+msgid "The form was saved successfully."
+msgstr "El formulario se guardó correctamente."
+
+#: templates/profile/profile.html:49 templates/profile/profile.html.py:64
+#: templates/project/add.html:15
+msgid "Submit"
+msgstr "Enviar"
+
+#~ msgid "process"
+#~ msgstr "proceso"
+
+#~ msgid "processes"
+#~ msgstr "procesos"
+
+#~ msgid "Backlog"
+#~ msgstr "Backlog"
+
+#~ msgid "Ready"
+#~ msgstr "Listo"
+
+#~ msgid "Working"
+#~ msgstr "Trabajando"
+
+#~ msgid "Complete"
+#~ msgstr "Completado"
+
+#~ msgid "Archive"
+#~ msgstr "Archivo"
 
 #~ msgid "column"
 #~ msgstr "columna"

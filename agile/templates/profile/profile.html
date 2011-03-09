@@ -6,21 +6,50 @@
 
 {% block head %}
 {{ block.super }}
+<script type="text/javascript">
+$(function(){
+    $('#tabs').tabs()
+})
+</script>
 {% endblock %}
 
 {% block content %}
-{% gravatar user 100 %}
-<form method="post">
-{% csrf_token %}
-{{ user_form.as_p }}
-<input type="submit" value="{% trans 'Submit' %}">
-</form>
-
-<form method="post">
-{% csrf_token %}
-{{ pass_form.as_p }}
-<input type="submit" value="{% trans 'Submit' %}">
-</form>
-
+<div id="tabs">
+    <ul>
+        <li><a href="#tabs-1">{% trans 'User information' %}</a></li>
+        <li><a href="#tabs-2">{% trans 'Change password' %}</a></li>
+    </ul>
+    <div id="tabs-1">
+        <div id="gravatar">{% gravatar user 100 %}</div>
+        <form method="post" action="#tabs-1">
+            {% if form_saved == 'user' %}
+            <div class="ui-state-highlight ui-corner-all">
+                <span class="ui-icon ui-icon-info"></span>
+                <strong>{% trans 'Success!' %}</strong>
+                {% trans 'The form was saved successfully.' %}
+            </div>
+            {% endif %}
+            {% csrf_token %}
+            <input type="hidden" name="form" value="user">
+            {{ user_form.as_p }}
+            <input type="submit" value="{% trans 'Submit' %}">
+        </form>
+    </div>
+    <div id="tabs-2">
+        <form method="post" action="#tabs-2">
+            {% if form_saved == 'password' %}
+            <div class="ui-state-highlight ui-corner-all">
+                <span class="ui-icon ui-icon-info"></span>
+                <strong>{% trans 'Success!' %}</strong>
+                {% trans 'The form was saved successfully.' %}
+            </div>
+            {% endif %}
+            {% csrf_token %}
+            <input type="hidden" name="form" value="pass">
+            {{ password_form.as_p }}
+            <input type="submit" value="{% trans 'Submit' %}">
+        </form>
+    </div>
+</div>
 
 {% endblock %}
