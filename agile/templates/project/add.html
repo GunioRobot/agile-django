@@ -5,18 +5,44 @@
 
 {% block head %}
 {{ block.super }}
+<script type="text/javascript">
+$(function(){
+    $('#tabs').tabs()
+})
+</script>
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/projects.css" />
+<script type="text/javascript" src="{{ MEDIA_URL}}js/projects.js"></script>
 {% endblock %}
 
 {% block content %}
 <div id="project">
-<form method="post">
-{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="{% trans 'Submit' %}">
-</form>
-{% for project in user.projects %}
-{{ project.name }} - {{ project.owner }} - <a href="{{ project.get_url }}">Go</a><br/>
-
-{% endfor %}
+<div id="tabs">
+    <ul>
+        <li><a href="#tabs-1">{% trans 'Projects' %}</a></li>
+        <li><a href="#tabs-2">{% trans 'Add project' %}</a></li>
+    </ul>
+    
+    <div id="tabs-1">
+        <div id="column-1" class="column">
+        {% for project in user.projects %}
+        <div class="portlet">
+            <div class="portlet-header"><a href="{{ project.get_url }}">{{ project.name }}</a></div>
+            <div class="portlet-content">
+                <p>{{ project.description }}</p>
+                <p style="text-align:right;">By {{ project.owner }}</p>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+    
+    <div id="tabs-2">
+        <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="{% trans 'Submit' %}">
+        </form>
+    </div>
+</div>
 </div>
 {% endblock %}
