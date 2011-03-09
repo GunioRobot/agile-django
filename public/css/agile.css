@@ -94,6 +94,15 @@ form input[type="submit"] {
     /*width: 75px;*/
     float:right;
 }
+form select {
+    width: 100%;
+}
+form textarea {
+    width: 100%;
+    border: 2px solid #F0F0F0;
+    font-size: 15px;
+    padding: 3px;
+}
 span.error {
     font-size: 12px;
     color: red;
