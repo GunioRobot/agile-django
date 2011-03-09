@@ -1,11 +1,10 @@
 /*
     Portlets script
     @see http://jqueryui.com/demos/sortable/#portlets
+    @see http://jqueryui.com/demos/sortable/#display-grid
 */
 $(function() {
-	$( ".column" ).sortable({
-		connectWith: ".column"
-	});
+	$( "#sortable" ).sortable();
 
 	$( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
 		.find( ".portlet-header" )
@@ -19,5 +18,6 @@ $(function() {
 		$( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();
 	});
 
-	$( ".column" ).disableSelection();
+    $( "#sortable" ).disableSelection();
+
 });

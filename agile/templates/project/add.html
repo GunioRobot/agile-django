@@ -23,17 +23,23 @@ $(function(){
     </ul>
     
     <div id="tabs-1">
-        <div id="column-1" class="column">
+        <ul id="sortable">
         {% for project in user.projects %}
+        <li>
         <div class="portlet">
             <div class="portlet-header"><a href="{{ project.get_url }}">{{ project.name }}</a></div>
             <div class="portlet-content">
-                <p>{{ project.description }}</p>
+                {% if project.description %}
+                    <p>{{ project.description }}</p>
+                {% else %}
+                    <p>{% trans 'No description avaible' %}</p>
+                {% endif %}
                 <p style="text-align:right;">By {{ project.owner }}</p>
             </div>
         </div>
+        </li>
         {% endfor %}
-        </div>
+        </ul>
     </div>
     
     <div id="tabs-2">
