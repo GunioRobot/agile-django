@@ -10,6 +10,7 @@ from django.template import RequestContext
 
 from agile.forms import *
 from agile.models import *
+from agile.decorators import *
 
 # Create your views here.
 
