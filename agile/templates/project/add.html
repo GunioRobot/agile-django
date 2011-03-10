@@ -34,7 +34,7 @@ $(function(){
                 {% else %}
                     <p>{% trans '(No description available)' %}</p>
                 {% endif %}
-                <p style="text-align:right;">By {{ project.owner }}</p>
+                <p style="text-align:right;">{% trans 'By' %} {{ project.owner }}</p>
             </div>
         </div>
         </li>
