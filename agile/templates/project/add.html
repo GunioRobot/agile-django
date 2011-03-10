@@ -32,7 +32,7 @@ $(function(){
                 {% if project.description %}
                     <p>{{ project.description }}</p>
                 {% else %}
-                    <p>{% trans 'No description avaible' %}</p>
+                    <p>{% trans '(No description available)' %}</p>
                 {% endif %}
                 <p style="text-align:right;">By {{ project.owner }}</p>
             </div>

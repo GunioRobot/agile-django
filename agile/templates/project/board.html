@@ -42,7 +42,6 @@ $(function(){
             var id = $element.attr('data-id')
             var index = $element.parent().children().index(ui.item);
             var phase = $element.parent().parent().attr('data-id');
-            console.log( id + ', index: ' + index + ', phase: ' + phase)
             $.ajax({
                 url: '/project/' + PROJECT_ID + '/story/' + id + '/move',
                 type: 'post',
@@ -52,7 +51,6 @@ $(function(){
                 },
                 dataType: 'json',
                 success: function(response){
-                    console.log(response)
                 }
             })
         }

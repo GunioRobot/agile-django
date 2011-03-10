@@ -102,12 +102,9 @@ def project(request, project_id):
     }))
     
 @login_required
+@render_to_json
 def story(request, project_id, story_number):
     story = Story.objects.get(phase__project=project_id, number=story_number)
     new_index = int(request.POST.get('index'))
     new_phase_id = int(request.POST.get('phase'))
-    
     story.move(new_phase_id=new_phase_id, new_index=new_index)
-    
-    return HttpResponse('true')
-    

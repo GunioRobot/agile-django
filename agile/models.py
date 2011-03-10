@@ -65,7 +65,7 @@ class Story(models.Model):
     class Meta:
         verbose_name = _(u'story')
         verbose_name_plural = _(u'stories')
-        ordering = ['index']
+        ordering = ('index',)
     
     def __unicode__(self):
         return '%s, Index %s, name %s' % (self.phase, self.index, self.name)
