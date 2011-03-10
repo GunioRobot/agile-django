@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{{ project.name }} - {% trans 'Board' %} - {{ block.super }}{% endblock %}
+
+{% block head %}
+{{ block.super }}
+<style>
+#phases {
+    border: 1px solid blue;
+    overflow: hidden;
+}
+.phase {
+    border:1px solid black;
+    float:left;
+}
+.phase-name {
+    text-align: center;	
+}
+.stories {
+    min-height: 30px;
+}
+.story {
+    border: 1px solid red;
+}
+</style>
+<script type="text/javascript">
+var PHASES_NUMBER = {{ project.phases.all.count }}
+var PROJECT_ID = {{ project.id }}
+$(function(){
+    $(window).resize(function(){
+        var phase_width = $('#phases').width() / PHASES_NUMBER - 2
+        $('.phase').width(phase_width)   
+    }).resize()
+	
+    $('.stories').sortable({
+        connectWith: ".stories",
+        distance: 15,
+        placeholder: "ui-state-highlight",
+        stop: function(event, ui){
+            var $element = $(ui.item)
+            var id = $element.attr('data-id')
+            var index = $element.parent().children().index(ui.item);
+            var phase = $element.parent().parent().attr('data-id');
+            console.log( id + ', index: ' + index + ', phase: ' + phase)
+            $.ajax({
+                url: '/project/' + PROJECT_ID + '/story/' + id + '/move',
+                type: 'post',
+                data: {
+                    phase: phase,
+                    index: index
+                },
+                dataType: 'json',
+                success: function(response){
+                    console.log(response)
+                }
+            })
+        }
+    }).disableSelection()
+})
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div id="phases">
+    {% for phase in project.phases.all %}
+    <div class="phase" data-id="{{ phase.id }}">
+    	<div class="phase-name">{{ phase.name }}</div>
+        <div class="stories">
+    	{% for story in phase.stories.all %}
+            <div class="story" data-id="{{ story.id }}">
+                <div class="story-name ui-state-default">
+                    {{ story.id }}
+                </div>
+            </div>
+    	{% endfor %}
+    	</div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

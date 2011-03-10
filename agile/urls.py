@@ -8,5 +8,8 @@ urlpatterns = patterns('agile.views',
     url(r'^projects/?$', 'projects', name='agile_projects'),
     url(r'^project/(?P<project_id>\d+)/?$', 'project', name='agile_project'),
     url(r'^profile/?$', 'profile', name='agile_profile'),
+    
+    url(r'^project/(?P<project_id>\d+)/story/(?P<story_id>\d+)/move/?$', 'story', name='agile_story'),
+
 
 )

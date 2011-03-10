@@ -52,6 +52,7 @@ class Phase(models.Model):
 class Story(models.Model):
     phase = models.ForeignKey('Phase', verbose_name=_(u'phase'), related_name='stories')
     number = models.PositiveIntegerField(_(u'number'))
+    index = models.PositiveIntegerField(_(u'index'))
     name = models.CharField(_(u'name'), max_length=100)
     description = models.TextField(_(u'description'), blank=True)
     creator = models.ForeignKey(User, verbose_name=_(u'creator'), related_name='created_stories', blank=True, null=True)
@@ -63,6 +64,7 @@ class Story(models.Model):
     class Meta:
         verbose_name = _(u'story')
         verbose_name_plural = _(u'stories')
+        ordering = ['index']
         
     @property
     def project(self):
