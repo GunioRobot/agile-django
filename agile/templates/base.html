@@ -40,6 +40,10 @@
         <div id="header">
             <span id="name">AgileDjango</span>
             <ul id="topmenu">
+                {% if user.is_authenticated %}
+                <li>{{ user.get_full_name }}</li>
+                <li>|</li>
+                {% endif %}
                 <li><a href='{% url agile_index %}'>{% trans 'Home' %}</a></li>
                 {% if not user.is_authenticated %}
                 <li><a href='{% url agile_login %}'>{% trans 'Login' %}</a></li>
