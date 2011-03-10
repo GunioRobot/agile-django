@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import F
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save, pre_delete
@@ -46,7 +47,7 @@ class Phase(models.Model):
     
     def __unicode__(self):
         return 'project: %s , phase: %s' % (self.project, self.name)
-
+    
 #class Sprint(models.Model):    
 	
 class Story(models.Model):
@@ -65,10 +66,36 @@ class Story(models.Model):
         verbose_name = _(u'story')
         verbose_name_plural = _(u'stories')
         ordering = ['index']
-        
+    
+    def __unicode__(self):
+        return '%s, Index %s, name %s' % (self.phase, self.index, self.name)
+    
     @property
     def project(self):
         return self.phase.project
+    
+    def move(self, new_phase_id, new_index):
+        stories = self.phase.stories.all()
+        if new_phase_id == self.phase_id:
+            if new_index < self.index:
+                stories.filter(
+                    index__lt=self.index,
+                    index__gte=new_index
+                ).update(index=F('index') + 1)
+            elif new_index > self.index:
+                stories.filter(
+                    index__gt=self.index,
+                    index__lte=new_index
+                ).update(index=F('index') - 1)
+        else:
+            stories.filter(index__gt=self.index).update(index=F('index') - 1)
+            Story.objects.filter(
+                phase=new_phase_id,
+                index__gte=new_index
+            ).update(index=F('index') + 1)
+            self.phase_id = new_phase_id
+        self.index = new_index
+        self.save()
     
 class Tag(models.Model):
     story = models.ForeignKey('Story', verbose_name=_(u'story'), related_name='tags')

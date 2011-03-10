@@ -7,7 +7,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.template import RequestContext
-from django.db.models import F
 
 from agile.forms import *
 from agile.models import *
@@ -103,17 +102,12 @@ def project(request, project_id):
     }))
     
 @login_required
-def story(request, project_id, story_id):
-    story = Story.objects.get(phase__project=project_id, id=story_id)
-    index = request.POST.get('index')
-    phase_id = request.POST.get('phase')
+def story(request, project_id, story_number):
+    story = Story.objects.get(phase__project=project_id, number=story_number)
+    new_index = int(request.POST.get('index'))
+    new_phase_id = int(request.POST.get('phase'))
     
-    if Story.objects.filter(index=index).exclude(id=story_id).exists():
-        stories = Story.objects.filter(phase=phase_id, index__gt=index)
-        stories.update(index=F('index') + 1)
+    story.move(new_phase_id=new_phase_id, new_index=new_index)
     
-    story.phase_id = phase_id
-    story.index = index
-    story.save()
     return HttpResponse('true')
     
