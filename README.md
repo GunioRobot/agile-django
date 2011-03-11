@@ -18,6 +18,6 @@ Dump database to fixture
 `python manage.py dumpdata --indent=1 -e sessions -e admin -e contenttypes > agile/fixtures/initial_data.json`
 
 
-Graph models
+Graph models in PNG format
 ------------
 `python manage.py graph_models -a -g -o models.png`
