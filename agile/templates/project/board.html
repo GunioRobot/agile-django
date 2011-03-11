@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'project/base.html' %}
 {% load i18n %}
 
 {% block title %}{{ project.name }} - {% trans 'Board' %} - {{ block.super }}{% endblock %}
@@ -60,7 +60,7 @@ $(function(){
 {% endblock %}
 
 {% block content %}
-
+{{ block.super }}
 <div id="phases">
     {% for phase in project.phases.all %}
     <div class="phase" data-id="{{ phase.id }}">
