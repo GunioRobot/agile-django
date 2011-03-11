@@ -74,6 +74,13 @@ class Story(models.Model):
     def project(self):
         return self.phase.project
     
+    @property
+    def project_id(self):
+        return self.phase.project_id
+    
+    def get_url(self):
+        return reverse('agile_story', args=[self.project_id, self.id])
+    
     def move(self, new_phase_id, new_index):
         stories = self.phase.stories.all()
         if new_phase_id == self.phase_id:

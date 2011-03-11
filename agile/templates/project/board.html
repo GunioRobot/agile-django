@@ -21,7 +21,20 @@
     min-height: 30px;
 }
 .story {
-    border: 1px solid red;
+    background: #CCC;
+    min-height: 75px;
+    margin: 10px 5px;
+}
+.story.disabled {
+    opacity: 0.4;
+}
+.story-header {
+    height: 18px;
+    padding: 0 7px
+}
+.story-name {
+    margin: 5px 7px;
+    overflow: hidden;
 }
 </style>
 <script type="text/javascript">
@@ -38,6 +51,7 @@ $(function(){
         distance: 15,
         placeholder: "ui-state-highlight",
         stop: function(event, ui){
+            //$('.phase').height($('.phase').height())
             var $element = $(ui.item)
             var id = $element.attr('data-id')
             var index = $element.parent().children().index(ui.item);
@@ -55,6 +69,17 @@ $(function(){
             })
         }
     }).disableSelection()
+    $('.story-name').dblclick(function(){
+        var $this = $(this)
+        var text = $.trim($this.text())
+        var $textarea = $('<textarea/>').val(text).blur(function(){
+            var $this = $(this)
+            var text = $.trim($this.val())
+            $this.parent().text(text)
+        })
+        $this.html($textarea)
+        $textarea.focus()
+    })
 })
 </script>
 {% endblock %}
@@ -68,9 +93,13 @@ $(function(){
         <div class="stories">
     	{% for story in phase.stories.all %}
             <div class="story" data-id="{{ story.id }}">
-                <div class="story-name ui-state-default">
-                    {{ story.id }}
+                <div class="story-header ui-state-default">
+                    <a href="{{ story.get_url }}">{{ story.number }}</a>
                 </div>
+                <div class="story-name">
+                    {{ story.name }}
+                </div>
+                
             </div>
     	{% endfor %}
     	</div>
