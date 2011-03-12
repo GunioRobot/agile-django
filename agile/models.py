@@ -3,7 +3,7 @@ from django.db.models import F, Max
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save, pre_delete
-from django.utils.translation import ugettext as __, ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 
 class AgileModelException(Exception):
     pass
@@ -191,35 +191,36 @@ post_save.connect(create_user_profile, sender=User)
         
 def create_project(sender, instance, created, **kwargs):
     if created:
+        from django.utils.translation import ugettext as _
         phases = instance.phases
         phases.create(
             index=0,
-            name=__(u'Backlog'),
+            name=_(u'Backlog'),
             deletable=False,
         )
         phases.create(
             index=1,
-            name=__(u'Ready'),
+            name=_(u'Ready'),
         )
         phases.create(
             index=2,
-            name=__(u'Working'),
+            name=_(u'Working'),
         )
         phases.create(
             index=3,
-            name=__(u'Complete'),
+            name=_(u'Complete'),
         )
         phases.create(
             index=4,
-            name=__(u'Archive'),
+            name=_(u'Archive'),
             deletable=False,
         )
         
 post_save.connect(create_project, sender=Project)
 
 def delete_phase(sender, instance, **kwargs):
-    if not instance.deletable:
-        raise AgileModelException('This phase is not deletable')
+#    if not instance.deletable:
+#        raise AgileModelException('This phase is not deletable')
     
     if instance.stories.all().exists():
         raise AgileModelException('This phase has stories')
