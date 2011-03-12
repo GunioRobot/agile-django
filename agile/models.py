@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, transaction
 from django.db.models import F
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
@@ -81,6 +81,7 @@ class Story(models.Model):
     def get_url(self):
         return reverse('agile_story', args=[self.project_id, self.id])
     
+    @transaction.commit_on_success()
     def move(self, new_phase_id, new_index):
         stories = self.phase.stories.all()
         if new_phase_id == self.phase_id:
@@ -94,6 +95,8 @@ class Story(models.Model):
                     index__gt=self.index,
                     index__lte=new_index
                 ).update(index=F('index') - 1)
+            else:
+                return
         else:
             stories.filter(index__gt=self.index).update(index=F('index') - 1)
             Story.objects.filter(
