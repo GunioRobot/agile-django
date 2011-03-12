@@ -1,5 +1,5 @@
 from django.db import models, transaction
-from django.db.models import F
+from django.db.models import F, Max
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save, pre_delete
@@ -31,7 +31,11 @@ class Project(models.Model):
     
     @property
     def stories(self):
-        return Story.objects.filter(phase__project=self) 
+        return Story.objects.filter(phase__project=self)
+    
+    @property
+    def users(self):
+        return (self.members.all() | User.objects.filter(id=self.owner.id)).distinct() 
     
 class Phase(models.Model):
     project = models.ForeignKey('Project', verbose_name=_(u'project'), related_name='phases')
@@ -96,6 +100,7 @@ class Story(models.Model):
                     index__lte=new_index
                 ).update(index=F('index') - 1)
             else:
+                # Same phase, same index, we don't to save anything.
                 return
         else:
             stories.filter(index__gt=self.index).update(index=F('index') - 1)
@@ -106,6 +111,15 @@ class Story(models.Model):
             self.phase_id = new_phase_id
         self.index = new_index
         self.save()
+        
+    @transaction.commit_on_success()
+    def save(self, *args, **kwargs):
+        # If is a new Story instance
+        if self.id is None:
+            project = self.phase.project
+            self.number = (project.phases.aggregate(max=Max('stories__number'))['max'] or 0) + 1
+            self.index = (self.phase.stories.aggregate(max=Max('index'))['max'] or 0) + 1
+        super(Story, self).save(*args, **kwargs)
     
 class Tag(models.Model):
     story = models.ForeignKey('Story', verbose_name=_(u'story'), related_name='tags')
@@ -177,24 +191,25 @@ post_save.connect(create_user_profile, sender=User)
         
 def create_project(sender, instance, created, **kwargs):
     if created:
-        instance.phases.create(
+        phases = instance.phases
+        phases.create(
             index=0,
             name=__(u'Backlog'),
             deletable=False,
         )
-        instance.phases.create(
+        phases.create(
             index=1,
             name=__(u'Ready'),
         )
-        instance.phases.create(
+        phases.create(
             index=2,
             name=__(u'Working'),
         )
-        instance.phases.create(
+        phases.create(
             index=3,
             name=__(u'Complete'),
         )
-        instance.phases.create(
+        phases.create(
             index=4,
             name=__(u'Archive'),
             deletable=False,

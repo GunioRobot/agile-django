@@ -10,8 +10,8 @@ urlpatterns = patterns('agile.views',
     url(r'^profile/?$', 'profile', name='agile_profile'),
     
     url(r'^project/(?P<project_id>\d+)/story/(?P<story_number>\d+)/?$', 'story', name='agile_story'),
-    url(r'^project/(?P<project_id>\d+)/story/(?P<story_number>\d+)/edit/?$', 'story', name='agile_story_edit'),
-    url(r'^project/(?P<project_id>\d+)/story/(?P<story_number>\d+)/move/?$', 'story', name='agile_story_move'),
+    url(r'^project/(?P<project_id>\d+)/story/(?P<story_number>\d+)/(?P<action>(move|edit))/?$', 'story', name='agile_story'),
+    url(r'^project/(?P<project_id>\d+)/story/add/?$', 'story_add', name='agile_story_add'),
 
 
 )

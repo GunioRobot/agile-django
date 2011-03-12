@@ -42,15 +42,14 @@
 
 </style>
 <script type="text/javascript">
-var PHASES_NUMBER = {{ project.phases.all.count }}
-var PROJECT_ID = {{ project.id }}
+var PHASES_NUMBER = {{ project.phases.all.count }};
+var PROJECT_ID = {{ project.id }};
 $(function(){
     $(window).resize(function(){
-        var phase_width = $('#phases').width() / PHASES_NUMBER - 5
-        $('.phase').width(phase_width)
-        $('#phases').height($(window).height()-105)
-        //$('.phase, .stories').css('min-height', $(window).height()-1207)
-    }).resize()
+        var phase_width = Math.floor($('#phases').width() / PHASES_NUMBER - 2); 
+        $('.phase').width(phase_width);
+        $('#phases').height($(window).height() - 105);
+    }).resize();
 	
     $('.stories').sortable({
         connectWith: ".stories",
@@ -58,7 +57,6 @@ $(function(){
         placeholder: "ui-state-highlight story-placeholder",
         containment: '#phases',
         stop: function(event, ui){
-            //$('.phase').height($('.phase').height())
             var $element = $(ui.item)
             var number = $element.attr('data-number')
             var index = $element.parent().children().index(ui.item);
@@ -73,26 +71,65 @@ $(function(){
                 dataType: 'json',
                 success: function(response){
                 }
-            })
+            });
         }
     }).disableSelection()
+    
     $('.story-name').dblclick(function(){
-        var $this = $(this)
-        var text = $.trim($this.text())
+        var $this = $(this);
+        var text = $.trim($this.text());
         var $textarea = $('<textarea/>').val(text).blur(function(){
-            var $this = $(this)
-            var text = $.trim($this.val())
-            $this.parent().text(text)
+            var $this = $(this);
+            var number = $this.parent().parent().attr('data-number')
+            var text = $.trim($this.val());
+            $this.parent().text(text);
+            $.ajax({
+                url: '/project/' + PROJECT_ID + '/story/' + number + '/edit',
+                type: 'post',
+                data: {
+                    name: text
+                },
+                dataType: 'json',
+                success: function(response){
+                }
+            });
         })
-        $this.html($textarea)
-        $textarea.focus()
-    })
-})
+        $this.html($textarea);
+        $textarea.focus();
+    });
+    
+    $("#add-story-dialog").dialog({
+        height: 600,
+        width: 480,
+        draggable: false,
+        autoOpen: false,
+        modal: true
+    });
+    
+    $('#add-story-dialog form').submit(function(){
+        var $this = $(this);
+        $.ajax({
+            url: $this.attr('action'),
+            type: $this.attr('method'),
+            data: $this.serialize(),
+            dataType: 'json',
+            success: function(response){
+                console.log(response);
+                if(response.success){
+                    $('#add-story-dialog').dialog('close');
+                }
+            }
+        });
+        this.reset();
+        return false;
+    });
+});
 </script>
 {% endblock %}
 
 {% block content %}
-{{ block.super }}
+<a href="javascript:$('#add-story-dialog').dialog('open')">{% trans 'Add story' %}</a>
+
 <div id="phases">
     {% for phase in project.phases.all %}
     <div class="phase" data-id="{{ phase.id }}">
@@ -102,6 +139,7 @@ $(function(){
             <div class="story" data-number="{{ story.number }}">
                 <div class="story-header ui-state-default">
                     <a href="{{ story.get_url }}">{{ story.number }}</a>
+                    {{ story.owner|default:'' }}
                 </div>
                 <div class="story-name">
                     {{ story.name }}
@@ -113,4 +151,10 @@ $(function(){
     {% endfor %}
 </div>
 
+<div id="add-story-dialog">
+    <form method="post" action="{% url agile_story_add project.id %}">
+        {{ story_form.as_p }}
+        <input type="submit" value="{% trans 'Submit' %}">
+    </form>
+</div>
 {% endblock %}

@@ -9,6 +9,7 @@ class ProjectForm(forms.ModelForm):
 class StoryForm(forms.ModelForm):
     class Meta:
         model = Story
+        exclude = ('index', 'number', 'phase', 'blocked', 'color',)
         
 class TaskForm(forms.ModelForm):
     class Meta:

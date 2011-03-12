@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.template import RequestContext
+from django.db import transaction
 
 from agile.forms import *
 from agile.models import *
@@ -98,14 +99,63 @@ def projects(request):
 @login_required
 def project(request, project_id):
     project = get_object_or_404(request.user.projects, id=project_id)
+    story_form = StoryForm()
+    users = project.users
+    story_form.fields['creator'].queryset = users
+    story_form.fields['owner'].queryset = users
     return render_to_response('project/board.html', RequestContext(request, {
         'project': project,
+        'story_form': story_form,
     }))
     
 @login_required
 @render_to_json
-def story(request, project_id, story_number):
+def story(request, project_id, story_number, action):
+    
+    if not (request.method == 'POST' and request.is_ajax()):
+        return {
+            'success': False
+        }
+        
     story = Story.objects.get(phase__project=project_id, number=story_number)
-    new_index = int(request.POST.get('index'))
-    new_phase_id = int(request.POST.get('phase'))
-    story.move(new_phase_id=new_phase_id, new_index=new_index)
+    
+    if action == 'move':
+        new_index = int(request.POST.get('index'))
+        new_phase_id = int(request.POST.get('phase'))
+        story.move(new_phase_id=new_phase_id, new_index=new_index)
+        
+    elif action == 'edit':
+        story.name = request.POST.get('name')
+        story.save()
+
+
+@login_required
+@render_to_json
+def story_add(request, project_id):
+    
+    if not (request.method == 'POST' and request.is_ajax()):
+        return {
+            'success': False
+        }
+    
+    story_form = StoryForm(request.POST)
+    if story_form.is_valid():
+        
+        project = Project.objects.get(id=project_id)
+        phase = project.phases.all().order_by('index')[0]
+        
+        story = story_form.save(commit=False)
+        story.phase = phase
+        story.save()
+        
+        return
+    else:
+        return {
+            'success': False,
+            'error': story_form.errors
+        }
+        
+    return {
+        'success': False
+    }
+

@@ -10,9 +10,10 @@ def render_to_json(function, **jsonargs):
     def wrap(request, *args, **kwargs):
         try:
             result = function(request, *args, **kwargs)
-        except Exception, e:
+        except Exception as e:
             result = {
-                'success': False
+                'success': False,
+                'error': ''
             }
         r = HttpResponse(mimetype='application/json')
         indent = jsonargs.pop('indent', None)
@@ -20,8 +21,6 @@ def render_to_json(function, **jsonargs):
             result = {
                 'success': True
             }
-            
-            
             
         r.write(json.dumps(result, indent=indent, **jsonargs))
         return r
