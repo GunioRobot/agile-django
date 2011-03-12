@@ -147,12 +147,14 @@ def story_add(request, project_id):
         story = story_form.save(commit=False)
         story.phase = phase
         story.save()
-        
         return
+    
     else:
         return {
             'success': False,
-            'error': story_form.errors
+            'error': [
+                {unicode(story_form.fields[field].label): error}
+            for field, error in story_form.errors.iteritems()], 
         }
         
     return {

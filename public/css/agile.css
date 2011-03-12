@@ -115,12 +115,16 @@ span.error {
     float:right;
 }
 
-.ui-state-highlight {
+.ui-state-highlight, .ui-state-error {
     padding: .7em;
     font-size: 12px;
 }
 
-.ui-state-highlight span.ui-icon.ui-icon-info {
+.ui-state-highlight span.ui-icon.ui-icon-info, .ui-state-error span.ui-icon.ui-icon-alert {
     float: left;
     margin-right: .3em;
+}
+
+#add-story-form-errors {
+    display: none;    
 }

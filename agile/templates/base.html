@@ -6,45 +6,23 @@
         <title>{% block title %}AgileDjango{% endblock %}</title>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="{{ MEDIA_URL }}js/agile.js"></script>
         <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/smoothness/jquery-ui.css" />
         <link rel="stylesheet" href="{{ MEDIA_URL }}css/agile.css" />
-        <script type="text/javascript">
-            $(function(){
-                $('input[type=submit]').addClass('ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only')
-                $('html').ajaxSend(function(event, xhr, settings) {
-                    function getCookie(name) {
-                        var cookieValue = null;
-                        if (document.cookie && document.cookie != '') {
-                            var cookies = document.cookie.split(';');
-                            for (var i = 0; i < cookies.length; i++) {
-                                var cookie = jQuery.trim(cookies[i]);
-                                // Does this cookie string begin with the name we want?
-                                if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                                    break;
-                                }
-                            }
-                        }
-                        return cookieValue;
-                    }
-                    if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-                        // Only send the token to relative URLs i.e. locally.
-                        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-                    }
-                });
-            })
-        </script>
         {% endblock %}
     </head>
     <body>
         <div id="header">
             <span id="name">AgileDjango</span>
             <ul id="topmenu">
-                {% if user.is_authenticated and user.get_full_name %}
-                <li>{{ user.get_full_name }}</li>
-                <li>|</li>
-                {% else %}
-                <li>{{ user.username|capfirst }}</li>
+                {% if user.is_authenticated %}
+                    <li>
+                    {% if user.get_full_name %}
+                        {{ user.get_full_name }}
+                    {% else %}
+                        {{ user.username|capfirst }}
+                    {% endif %}
+                    </li>
                 <li>|</li>
                 {% endif %}
                 <li><a href='{% url agile_index %}'>{% trans 'Home' %}</a></li>

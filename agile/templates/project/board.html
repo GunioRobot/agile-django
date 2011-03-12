@@ -114,12 +114,19 @@ $(function(){
             data: $this.serialize(),
             dataType: 'json',
             success: function(response){
-                console.log(response);
                 if(response.success){
                     $('#add-story-dialog').dialog('close');
+                } else {
+                    $('#add-story-form-errors').show()
+                    $('#add-story-form-errors .errors').html('<br/>')
+                    $.each(response.error[0], function(index, value){
+                        $('#add-story-form-errors .errors').append(index + ": " + value + '<br/>')
+                    })
+                    
                 }
             }
         });
+        $('#add-story-form-errors').hide()
         this.reset();
         return false;
     });
@@ -153,6 +160,12 @@ $(function(){
 
 <div id="add-story-dialog">
     <form method="post" action="{% url agile_story_add project.id %}">
+        <div id="add-story-form-errors" class="ui-state-error ui-corner-all">
+            <span class="ui-icon ui-icon-alert"></span>
+            <strong>{% trans 'Error!' %}</strong>
+            {% trans 'Validation errors:' %}<br/>
+            <div class="errors"></div>
+        </div>
         {{ story_form.as_p }}
         <input type="submit" value="{% trans 'Submit' %}">
     </form>
