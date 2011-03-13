@@ -7,6 +7,14 @@ class ProjectForm(forms.ModelForm):
         exclude = ('owner', 'is_active',)
         
 class StoryForm(forms.ModelForm):
+    
+    def __init__(self, project=None, *args, **kwargs):
+        super(StoryForm, self).__init__(*args, **kwargs)
+        if project:
+            users = project.users
+            self.fields['creator'].queryset = users
+            self.fields['owner'].queryset = users
+        
     class Meta:
         model = Story
         exclude = ('index', 'number', 'phase', 'blocked', 'color',)

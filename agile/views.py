@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import (AuthenticationForm, UserCreationForm, 
                                        PasswordChangeForm)
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.template import RequestContext
@@ -13,7 +13,9 @@ from agile.forms import *
 from agile.models import *
 from agile.decorators import *
 
-# Create your views here.
+################################################################################
+# Views
+################################################################################
 
 def index(request):
     return render_to_response('index.html', RequestContext(request))
@@ -98,11 +100,9 @@ def projects(request):
     
 @login_required
 def project(request, project_id):
-    project = get_object_or_404(request.user.projects, id=project_id)
-    story_form = StoryForm()
-    users = project.users
-    story_form.fields['creator'].queryset = users
-    story_form.fields['owner'].queryset = users
+    project = request.user.projects.get(id=project_id)
+    story_form = StoryForm(project)
+    
     return render_to_response('project/board.html', RequestContext(request, {
         'project': project,
         'story_form': story_form,
@@ -110,14 +110,13 @@ def project(request, project_id):
     
 @login_required
 @render_to_json
-def story(request, project_id, story_number, action):
+def story(request, project_id, story_number, action=None):
     
     if not (request.method == 'POST' and request.is_ajax()):
-        return {
-            'success': False
-        }
-        
-    story = Story.objects.get(phase__project=project_id, number=story_number)
+        raise Http404
+    
+    project = request.user.projects.get(id=project_id)
+    story = project.stories.get(number=story_number)
     
     if action == 'move':
         new_index = int(request.POST.get('index'))
@@ -125,6 +124,7 @@ def story(request, project_id, story_number, action):
         story.move(new_phase_id=new_phase_id, new_index=new_index)
         
     elif action == 'edit':
+        # Unsanitized input, but it doesn't matter, because its a TextField
         story.name = request.POST.get('name')
         story.save()
 
@@ -134,14 +134,11 @@ def story(request, project_id, story_number, action):
 def story_add(request, project_id):
     
     if not (request.method == 'POST' and request.is_ajax()):
-        return {
-            'success': False
-        }
-    
-    story_form = StoryForm(request.POST)
-    if story_form.is_valid():
+        raise Http404
         
-        project = Project.objects.get(id=project_id)
+    project = request.user.projects.get(id=project_id)
+    story_form = StoryForm(project, request.POST)
+    if story_form.is_valid():
         phase = project.phases.all().order_by('index')[0]
         
         story = story_form.save(commit=False)
@@ -150,11 +147,13 @@ def story_add(request, project_id):
         return
     
     else:
+        errors = {}
+        for field, error in story_form.errors.iteritems():
+            errors[unicode(story_form.fields[field].label)] = error 
+        
         return {
             'success': False,
-            'error': [
-                {unicode(story_form.fields[field].label): error}
-            for field, error in story_form.errors.iteritems()], 
+            'error': errors, 
         }
         
     return {

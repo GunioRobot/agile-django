@@ -54,6 +54,8 @@ $(function(){
     $('.stories').sortable({
         connectWith: ".stories",
         distance: 15,
+        revert: true,
+        opacity: 0.9,
         placeholder: "ui-state-highlight story-placeholder",
         containment: '#phases',
         stop: function(event, ui){
@@ -103,7 +105,12 @@ $(function(){
         width: 480,
         draggable: false,
         autoOpen: false,
-        modal: true
+        modal: true,
+        title: 'Add story',
+        close: function(){
+            $('#add-story-form-errors').hide();
+            $('#add-story-dialog form')[0].reset();
+        }
     });
     
     $('#add-story-dialog form').submit(function(){
@@ -119,15 +126,13 @@ $(function(){
                 } else {
                     $('#add-story-form-errors').show()
                     $('#add-story-form-errors .errors').html('<br/>')
-                    $.each(response.error[0], function(index, value){
+                    $.each(response.error, function(index, value){
                         $('#add-story-form-errors .errors').append(index + ": " + value + '<br/>')
                     })
                     
                 }
             }
         });
-        $('#add-story-form-errors').hide()
-        this.reset();
         return false;
     });
 });
