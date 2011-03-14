@@ -91,7 +91,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'agile.middleware.ColorSQLMiddleware',
 )
 
 ROOT_URLCONF = 'AgileDjango.urls'
@@ -124,8 +123,11 @@ if DEBUG:
     )
     
     MIDDLEWARE_CLASSES += (
-        'debug_toolbar.middleware.DebugToolbarMiddleware',
+        #'debug_toolbar.middleware.DebugToolbarMiddleware',
+        'agile.middleware.ColorSQLMiddleware',
     )
+    
+    LOG_COLORSQL_VERBOSE = True
     
     DEBUG_TOOLBAR_CONFIG = {
         'INTERCEPT_REDIRECTS': False,
