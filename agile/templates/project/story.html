@@ -1,0 +1,16 @@
+{% load i18n %}
+{% load gravatar %}
+<div class="story" data-number="{{ story.number }}">
+    <div class="story-header ui-state-default">
+        <a href="{{ story.get_url }}">{{ story.number }}</a>
+        <div class="story-owner">
+            {% if story.owner %}
+                {{ story.owner }}
+                {% gravatar story.owner 16 %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="story-name">
+        {{ story.name }}
+    </div>
+</div>

@@ -5,6 +5,7 @@ from django.contrib.auth.forms import (AuthenticationForm, UserCreationForm,
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 from django.template import RequestContext
 from django.db import transaction
@@ -144,7 +145,12 @@ def story_add(request, project_id):
         story = story_form.save(commit=False)
         story.phase = phase
         story.save()
-        return
+        return {
+            'success': True,
+            'html': render_to_string('project/story.html', {
+                'story': story,
+            })
+        }
     
     else:
         errors = {}
