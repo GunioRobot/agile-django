@@ -5,12 +5,12 @@
         <a href="{{ story.get_url }}">{{ story.number }}</a>
         <div class="story-owner">
             {% if story.owner %}
-                {{ story.owner }}
+                {{ story.owner.get_full_name|default:story.owner }}
                 {% gravatar story.owner 16 %}
+            {% else %}
+                {% trans 'Not assigned' %}
             {% endif %}
         </div>
     </div>
-    <div class="story-name">
-        {{ story.name }}
-    </div>
+    <div class="story-name">{{ story.name }}</div>
 </div>
