@@ -7,11 +7,11 @@
 {{ block.super }}
 <style>
 #phases {
-    border: 1px solid blue;
+    border: 1px solid #CCC;
     overflow: auto;
 }
 .phase {
-    border:1px solid black;
+    border: 0px solid black;
     float:left;
 }
 .phase-name {
@@ -52,6 +52,12 @@ $(function(){
         var phase_width = Math.floor($('#phases').width() / PHASES_NUMBER - 2); 
         $('.phase').width(phase_width);
         $('#phases').height($(window).height() - 105);
+        var min_height = 0;
+        $('.phase').each(function(){
+            var height = $(this).height();
+            if(height > min_height)
+                min_height = height;
+        }).css('min-height', min_height);
     }).resize();
 	
     $('.stories').sortable({
