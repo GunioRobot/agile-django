@@ -14,10 +14,11 @@ class StoryForm(forms.ModelForm):
             users = project.users
             self.fields['creator'].queryset = users
             self.fields['owner'].queryset = users
+            self.fields['phase'].queryset = project.phases
         
     class Meta:
         model = Story
-        exclude = ('index', 'number', 'phase', 'blocked', 'color',)
+        exclude = ('index', 'number', 'blocked', 'color',)
         
 class TaskForm(forms.ModelForm):
     class Meta:

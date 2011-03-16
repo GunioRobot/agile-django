@@ -15,7 +15,9 @@
     float:left;
 }
 .phase-name {
-    text-align: center;	
+    text-align: center;
+    padding: 10px 0 7px 0;
+    font-size: 120%;	
 }
 .stories {
     min-height: 30px;
@@ -38,6 +40,7 @@
 }
 .ui-state-highlight.story-placeholder {
     height: 40px;
+    margin: 10px 5px;
 }
 .story-owner {
     float: right;
@@ -45,13 +48,16 @@
 
 </style>
 <script type="text/javascript">
-var PHASES_NUMBER = {{ project.phases.all.count }};
+//var PHASES_NUMBER = {{ project.phases.all.count }};
 var PROJECT_ID = {{ project.id }};
 $(function(){
     $(window).resize(function(){
-        var phase_width = Math.floor($('#phases').width() / PHASES_NUMBER - 2); 
+        //$('.phase:nth(1)').hide("slide", { direction: "left" }, 1000, function(){$(window).resize()}); 
+        var phases_number = $('.phase:visible').length; 
+        var phase_width = Math.floor($('#phases').width() / phases_number - 5);
+        $('#phases').height($(window).height() - 105); 
         $('.phase').width(phase_width);
-        $('#phases').height($(window).height() - 105);
+        
         var min_height = 0;
         $('.phase').each(function(){
             var height = $(this).height();
@@ -110,7 +116,7 @@ $(function(){
     });
     
     $("#add-story-dialog").dialog({
-        height: 600,
+        height: 650,
         width: 480,
         draggable: false,
         autoOpen: false,
@@ -133,7 +139,7 @@ $(function(){
                 if(response.success){
                     $('#add-story-dialog').dialog('close');
                     var $story = $(response.html);
-                    $('.stories:first').append($story).sortable('refresh');
+                    $('.stories:nth(' + response.phase_index + ')').append($story).sortable('refresh');
                 } else {
                     $('#add-story-form-errors').show()
                     $('#add-story-form-errors .errors').html('<br/>')

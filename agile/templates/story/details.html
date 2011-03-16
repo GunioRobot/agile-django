@@ -1,0 +1,49 @@
+{% extends 'project/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Story' %} - #{{ story.number }} -  {{ story.project.name }} - {{ block.super }}{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui.toolbar.js"></script>
+{% endblock %}
+
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/jquery-ui.toolbar.css" />
+{% endblock %}
+
+{% block head %}
+{{ block.super }}
+<script type="text/javascript">
+$(function(){
+    $('#toolbar').toolbar({
+        buttons: [
+            {
+                name: 'Delete',
+                uiIcon: 'ui-icon-cancel',
+                click: function(){}
+            },
+            {
+                name: 'Block',
+                uiIcon: 'ui-icon-circle-close',
+                click: function(){}
+            },
+            {
+                name: 'Mark as Ready',
+                uiIcon: 'ui-icon-check',
+                click: function(){}
+            }
+        ]
+    })
+})
+</script>
+{% endblock %}
+
+{% block content %}
+<div id="story-number">
+    {{ story.number }}
+</div>
+<div id="toolbar"></div>
+<a href="{{ story.project.get_url }}">go back</a>
+{% endblock %}

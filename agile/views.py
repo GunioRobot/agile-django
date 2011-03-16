@@ -110,8 +110,19 @@ def project(request, project_id):
     }))
     
 @login_required
+def story(request, project_id, story_number):
+    
+    project = request.user.projects.get(id=project_id)
+    story = project.stories.get(number=story_number)
+    
+    return render_to_response('story/details.html', RequestContext(request, {
+        'story': story,
+    }))
+
+
+@login_required
 @render_to_json
-def story(request, project_id, story_number, action=None):
+def story_ajax(request, project_id, story_number, action=None):
     
     if not (request.method == 'POST' and request.is_ajax()):
         raise Http404
@@ -125,8 +136,9 @@ def story(request, project_id, story_number, action=None):
         story.move(new_phase_id=new_phase_id, new_index=new_index)
         
     elif action == 'edit':
-        # Unsanitized input, but it doesn't matter, because its a TextField
-        story.name = request.POST.get('name')
+        name = request.POST.get('name')
+        name = StoryForm.base_fields['name'].clean(name)
+        story.name = name 
         story.save()
 
 
@@ -140,16 +152,17 @@ def story_add(request, project_id):
     project = request.user.projects.get(id=project_id)
     story_form = StoryForm(project, request.POST)
     if story_form.is_valid():
-        phase = project.phases.all().order_by('index')[0]
+        #phase = project.phases.all().order_by('index')[0]
         
         story = story_form.save(commit=False)
-        story.phase = phase
+        #story.phase = phase
         story.save()
         return {
             'success': True,
             'html': render_to_string('project/story.html', {
                 'story': story,
-            })
+            }),
+            'phase_index': story.phase.index,
         }
     
     else:

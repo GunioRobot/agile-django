@@ -48,18 +48,19 @@ class Phase(models.Model):
     class Meta:
         verbose_name = _(u'phase')
         verbose_name_plural = _(u'phases')
+        ordering = ('index',)
     
     def __unicode__(self):
-        return 'project: %s , phase: %s' % (self.project, self.name)
+        return '%s' % (self.name)
     
 #class Sprint(models.Model):    
 	
 class Story(models.Model):
-    phase = models.ForeignKey('Phase', verbose_name=_(u'phase'), related_name='stories')
     number = models.PositiveIntegerField(_(u'number'))
     index = models.PositiveIntegerField(_(u'index'))
     name = models.CharField(_(u'name'), max_length=100)
     description = models.TextField(_(u'description'), blank=True)
+    phase = models.ForeignKey('Phase', verbose_name=_(u'phase'), related_name='stories')
     creator = models.ForeignKey(User, verbose_name=_(u'creator'), related_name='created_stories', blank=True, null=True)
     owner = models.ForeignKey(User, verbose_name=_(u'owner'), related_name='own_stories', blank=True, null=True)
     created_at = models.DateTimeField(_(u'created at'), auto_now_add=True)
@@ -83,7 +84,7 @@ class Story(models.Model):
         return self.phase.project_id
     
     def get_url(self):
-        return reverse('agile_story', args=[self.project_id, self.id])
+        return reverse('agile_story', args=[self.project_id, self.number])
     
     @transaction.commit_on_success()
     def move(self, new_phase_id, new_index):
@@ -218,11 +219,11 @@ def create_project(sender, instance, created, **kwargs):
         
 post_save.connect(create_project, sender=Project)
 
-def delete_phase(sender, instance, **kwargs):
+#def delete_phase(sender, instance, **kwargs):
 #    if not instance.deletable:
 #        raise AgileModelException('This phase is not deletable')
-    
-    if instance.stories.all().exists():
-        raise AgileModelException('This phase has stories')
-
-pre_delete.connect(delete_phase, sender=Phase)
+#
+#    if instance.stories.all().exists():
+#        raise AgileModelException('This phase has stories')
+#
+#pre_delete.connect(delete_phase, sender=Phase)
