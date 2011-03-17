@@ -1,6 +1,6 @@
 $(function(){
     /* Use jQuery UI buttons */
-    $('input[type=submit]').addClass('ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only');
+    $('input[type=submit]').button();
     
     /* Use selectmenu jQuery UI plugin */
     $('select:not([multiple])').each(function(){
