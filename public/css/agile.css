@@ -12,8 +12,8 @@ body {
 #header {
 	padding: 14px 21px;
 	height: 24px;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#d0d0d0));
-    background-image: -moz-linear-gradient(270deg, #f7f7f7, #d0d0d0);
+	/*background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#d0d0d0));
+    background-image: -moz-linear-gradient(270deg, #f7f7f7, #d0d0d0);*/
 }
 
 #name {
@@ -38,7 +38,7 @@ ul#topmenu li {
 }
 
 ul#topmenu li a:link, ul#topmenu li a:visited {
-    color: #555;
+    /*color: #555;*/
     text-decoration:none;
     font-weight: bold;
 }
@@ -120,9 +120,13 @@ span.error {
     font-size: 12px;
 }
 
-.ui-state-highlight span.ui-icon.ui-icon-info, .ui-state-error span.ui-icon.ui-icon-alert {
+.ui-state-highlight span.ui-icon.ui-icon-info,
+.ui-state-error span.ui-icon.ui-icon-alert {
     float: left;
     margin-right: .3em;
+}
+.ui-widget {
+    font-size: 85%;
 }
 
 #add-story-form-errors {

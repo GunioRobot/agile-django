@@ -1,5 +1,17 @@
 $(function(){
-    $('input[type=submit]').addClass('ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only')
+    /* Use jQuery UI buttons */
+    $('input[type=submit]').addClass('ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only');
+    
+    /* Use selectmenu jQuery UI plugin */
+    $('select:not([multiple])').each(function(){
+        var $this = $(this);
+        $this.selectmenu({
+            style: 'popup',
+            menuWidth: $this.width()
+        });
+    });
+    
+    /* Add X-CSRFToken to the request headers */
     $('html').ajaxSend(function(event, xhr, settings) {
         function getCookie(name) {
             var cookieValue = null;

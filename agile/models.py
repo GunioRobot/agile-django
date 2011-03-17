@@ -160,8 +160,37 @@ class Attachment(models.Model):
         verbose_name = _(u'attachment')
         verbose_name_plural = _(u'attachments')
 
+JQUERY_UI_THEMES = (
+   #('base', 'base'),
+   ('black-tie', 'Black Tie'),
+   ('blitzer', 'Blitzer'),
+   ('cupertino', 'Cupertino'),
+   ('dark-hive', 'Dark Hive'),
+   ('dot-luv', 'Dot Luv'),
+   ('eggplant', 'Eggplant'),
+   ('excite-bike', 'Excite Bike'),
+   ('flick', 'Flick'),
+   ('hot-sneaks', 'Hot sneaks'),
+   ('humanity', 'Humanity'),
+   ('le-frog', 'Le Frog'),
+   ('mint-choc', 'Mint Choc'),
+   ('overcast', 'Overcast'),
+   ('pepper-grinder', 'Pepper Grinder'),
+   ('redmond', 'Redmond'),
+   ('smoothness', 'Smoothness'),
+   ('south-street', 'South Street'),
+   ('start', 'Start'),
+   ('sunny', 'Sunny'),
+   ('swanky-purse', 'Swanky Purse'),
+   ('trontastic', 'Trontastic'),
+   ('ui-darkness', 'UI darkness'),
+   ('ui-lightness', 'UI lightness'),
+   ('vader', 'Vader'),
+)
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, verbose_name=_(u'user'), related_name='agile_userprofile')
+    jquery_ui_theme = models.CharField(_(u'jQuery UI Theme'), max_length=100, default='cupertino', choices=JQUERY_UI_THEMES)
         
     class Meta:
         verbose_name = _(u'user profile')
