@@ -20,23 +20,23 @@ $(function(){
     $('#toolbar').toolbar({
         buttons: [
             {
-                name: 'Delete',
+                name: gettext('Delete'),
                 uiIcon: 'ui-icon-cancel',
                 click: function(){}
             },
             {
-                name: 'Block',
+                name: gettext('Block'),
                 uiIcon: 'ui-icon-circle-close',
                 click: function(){}
             },
             {
-                name: 'Mark as Ready',
+                name: gettext('Mark as Ready'),
                 uiIcon: 'ui-icon-check',
                 click: function(){}
             }
         ]
-    })
-})
+    });
+});
 </script>
 {% endblock %}
 

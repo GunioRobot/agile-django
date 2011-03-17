@@ -13,5 +13,14 @@ urlpatterns = patterns('agile.views',
     url(r'^project/(?P<project_id>\d+)/story/(?P<story_number>\d+)/(?P<action>(move|edit))/?$', 'story_ajax', name='agile_story_ajax'),
     url(r'^project/(?P<project_id>\d+)/story/add/?$', 'story_add', name='agile_story_add'),
 
-
 )
+
+
+js_info_dict = {
+    'packages': ('agile',),
+}
+
+urlpatterns += patterns('',
+    url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict, name='agile_js_translations')
+)
+

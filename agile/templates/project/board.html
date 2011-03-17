@@ -123,12 +123,13 @@ $(function(){
         draggable: false,
         autoOpen: false,
         modal: true,
-        title: 'Add story',
+        title: gettext('Add story'),
         close: function(){
             $('#add-story-form-errors').hide();
             $('#add-story-dialog form')[0].reset();
         }
     });
+    
     
     $('#add-story-dialog form').submit(function(){
         var $this = $(this);
