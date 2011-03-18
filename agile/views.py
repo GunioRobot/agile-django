@@ -140,10 +140,8 @@ def story_ajax(request, project_id, story_number, action=None):
     story = project.stories.get(number=story_number)
     
     if action == 'move':
-        try:
-            new_index = int(request.POST.get('index'))
-        except ValueError:
-            new_index = None
+        new_index = request.POST.get('index')
+        new_index = int(new_index) if new_index else None
         new_phase_id = int(request.POST.get('phase', -1))
         story.move(new_phase_id=new_phase_id, new_index=new_index)
         

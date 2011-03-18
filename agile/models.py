@@ -87,8 +87,28 @@ class Story(models.Model):
         return reverse('agile_story', args=[self.project_id, self.number])
     
     @transaction.commit_on_success()
-    def move(self, new_phase_id, new_index):
+    def move(self, new_phase_id, new_index=None):
+        """
+        This method moves a Story through the phases
+        including the index management.
+        
+         - If the new Phase and the new index are the same
+           as the current, do nothing.
+        
+         - If the new Phase is the same as the current one, just
+           changes the index.
+        
+         - If the new Phase is another one than the current,
+           changes the index and the Phase which this belongs,
+           and manages all the index needed stuff.
+        
+         - If new index is not given or is None and the new Phase
+           given is another one than the current, moves the Story at
+           the end of the new Phase.
+        """
         stories = self.phase.stories.all()
+        # Same phase id, so we give space to the new
+        # story in the same phase.
         if new_phase_id == self.phase_id:
             if new_index < self.index:
                 stories.filter(
@@ -103,17 +123,23 @@ class Story(models.Model):
             else:
                 # Same phase, same index, we don't to save anything.
                 return
-        elif new_index is not None:
+        else:
             stories.filter(index__gt=self.index).update(index=F('index') - 1)
-            Story.objects.filter(
-                phase=new_phase_id,
-                index__gte=new_index
-            ).update(index=F('index') + 1)
             self.phase_id = new_phase_id
-        elif new_index is None:
-            new_index = (Story.objects.filter(
-                phase=new_phase_id).aggregate(max=Max('index'))['max'] or 0) + 1
-            self.phase_id = new_phase_id
+			
+			# Let's calculate the max + 1 index
+            if new_index is None:
+                max = Story.objects.filter(
+                    phase=new_phase_id).aggregate(max=Max('index'))['max']
+                new_index = 0 if max is None else max + 1
+            
+            # Move the stories index + 1 for give space to the new story
+            else:
+                Story.objects.filter(
+                    phase=new_phase_id,
+                    index__gte=new_index
+                ).update(index=F('index') + 1)
+
         self.index = new_index
         self.save()
         

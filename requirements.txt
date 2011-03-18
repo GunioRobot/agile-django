@@ -1,2 +1,2 @@
-django
+django==1.2.5
 django-gravatar

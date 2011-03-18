@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-12 16:15-0600\n"
+"POT-Creation-Date: 2011-03-17 21:59-0600\n"
 "PO-Revision-Date: 2011-03-04 13:24\n"
 "Last-Translator: <srpoder@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,15 +19,15 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: models.py:16 models.py:42 models.py:61 models.py:126 models.py:167
+#: models.py:16 models.py:42 models.py:61 models.py:157 models.py:231
 msgid "name"
 msgstr "имя"
 
-#: models.py:17 models.py:44 models.py:62 models.py:131
+#: models.py:17 models.py:44 models.py:62 models.py:166
 msgid "description"
 msgstr "описание"
 
-#: models.py:18 models.py:64
+#: models.py:18 models.py:65
 msgid "owner"
 msgstr "владелец"
 
@@ -43,7 +43,7 @@ msgstr "проект"
 msgid "projects"
 msgstr "проекты"
 
-#: models.py:43 models.py:60 models.py:129
+#: models.py:43 models.py:60 models.py:164
 msgid "index"
 msgstr "индекс"
 
@@ -55,7 +55,7 @@ msgstr ""
 msgid "deletable"
 msgstr ""
 
-#: models.py:49 models.py:58
+#: models.py:49 models.py:63
 msgid "phase"
 msgstr ""
 
@@ -67,134 +67,147 @@ msgstr ""
 msgid "number"
 msgstr "число"
 
-#: models.py:63
+#: models.py:64
 msgid "creator"
 msgstr "создатель"
 
-#: models.py:65
+#: models.py:66
 msgid "created at"
 msgstr "создана в"
 
-#: models.py:67
+#: models.py:68
 msgid "color"
 msgstr "цвет"
 
-#: models.py:70 models.py:125 models.py:130 models.py:140 models.py:150
+#: models.py:71 models.py:156 models.py:165 models.py:175 models.py:185
 msgid "story"
 msgstr "история"
 
-#: models.py:71
+#: models.py:72
 msgid "stories"
 msgstr "истории"
 
-#: models.py:132
+#: models.py:160
+msgid "tag"
+msgstr ""
+
+#: models.py:161
+#, fuzzy
+msgid "tags"
+msgstr "Задача"
+
+#: models.py:167
 msgid "finished at"
 msgstr "закончил в"
 
-#: models.py:135
+#: models.py:170
 msgid "task"
 msgstr "Задача"
 
-#: models.py:136
+#: models.py:171
 msgid "tasks"
 msgstr "задачи"
 
-#: models.py:139 models.py:149 models.py:159 models.py:166
+#: models.py:174 models.py:184 models.py:222 models.py:230
 msgid "user"
 msgstr "Пользователь"
 
-#: models.py:141 models.py:151
+#: models.py:176 models.py:186
 msgid "datetime"
 msgstr "DateTime"
 
-#: models.py:142
+#: models.py:177
 msgid "text"
 msgstr "текст"
 
-#: models.py:145
+#: models.py:180
 msgid "comment"
 msgstr "комментарий"
 
-#: models.py:146
+#: models.py:181
 msgid "comments"
 msgstr "Комментарии"
 
-#: models.py:155
+#: models.py:190
 msgid "attachment"
 msgstr "привязанность"
 
-#: models.py:156
+#: models.py:191
 msgid "attachments"
 msgstr "вложения"
 
-#: models.py:162
+#: models.py:223
+msgid "jQuery UI Theme"
+msgstr ""
+
+#: models.py:226
 msgid "user profile"
 msgstr "профиль пользователя"
 
-#: models.py:163
+#: models.py:227
 msgid "user profiles"
 msgstr "профили пользователей"
 
-#: models.py:168
+#: models.py:232
 msgid "query"
 msgstr "запрос"
 
-#: models.py:169
+#: models.py:233
 msgid "shared"
 msgstr "общий"
 
-#: models.py:172
+#: models.py:236
 msgid "filter"
 msgstr "Фильтр"
 
-#: models.py:173
+#: models.py:237
 msgid "filters"
 msgstr "фильтры"
 
-#: models.py:197
+#: models.py:262
 msgid "Backlog"
 msgstr "Отставание"
 
-#: models.py:202
+#: models.py:267
 msgid "Ready"
 msgstr "Готовы"
 
-#: models.py:206
+#: models.py:271
 msgid "Working"
 msgstr "Рабочая"
 
-#: models.py:210
+#: models.py:275
 msgid "Complete"
 msgstr "Полный"
 
-#: models.py:214
+#: models.py:279
 msgid "Archive"
 msgstr "Архив"
 
-#: templates/base.html:50 templates/index.html:4
+#: templates/base.html:35 templates/index.html:4
 msgid "Home"
 msgstr "Главная"
 
-#: templates/base.html:52 templates/login.html:4 templates/login.html.py:19
+#: templates/base.html:37 templates/login.html:4 templates/login.html.py:19
 #: templates/signup.html:16
 msgid "Login"
 msgstr "Войти"
 
-#: templates/base.html:53 templates/signup.html:4
+#: templates/base.html:38 templates/signup.html:4
 msgid "Signup"
 msgstr "Зарегистрироваться"
 
-#: templates/base.html:55 templates/project/add.html:4
+#: templates/base.html:40 templates/project/add.html:4
 #: templates/project/add.html.py:21
 msgid "Projects"
 msgstr "Проекты"
 
-#: templates/base.html:56 templates/profile/profile.html:5
+#: templates/base.html:41 templates/profile/profile.html:5
 #, fuzzy
 msgid "Profile"
 msgstr "профиль пользователя"
 
-#: templates/base.html:57
+#: templates/base.html:42
 msgid "Logout"
 msgstr "Выйти"
 
@@ -210,16 +223,23 @@ msgstr ""
 msgid "Change password"
 msgstr ""
 
-#: templates/profile/profile.html:28 templates/profile/profile.html.py:43
-msgid "Success!"
+#: templates/profile/profile.html:21
+msgid "Settings"
 msgstr ""
 
 #: templates/profile/profile.html:29 templates/profile/profile.html.py:44
+#: templates/profile/profile.html:59
+msgid "Success!"
+msgstr ""
+
+#: templates/profile/profile.html:30 templates/profile/profile.html.py:45
+#: templates/profile/profile.html:60
 msgid "The form was saved successfully."
 msgstr ""
 
-#: templates/profile/profile.html:35 templates/profile/profile.html.py:50
-#: templates/project/add.html:49 templates/project/board.html:157
+#: templates/profile/profile.html:36 templates/profile/profile.html.py:51
+#: templates/profile/profile.html:66 templates/project/add.html:49
+#: templates/project/board.html:184
 msgid "Submit"
 msgstr ""
 
@@ -240,10 +260,41 @@ msgstr ""
 msgid "Board"
 msgstr ""
 
-#: templates/project/board.html:131
+#: templates/project/board.html:160
 #, fuzzy
 msgid "Add story"
 msgstr "история"
+
+#: templates/project/board.html:179
+msgid "Error!"
+msgstr ""
+
+#: templates/project/board.html:180
+msgid "Validation errors:"
+msgstr ""
+
+#: templates/project/story.html:11
+msgid "Not assigned"
+msgstr ""
+
+#: templates/story/details.html:4
+#, fuzzy
+msgid "Story"
+msgstr "история"
+
+#: templates/story/details.html:106
+msgid "Details"
+msgstr ""
+
+#: templates/story/details.html:107
+#, fuzzy
+msgid "Comments"
+msgstr "Комментарии"
+
+#: templates/story/details.html:108
+#, fuzzy
+msgid "Files"
+msgstr "фильтры"
 
 #~ msgid "process"
 #~ msgstr "процесс"
