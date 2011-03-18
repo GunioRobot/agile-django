@@ -1,5 +1,5 @@
 {% extends 'project/base.html' %}
-{% load i18n %}
+{% load i18n markup gravatar %}
 
 {% block title %}{% trans 'Story' %} - #{{ story.number }} -  {{ story.project.name }} - {{ block.super }}{% endblock %}
 
@@ -61,7 +61,12 @@ $(function(){
         ]
     });
     
-    $('#tabs').tabs();
+    $('#tabs').tabs({
+        select: function(event, ui){
+            var href = $(ui.tab).attr('href');
+            window.location.hash = href;
+        }
+    });
     $('.ui-widget-content.phase').hover(function(){
        $(this).toggleClass('ui-state-focus'); 
     }).click(function(){
@@ -106,8 +111,15 @@ $(function(){
             <li><a href="#files">{% trans 'Files' %}</a></li>
         </ul>
         
-        <div id="details"></div>
-        <div id="comments"></div>
+        <div id="details">{{ story.description|markdown }}</div>
+        <div id="comments">
+            {% for comment in story.comments.all.select_related %}
+            <div class="comment">
+                {% gravatar comment.user %} {{ comment.user }} - {{ comment.datetime }}
+                <div class="comment-text">{{ comment.text }}</div>
+            </div>
+            {% endfor %}
+        </div>
         <div id="files"></div>
     </div>
 </div>

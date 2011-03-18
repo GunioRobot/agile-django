@@ -7,8 +7,13 @@
 {{ block.super }}
 <script type="text/javascript">
 $(function(){
-    $('#tabs').tabs()
-})
+    $('#tabs').tabs({
+        select: function(event, ui){
+            var href = $(ui.tab).attr('href');
+            window.location.hash = href;
+        }
+    });
+});
 </script>
 <link rel="stylesheet" href="{{ MEDIA_URL }}css/projects.css" />
 <script type="text/javascript" src="{{ MEDIA_URL}}js/projects.js"></script>
@@ -18,11 +23,11 @@ $(function(){
 <div id="project">
 <div id="tabs">
     <ul>
-        <li><a href="#tabs-1">{% trans 'Projects' %}</a></li>
-        <li><a href="#tabs-2">{% trans 'Add project' %}</a></li>
+        <li><a href="#projects">{% trans 'Projects' %}</a></li>
+        <li><a href="#add-project">{% trans 'Add project' %}</a></li>
     </ul>
     
-    <div id="tabs-1">
+    <div id="projects">
         <ul id="sortable">
         {% for project in user.projects %}
         <li>
@@ -42,7 +47,7 @@ $(function(){
         </ul>
     </div>
     
-    <div id="tabs-2">
+    <div id="add-project">
         <form method="post" style="width:370px;">
         {% csrf_token %}
         {{ form.as_p }}

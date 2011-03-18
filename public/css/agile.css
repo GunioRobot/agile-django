@@ -12,22 +12,18 @@ body {
 #header {
 	padding: 14px 21px;
 	height: 24px;
-	/*background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#d0d0d0));
-    background-image: -moz-linear-gradient(270deg, #f7f7f7, #d0d0d0);*/
 }
 
 #name {
     color: blue;
     text-shadow: #fff 0px 1px 0, #000 0 -1px 0;
     font-size: 22px;
-    display: inline;
+    float: left;
 }
 
 ul#topmenu {
 	list-style: none;
-	position: absolute;
-    top: 14px;
-    right: 0px;
+    float: right;
 }
 
 ul#topmenu li {
@@ -38,7 +34,6 @@ ul#topmenu li {
 }
 
 ul#topmenu li a:link, ul#topmenu li a:visited {
-    /*color: #555;*/
     text-decoration:none;
     font-weight: bold;
 }
@@ -83,7 +78,6 @@ form label {
 }
 form input[type="text"], form input[type="password"] {
     width: 100%;
-    /*margin-top: 9px;*/
     border: 2px solid #F0F0F0;
     font-size: 15px;
     height: 35px;
@@ -91,7 +85,6 @@ form input[type="text"], form input[type="password"] {
 }
 form input[type="submit"] {
     margin-top: 30px;
-    /*width: 75px;*/
     float:right;
 }
 form select {

@@ -4,13 +4,27 @@
 
 {% block title %}{% trans 'Profile' %} - {{ block.super }}{% endblock %}
 
-{% block head %}
+{% block javascript %}
 {{ block.super }}
 <script type="text/javascript">
 $(function(){
-    $('#tabs').tabs();
+    $('#tabs').tabs({
+        select: function(event, ui){
+            var href = $(ui.tab).attr('href');
+            window.location.hash = href;
+        }
+    });
 })
 </script>
+{% endblock %}
+
+{% block css %}
+{{ block.super }}
+<style>
+#tabs {
+    height: 450px;
+}
+</style>
 {% endblock %}
 
 {% block content %}
@@ -22,7 +36,7 @@ $(function(){
     </ul>
     <div id="user-information">
         <div id="gravatar">{% gravatar user 100 %}</div>
-        <form method="post" action="#user-information">
+        <form method="post">
             {% if form_saved == 'user' %}
             <div class="ui-state-highlight ui-corner-all">
                 <span class="ui-icon ui-icon-info"></span>
@@ -37,7 +51,7 @@ $(function(){
         </form>
     </div>
     <div id="change-password">
-        <form method="post" action="#change-password">
+        <form method="post">
             {% if form_saved == 'password' %}
             <div class="ui-state-highlight ui-corner-all">
                 <span class="ui-icon ui-icon-info"></span>
@@ -52,7 +66,7 @@ $(function(){
         </form>
     </div>
     <div id="settings">
-        <form method="post" action="#settings">
+        <form method="post">
             {% if form_saved == 'settings' %}
             <div class="ui-state-highlight ui-corner-all">
                 <span class="ui-icon ui-icon-info"></span>
