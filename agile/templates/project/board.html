@@ -50,7 +50,6 @@
 
 </style>
 <script type="text/javascript">
-//var PHASES_NUMBER = {{ project.phases.all.count }};
 var PROJECT_ID = {{ project.id }};
 $(function(){
     $(window).resize(function(){
@@ -80,17 +79,11 @@ $(function(){
             var number = $element.attr('data-number')
             var index = $element.parent().children().index(ui.item);
             var phase = $element.parent().parent().attr('data-id');
-            $.ajax({
-                url: '/project/' + PROJECT_ID + '/story/' + number + '/move',
-                type: 'post',
-                data: {
-                    phase: phase,
-                    index: index
-                },
-                dataType: 'json',
-                success: function(response){
-                }
-            });
+            move_story(number, phase, index);
+        },
+        start: function(event, ui){
+            var height = $(ui.item).height();
+            $('.story-placeholder').height(height - 20); // because margin top and bottom = 10px
         }
     }).disableSelection()
     
@@ -155,12 +148,16 @@ $(function(){
         });
         return false;
     });
+    
+    $('#add-story').click(function(){
+        $('#add-story-dialog').dialog('open');
+    });
 });
 </script>
 {% endblock %}
 
 {% block content %}
-<a href="javascript:$('#add-story-dialog').dialog('open')">{% trans 'Add story' %}</a>
+<a id="add-story" href="javascript:;">{% trans 'Add story' %}</a>
 
 <div id="phases">
     {% for phase in project.phases.all %}

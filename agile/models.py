@@ -103,12 +103,16 @@ class Story(models.Model):
             else:
                 # Same phase, same index, we don't to save anything.
                 return
-        else:
+        elif new_index is not None:
             stories.filter(index__gt=self.index).update(index=F('index') - 1)
             Story.objects.filter(
                 phase=new_phase_id,
                 index__gte=new_index
             ).update(index=F('index') + 1)
+            self.phase_id = new_phase_id
+        elif new_index is None:
+            new_index = (Story.objects.filter(
+                phase=new_phase_id).aggregate(max=Max('index'))['max'] or 0) + 1
             self.phase_id = new_phase_id
         self.index = new_index
         self.save()

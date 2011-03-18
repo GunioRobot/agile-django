@@ -11,11 +11,37 @@
 {% block css %}
 {{ block.super }}
 <link rel="stylesheet" href="{{ MEDIA_URL }}css/jquery-ui.toolbar.css" />
+<style>
+#story-number {
+    width: 100px;
+    height: 30px;
+    padding: 15px 7px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#story-name {
+    width: 400px;
+    height: 30px;
+    padding: 15px 40px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.phase {
+    padding: 5px 20px;
+    cursor: pointer;
+}
+.phase.current {
+    background: #213;
+}
+</style>
 {% endblock %}
 
 {% block head %}
 {{ block.super }}
 <script type="text/javascript">
+var PROJECT_ID = {{ story.project.id }};
 $(function(){
     $('#toolbar').toolbar({
         buttons: [
@@ -36,14 +62,56 @@ $(function(){
             }
         ]
     });
+    
+    $('#tabs').tabs();
+    $('.ui-widget-content.phase').hover(function(){
+       $(this).toggleClass('ui-state-focus'); 
+    }).click(function(){
+        var $this = $(this);
+        var phase = $this.attr('data-id')
+        var number = $('#story').attr('data-number');
+        move_story(number, phase, function(){
+            var $phases = $this.parent().find('.phase');
+            $phases.removeClass('ui-state-default ui-state-active');
+            $this.addClass('ui-state-active');
+            $this.prevAll().addClass('ui-state-default')
+        });
+    });
 });
 </script>
 {% endblock %}
 
 {% block content %}
-<div id="story-number">
-    {{ story.number }}
+<div id="story" data-number="{{ story.number }}">
+    <div id="story-number" class="ui-widget-content">
+        # {{ story.number }}
+    </div>
+    <div id="story-name" class="ui-widget-content">
+        {{ story.name }}
+    </div>
+    <div id="toolbar"></div>
+    <div id="phases">
+        <table>
+            <tbody>
+                <tr>
+                {% for phase in story.project.phases.all %}
+                    <td class="ui-widget-content phase {% if phase.index < story.phase.index %} ui-state-default{% endif %}{% if phase == story.phase %} ui-state-active{% endif %}" data-id="{{ phase.id }}">{{ phase.name }}</td>
+                {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="tabs">
+        <ul>
+            <li><a href="#details">{% trans 'Details' %}</a></li>
+            <li><a href="#comments">{% trans 'Comments' %}</a></li>
+            <li><a href="#files">{% trans 'Files' %}</a></li>
+        </ul>
+        
+        <div id="details"></div>
+        <div id="comments"></div>
+        <div id="files"></div>
+    </div>
 </div>
-<div id="toolbar"></div>
 <a href="{{ story.project.get_url }}">go back</a>
 {% endblock %}

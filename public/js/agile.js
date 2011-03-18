@@ -33,4 +33,24 @@ $(function(){
             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
         }
     });
-})
+});
+
+function move_story(number, phase, index, successCallback){
+    if(typeof index == 'undefined')
+        index = '';
+    else if(typeof index == 'function'){
+        successCallback = index;
+        index = '';
+    }
+    successCallback = successCallback || null;
+    $.ajax({
+        url: '/project/' + PROJECT_ID + '/story/' + number + '/move',
+        type: 'post',
+        data: {
+            phase: phase,
+            index: index
+        },
+        dataType: 'json',
+        success: successCallback
+    });    
+}
