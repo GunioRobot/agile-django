@@ -1,29 +1,56 @@
 [
  {
-  "pk": 46, 
+  "pk": 19, 
   "model": "auth.permission", 
   "fields": {
-   "codename": "add_logentry", 
-   "name": "Can add log entry", 
-   "content_type": 16
+   "codename": "add_project", 
+   "name": "Can add project", 
+   "content_type": 7
   }
  }, 
  {
-  "pk": 47, 
+  "pk": 20, 
   "model": "auth.permission", 
   "fields": {
-   "codename": "change_logentry", 
-   "name": "Can change log entry", 
-   "content_type": 16
+   "codename": "change_project", 
+   "name": "Can change project", 
+   "content_type": 7
   }
  }, 
  {
-  "pk": 48, 
+  "pk": 21, 
   "model": "auth.permission", 
   "fields": {
-   "codename": "delete_logentry", 
-   "name": "Can delete log entry", 
-   "content_type": 16
+   "codename": "delete_project", 
+   "name": "Can delete project", 
+   "content_type": 7
+  }
+ }, 
+ {
+  "pk": 40, 
+  "model": "auth.permission", 
+  "fields": {
+   "codename": "add_filter", 
+   "name": "Can add filter", 
+   "content_type": 14
+  }
+ }, 
+ {
+  "pk": 41, 
+  "model": "auth.permission", 
+  "fields": {
+   "codename": "change_filter", 
+   "name": "Can change filter", 
+   "content_type": 14
+  }
+ }, 
+ {
+  "pk": 42, 
+  "model": "auth.permission", 
+  "fields": {
+   "codename": "delete_filter", 
+   "name": "Can delete filter", 
+   "content_type": 14
   }
  }, 
  {
@@ -54,111 +81,30 @@
   }
  }, 
  {
-  "pk": 34, 
-  "model": "auth.permission", 
-  "fields": {
-   "codename": "add_attachment", 
-   "name": "Can add attachment", 
-   "content_type": 12
-  }
- }, 
- {
-  "pk": 35, 
-  "model": "auth.permission", 
-  "fields": {
-   "codename": "change_attachment", 
-   "name": "Can change attachment", 
-   "content_type": 12
-  }
- }, 
- {
-  "pk": 36, 
-  "model": "auth.permission", 
-  "fields": {
-   "codename": "delete_attachment", 
-   "name": "Can delete attachment", 
-   "content_type": 12
-  }
- }, 
- {
-  "pk": 43, 
+  "pk": 46, 
   "model": "auth.permission", 
   "fields": {
    "codename": "add_logentry", 
    "name": "Can add log entry", 
-   "content_type": 15
+   "content_type": 16
   }
  }, 
  {
-  "pk": 44, 
+  "pk": 47, 
   "model": "auth.permission", 
   "fields": {
    "codename": "change_logentry", 
    "name": "Can change log entry", 
-   "content_type": 15
+   "content_type": 16
   }
  }, 
  {
-  "pk": 45, 
+  "pk": 48, 
   "model": "auth.permission", 
   "fields": {
    "codename": "delete_logentry", 
    "name": "Can delete log entry", 
-   "content_type": 15
-  }
- }, 
- {
-  "pk": 22, 
-  "model": "auth.permission", 
-  "fields": {
-   "codename": "add_column", 
-   "name": "Can add column", 
-   "content_type": 8
-  }
- }, 
- {
-  "pk": 23, 
-  "model": "auth.permission", 
-  "fields": {
-   "codename": "change_column", 
-   "name": "Can change column", 
-   "content_type": 8
-  }
- }, 
- {
-  "pk": 24, 
-  "model": "auth.permission", 
-  "fields": {
-   "codename": "delete_column", 
-   "name": "Can delete column", 
-   "content_type": 8
-  }
- }, 
- {
-  "pk": 19, 
-  "model": "auth.permission", 
-  "fields": {
-   "codename": "add_project", 
-   "name": "Can add project", 
-   "content_type": 7
-  }
- }, 
- {
-  "pk": 20, 
-  "model": "auth.permission", 
-  "fields": {
-   "codename": "change_project", 
-   "name": "Can change project", 
-   "content_type": 7
-  }
- }, 
- {
-  "pk": 21, 
-  "model": "auth.permission", 
-  "fields": {
-   "codename": "delete_project", 
-   "name": "Can delete project", 
-   "content_type": 7
+   "content_type": 16
   }
  }, 
  {
@@ -186,6 +132,33 @@
    "codename": "delete_story", 
    "name": "Can delete story", 
    "content_type": 9
+  }
+ }, 
+ {
+  "pk": 22, 
+  "model": "auth.permission", 
+  "fields": {
+   "codename": "add_column", 
+   "name": "Can add column", 
+   "content_type": 8
+  }
+ }, 
+ {
+  "pk": 23, 
+  "model": "auth.permission", 
+  "fields": {
+   "codename": "change_column", 
+   "name": "Can change column", 
+   "content_type": 8
+  }
+ }, 
+ {
+  "pk": 24, 
+  "model": "auth.permission", 
+  "fields": {
+   "codename": "delete_column", 
+   "name": "Can delete column", 
+   "content_type": 8
   }
  }, 
  {
@@ -243,30 +216,57 @@
   }
  }, 
  {
-  "pk": 40, 
+  "pk": 34, 
   "model": "auth.permission", 
   "fields": {
-   "codename": "add_filter", 
-   "name": "Can add filter", 
-   "content_type": 14
+   "codename": "add_attachment", 
+   "name": "Can add attachment", 
+   "content_type": 12
   }
  }, 
  {
-  "pk": 41, 
+  "pk": 35, 
   "model": "auth.permission", 
   "fields": {
-   "codename": "change_filter", 
-   "name": "Can change filter", 
-   "content_type": 14
+   "codename": "change_attachment", 
+   "name": "Can change attachment", 
+   "content_type": 12
   }
  }, 
  {
-  "pk": 42, 
+  "pk": 36, 
   "model": "auth.permission", 
   "fields": {
-   "codename": "delete_filter", 
-   "name": "Can delete filter", 
-   "content_type": 14
+   "codename": "delete_attachment", 
+   "name": "Can delete attachment", 
+   "content_type": 12
+  }
+ }, 
+ {
+  "pk": 43, 
+  "model": "auth.permission", 
+  "fields": {
+   "codename": "add_logentry", 
+   "name": "Can add log entry", 
+   "content_type": 15
+  }
+ }, 
+ {
+  "pk": 44, 
+  "model": "auth.permission", 
+  "fields": {
+   "codename": "change_logentry", 
+   "name": "Can change log entry", 
+   "content_type": 15
+  }
+ }, 
+ {
+  "pk": 45, 
+  "model": "auth.permission", 
+  "fields": {
+   "codename": "delete_logentry", 
+   "name": "Can delete log entry", 
+   "content_type": 15
   }
  }, 
  {
@@ -436,12 +436,12 @@
   "model": "auth.user", 
   "fields": {
    "username": "admin", 
-   "first_name": "Admin", 
+   "first_name": "admin", 
    "last_name": "", 
    "is_active": true, 
    "is_superuser": true, 
    "is_staff": true, 
-   "last_login": "2011-03-12 16:18:09", 
+   "last_login": "2011-03-18 08:30:14", 
    "groups": [], 
    "user_permissions": [], 
    "password": "sha1$30c75$b7cc017b2a168db3281c26c2735738ebd1865a12", 
@@ -609,42 +609,10 @@
   }
  }, 
  {
-  "pk": 2, 
-  "model": "agile.story", 
-  "fields": {
-   "index": 0, 
-   "description": "", 
-   "creator": null, 
-   "color": "ffffff", 
-   "created_at": "2011-03-10 07:09:33", 
-   "number": 2, 
-   "owner": null, 
-   "phase": 1, 
-   "blocked": "", 
-   "name": "B"
-  }
- }, 
- {
-  "pk": 4, 
-  "model": "agile.story", 
-  "fields": {
-   "index": 0, 
-   "description": "", 
-   "creator": null, 
-   "color": "ffffff", 
-   "created_at": "2011-03-10 07:09:54", 
-   "number": 4, 
-   "owner": null, 
-   "phase": 2, 
-   "blocked": "", 
-   "name": "D Long name Long name Long name Long name Long name Long name Long name Long name Long name Long nam"
-  }
- }, 
- {
   "pk": 3, 
   "model": "agile.story", 
   "fields": {
-   "index": 1, 
+   "index": 0, 
    "description": "", 
    "creator": null, 
    "color": "ffffff", 
@@ -657,10 +625,42 @@
   }
  }, 
  {
+  "pk": 4, 
+  "model": "agile.story", 
+  "fields": {
+   "index": 0, 
+   "description": "This is a title\r\n========\r\n\r\n**Supports Markdown**\r\n\r\n\r\n*Test Story*\r\n\r\n", 
+   "creator": null, 
+   "color": "ffffff", 
+   "created_at": "2011-03-10 07:09:54", 
+   "number": 4, 
+   "owner": null, 
+   "phase": 2, 
+   "blocked": "", 
+   "name": "D Long name Long name Long name Long name Long name Long name Long name Long name Long name Long nam"
+  }
+ }, 
+ {
+  "pk": 2, 
+  "model": "agile.story", 
+  "fields": {
+   "index": 1, 
+   "description": "", 
+   "creator": null, 
+   "color": "ffffff", 
+   "created_at": "2011-03-10 07:09:33", 
+   "number": 2, 
+   "owner": null, 
+   "phase": 3, 
+   "blocked": "", 
+   "name": "B"
+  }
+ }, 
+ {
   "pk": 5, 
   "model": "agile.story", 
   "fields": {
-   "index": 2, 
+   "index": 1, 
    "description": "", 
    "creator": null, 
    "color": "ffffff", 
@@ -674,8 +674,19 @@
  }, 
  {
   "pk": 1, 
+  "model": "agile.comment", 
+  "fields": {
+   "text": "Nicely done!", 
+   "story": 4, 
+   "user": 2, 
+   "datetime": "2011-03-18 08:26:38"
+  }
+ }, 
+ {
+  "pk": 1, 
   "model": "agile.userprofile", 
   "fields": {
+   "jquery_ui_theme": "start", 
    "user": 1
   }
  }, 
@@ -683,6 +694,7 @@
   "pk": 2, 
   "model": "agile.userprofile", 
   "fields": {
+   "jquery_ui_theme": "cupertino", 
    "user": 2
   }
  }, 
@@ -690,6 +702,7 @@
   "pk": 3, 
   "model": "agile.userprofile", 
   "fields": {
+   "jquery_ui_theme": "cupertino", 
    "user": 3
   }
  }, 
@@ -697,6 +710,7 @@
   "pk": 4, 
   "model": "agile.userprofile", 
   "fields": {
+   "jquery_ui_theme": "cupertino", 
    "user": 4
   }
  }, 
@@ -704,6 +718,7 @@
   "pk": 5, 
   "model": "agile.userprofile", 
   "fields": {
+   "jquery_ui_theme": "cupertino", 
    "user": 5
   }
  }
