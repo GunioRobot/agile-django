@@ -26,6 +26,11 @@
     font-size: 20px;
     font-weight: bold;
 }
+#tags {
+    padding: 15px 7px;
+    width: 100px;
+    font-size: 12px;
+}
 .phase {
     padding: 5px 20px;
     cursor: pointer;
@@ -51,29 +56,21 @@ $(function(){
     $('#toolbar').toolbar({
         buttons: [
             {
-                name: gettext('Delete'),
-                uiIcon: 'ui-icon-cancel',
-                click: function(){}
-            },
-            {
                 name: gettext('Block'),
                 uiIcon: 'ui-icon-circle-close',
                 click: function(){}
-            },
-            {
+            },{
                 name: gettext('Mark as Ready'),
                 uiIcon: 'ui-icon-check',
+                click: function(){}
+            },{
+                name: gettext('Delete'),
+                uiIcon: 'ui-icon-cancel',
                 click: function(){}
             }
         ]
     });
     
-    $('#tabs').tabs({
-        select: function(event, ui){
-            var href = $(ui.tab).attr('href');
-            window.location.hash = href;
-        }
-    });
     $('.ui-widget-content.phase').hover(function(){
        $(this).toggleClass('ui-state-focus'); 
     }).click(function(){
@@ -93,11 +90,12 @@ $(function(){
 
 {% block content %}
 <div id="story" data-number="{{ story.number }}">
-    <div id="story-number" class="ui-widget-content">
-        # {{ story.number }}
-    </div>
-    <div id="story-name" class="ui-widget-content">
-        {{ story.name }}
+    <div id="story-number" class="ui-widget-content"># {{ story.number }}</div>
+    <div id="story-name" class="ui-widget-content">{{ story.name }}</div>
+    <div id="tags" class="ui-widget-content">asdasd asdas dsad
+        {% for tag in story.tags.all.select_related %}
+            {{ tag.name }}
+        {% endfor %}
     </div>
     <div id="toolbar"></div>
     <div id="phases">
@@ -116,11 +114,16 @@ $(function(){
             <li><a href="#details"><span class="ui-icon ui-icon-note"></span>{% trans 'Details' %}</a></li>
             <li><a href="#tasks"><span class="ui-icon ui-icon-clipboard"></span>{% trans 'Tasks' %} ({{ story.tasks.all.count }})</a></li>
             <li><a href="#comments"><span class="ui-icon ui-icon-comment"></span>{% trans 'Comments' %} ({{ story.comments.all.count }})</a></li>
-            <li><a href="#files"><span class="ui-icon ui-icon-document"></span>{% trans 'Files' %}</a></li>
+            <li><a href="#attachments"><span class="ui-icon ui-icon-document"></span>{% trans 'Attachments' %}</a></li>
         </ul>
         
         <div id="details">{{ story.description|markdown|linebreaksbr }}</div>
-        <div id="tasks"></div>
+        <div id="tasks">
+            {% for task in story.tasks.all.select_related %}
+            <div class="task">
+            </div>
+            {% endfor %}
+        </div>
         <div id="comments">
             {% for comment in story.comments.all.select_related %}
             <div class="comment">
@@ -132,7 +135,12 @@ $(function(){
             </div>
             {% endfor %}
         </div>
-        <div id="files"></div>
+        <div id="attachments">
+            {% for attachment in story.attachments.all.select_related %}
+            <div class="attach">
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 <a href="{{ story.project.get_url }}">go back</a>

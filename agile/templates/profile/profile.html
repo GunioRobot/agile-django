@@ -4,20 +4,6 @@
 
 {% block title %}{% trans 'Profile' %} - {{ block.super }}{% endblock %}
 
-{% block javascript %}
-{{ block.super }}
-<script type="text/javascript">
-$(function(){
-    $('#tabs').tabs({
-        select: function(event, ui){
-            var href = $(ui.tab).attr('href');
-            window.location.hash = href;
-        }
-    });
-})
-</script>
-{% endblock %}
-
 {% block css %}
 {{ block.super }}
 <style>

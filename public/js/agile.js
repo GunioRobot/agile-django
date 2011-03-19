@@ -11,6 +11,14 @@ $(function(){
         });
     });
     
+    /* Add jQuery UI tabs */
+    $('#tabs').tabs({
+        select: function(event, ui){
+            var href = $(ui.tab).attr('href');
+            window.location.hash = href;
+        }
+    });
+    
     /* Add X-CSRFToken to the request headers */
     $('html').ajaxSend(function(event, xhr, settings) {
         function getCookie(name) {

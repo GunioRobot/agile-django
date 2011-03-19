@@ -23,7 +23,6 @@
     min-height: 30px;
 }
 .story {
-    /*background: #CCC;*/
     min-height: 75px;
     margin: 10px 5px;
 }
@@ -72,6 +71,7 @@ $(function(){
         distance: 15,
         revert: true,
         opacity: 0.9,
+        handle: '.story-header',
         placeholder: "ui-state-highlight story-placeholder",
         containment: '#phases',
         stop: function(event, ui){

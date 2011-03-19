@@ -162,10 +162,7 @@ def story_add(request, project_id):
     project = request.user.projects.get(id=project_id)
     story_form = StoryForm(project, request.POST)
     if story_form.is_valid():
-        #phase = project.phases.all().order_by('index')[0]
-        
         story = story_form.save(commit=False)
-        #story.phase = phase
         story.save()
         return {
             'success': True,
