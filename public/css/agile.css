@@ -45,6 +45,8 @@ ul#topmenu img {
     border: 1px solid #000;
     margin-top: -12px;
     margin-left: 10px;
+    padding: 1px;
+    background: white;
 }
 
 #content {

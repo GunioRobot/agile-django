@@ -1,0 +1,8 @@
+{% load gravatar markup %}
+<div class="comment ui-widget-content" id="comment-{{ comment.id }}">
+    {% gravatar comment.user 32 %}
+    <div class="comment-user">
+        <a href="#comment-{{ comment.id }}">{{ comment.user.agile_get_name }} @ {{ comment.datetime }}</a>
+    </div>
+    <div class="comment-text">{{ comment.text|markdown|linebreaksbr }}</div>
+</div>

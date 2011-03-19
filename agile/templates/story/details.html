@@ -1,7 +1,7 @@
 {% extends 'project/base.html' %}
 {% load i18n markup gravatar %}
 
-{% block title %}{% trans 'Story' %} - #{{ story.number }} -  {{ story.project.name }} - {{ block.super }}{% endblock %}
+{% block title %}{% trans 'Story' %} #{{ story.number }} -  {{ story.project.name }} - {{ block.super }}{% endblock %}
 
 {% block javascript %}
 {{ block.super }}
@@ -39,11 +39,21 @@
     background: #213;
 }
 .comment-user {
-    font-size: 75%;
+    font-size: 85%;
 }
 span.ui-icon {
     float: left;
     margin-right: 7px;
+}
+.comment.ui-widget-content {
+	padding: 15px;
+}
+.comment img {
+    float: left;
+    margin-right: 15px;
+    border: 1px solid #000;
+    padding: 1px;
+    background: white;
 }
 </style>
 {% endblock %}
@@ -84,6 +94,26 @@ $(function(){
             $this.prevAll().addClass('ui-state-default')
         });
     });
+    $('#comments form').submit(function(){
+        var $this = $(this);
+        $.ajax({
+            url: $this.attr('action'),
+            type: $this.attr('method'),
+            data: $this.serialize(),
+            dataType: 'json',
+            success: function(response){
+                if(response.success){
+                    $this.get(0).reset();
+                    var $comment = $(response.html);
+                    $('#comments-container').append($comment);
+                    var $comments_count = $('#comments-count');
+                    var comments_count = +$comments_count.text();
+                    $comments_count.text(comments_count + 1);
+                }
+            }
+        });
+        return false;
+    });
 });
 </script>
 {% endblock %}
@@ -92,7 +122,7 @@ $(function(){
 <div id="story" data-number="{{ story.number }}">
     <div id="story-number" class="ui-widget-content"># {{ story.number }}</div>
     <div id="story-name" class="ui-widget-content">{{ story.name }}</div>
-    <div id="tags" class="ui-widget-content">asdasd asdas dsad
+    <div id="tags" class="ui-widget-content">
         {% for tag in story.tags.all.select_related %}
             {{ tag.name }}
         {% endfor %}
@@ -103,7 +133,7 @@ $(function(){
             <tbody>
                 <tr>
                 {% for phase in story.project.phases.all %}
-                    <td class="ui-widget-content phase {% if phase.index < story.phase.index %} ui-state-default{% endif %}{% if phase == story.phase %} ui-state-active{% endif %}" data-id="{{ phase.id }}">{{ phase.name }}</td>
+                    <td class="ui-widget-content phase{% if phase.index < story.phase.index %} ui-state-default{% endif %}{% if phase == story.phase %} ui-state-active{% endif %}" data-id="{{ phase.id }}">{{ phase.name }}</td>
                 {% endfor %}
                 </tr>
             </tbody>
@@ -112,8 +142,8 @@ $(function(){
     <div id="tabs">
         <ul>
             <li><a href="#details"><span class="ui-icon ui-icon-note"></span>{% trans 'Details' %}</a></li>
-            <li><a href="#tasks"><span class="ui-icon ui-icon-clipboard"></span>{% trans 'Tasks' %} ({{ story.tasks.all.count }})</a></li>
-            <li><a href="#comments"><span class="ui-icon ui-icon-comment"></span>{% trans 'Comments' %} ({{ story.comments.all.count }})</a></li>
+            <li><a href="#tasks"><span class="ui-icon ui-icon-clipboard"></span>{% trans 'Tasks' %} (<span id="tasks-count">{{ story.tasks.all.count }}</span>)</a></li>
+            <li><a href="#comments"><span class="ui-icon ui-icon-comment"></span>{% trans 'Comments' %} (<span id="comments-count">{{ story.comments.all.count }}</span>)</a></li>
             <li><a href="#attachments"><span class="ui-icon ui-icon-document"></span>{% trans 'Attachments' %}</a></li>
         </ul>
         
@@ -125,15 +155,15 @@ $(function(){
             {% endfor %}
         </div>
         <div id="comments">
+            <div id="comments-container">
             {% for comment in story.comments.all.select_related %}
-            <div class="comment">
-                {% gravatar comment.user 32 %}
-                <div class="comment-text">{{ comment.text }}</div>
-                <div class="comment-user">
-                    {{ comment.user.agile_get_name }} @ {{ comment.datetime }}
-                </div>
-            </div>
+                {% include 'story/comment.html' %}
             {% endfor %}
+            </div>
+            <form method="post" action="{{ story.get_comment_url }}">
+            {{ comment_form.text }}
+            <input type="submit" value="{% trans 'Leave comment' %}"/>
+            </form>
         </div>
         <div id="attachments">
             {% for attachment in story.attachments.all.select_related %}

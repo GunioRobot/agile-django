@@ -1,13 +1,13 @@
 {% load i18n gravatar %}
 <div class="story ui-widget-content" data-number="{{ story.number }}">
     <div class="story-header ui-state-default">
-        <a href="{{ story.get_url }}">{{ story.number }}</a>
+        <a href="{{ story.get_url }}"><span class="ui-icon ui-icon-search"></span>{{ story.number }}</a>
         <div class="story-owner">
             {% if story.owner %}
-                {{ story.owner.get_full_name|default:story.owner }}
+                <span class="story-owner-name">{{ story.owner.agile_get_name }}</span>
                 {% gravatar story.owner 16 %}
             {% else %}
-                {% trans 'Not assigned' %}
+                <span class="story-owner-name">{% trans 'Not assigned' %}</span>
             {% endif %}
         </div>
     </div>

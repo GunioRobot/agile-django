@@ -124,8 +124,11 @@ def story(request, project_id, story_number):
     project = request.user.projects.get(id=project_id)
     story = project.stories.get(number=story_number)
     
+    comment_form = CommentForm()
+    
     return render_to_response('story/details.html', RequestContext(request, {
         'story': story,
+        'comment_form': comment_form,
     }))
 
 
@@ -150,6 +153,31 @@ def story_ajax(request, project_id, story_number, action=None):
         name = StoryForm.base_fields['name'].clean(name)
         story.name = name 
         story.save()
+        
+    elif action == 'comment':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.user = request.user
+            comment.story = story
+            comment.save()
+            return {
+                'success': True,
+                'html': render_to_string('story/comment.html', {
+                    'comment': comment,
+                }),
+            }
+            
+        else:
+            errors = {}
+            for field, error in comment_form.errors.iteritems():
+                errors[unicode(comment_form.fields[field].label)] = error 
+        
+            return {
+                'success': False,
+                'error': errors, 
+            }
+        
 
 
 @login_required

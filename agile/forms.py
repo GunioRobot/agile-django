@@ -27,6 +27,7 @@ class TaskForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
+        exclude = ('user', 'story',)
         
 class FilterForm(forms.ModelForm):
     class Meta:

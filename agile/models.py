@@ -86,6 +86,9 @@ class Story(models.Model):
     def get_url(self):
         return reverse('agile_story', args=[self.project_id, self.number])
     
+    def get_comment_url(self):
+        return reverse('agile_story_ajax', args=[self.project_id, self.number, 'comment'])
+    
     @transaction.commit_on_success()
     def move(self, new_phase_id, new_index=None):
         """
@@ -174,7 +177,7 @@ class Comment(models.Model):
     user = models.ForeignKey(User, verbose_name=_(u'user'), related_name='comments')
     story = models.ForeignKey('Story', verbose_name=_(u'story'), related_name='comments')
     datetime = models.DateTimeField(_(u'datetime'), auto_now=True)
-    text = models.CharField(_(u'text'), max_length=100)
+    text = models.TextField(_(u'text'))
         
     class Meta:
         verbose_name = _(u'comment')
