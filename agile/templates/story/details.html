@@ -155,10 +155,18 @@ $(function(){
     </div>
     <div id="tabs">
         <ul>
-            <li><a href="#details"><span class="ui-icon ui-icon-note"></span>{% trans 'Details' %}</a></li>
-            <li><a href="#tasks"><span class="ui-icon ui-icon-clipboard"></span>{% trans 'Tasks' %} (<span id="tasks-count">{{ story.tasks.all.count }}</span>)</a></li>
-            <li><a href="#comments"><span class="ui-icon ui-icon-comment"></span>{% trans 'Comments' %} (<span id="comments-count">{{ story.comments.all.count }}</span>)</a></li>
-            <li><a href="#attachments"><span class="ui-icon ui-icon-document"></span>{% trans 'Attachments' %}</a></li>
+            <li>
+                <a href="#details"><span class="ui-icon ui-icon-note"></span>{% trans 'Details' %}</a>
+            </li>
+            <li>
+                <a href="#tasks"><span class="ui-icon ui-icon-clipboard"></span>{% trans 'Tasks' %} (<span id="tasks-count">{{ story.tasks.all.count }}</span>)</a>
+            </li>
+            <li>
+                <a href="#comments"><span class="ui-icon ui-icon-comment"></span>{% trans 'Comments' %} (<span id="comments-count">{{ story.comments.all.count }}</span>)</a>
+            </li>
+            <li>
+                <a href="#attachments"><span class="ui-icon ui-icon-document"></span>{% trans 'Attachments' %} (<span id="attachments-count">{{ story.attachments.all.count }}</span>)</a>
+            </li>
         </ul>
         
         <div id="details">{{ story.description|markdown|linebreaksbr }}</div>

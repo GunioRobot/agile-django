@@ -97,7 +97,9 @@ $(function(){
         },
         start: function(event, ui){
             var height = $(ui.item).height();
-            $('.story-placeholder').height(height - 20); // because margin top and bottom = 10px
+            // because margin top and bottom = 10px
+            // and the borders take 4 pixels
+            $('.story-placeholder').height(height - 20 + 4); 
         }
     }).disableSelection()
     
