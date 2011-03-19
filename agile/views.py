@@ -165,7 +165,7 @@ def story_ajax(request, project_id, story_number, action=None):
                 'success': True,
                 'html': render_to_string('story/comment.html', {
                     'comment': comment,
-                }),
+                }, RequestContext(request)),
             }
             
         else:
@@ -196,7 +196,7 @@ def story_add(request, project_id):
             'success': True,
             'html': render_to_string('project/story.html', {
                 'story': story,
-            }),
+            }, RequestContext(request)),
             'phase_index': story.phase.index,
         }
     

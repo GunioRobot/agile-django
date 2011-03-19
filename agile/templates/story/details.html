@@ -55,6 +55,13 @@ span.ui-icon {
     padding: 1px;
     background: white;
 }
+.comment-delete {
+    display: none;
+    float: right;
+}
+.comment:hover .comment-delete {
+    display: inline-block;
+}
 </style>
 {% endblock %}
 
@@ -109,10 +116,17 @@ $(function(){
                     var $comments_count = $('#comments-count');
                     var comments_count = +$comments_count.text();
                     $comments_count.text(comments_count + 1);
+                    $comment.find('.button').button();
                 }
             }
         });
         return false;
+    });
+    $('.comment-delete').live('click', function(){
+        var $this = $(this);
+        var id = $this.parents('.comment').attr('data-id');
+        alert(id)
+        
     });
 });
 </script>

@@ -1,6 +1,6 @@
 $(function(){
     /* Use jQuery UI buttons */
-    $('input[type=submit]').button();
+    $('input[type=submit], .button').button();
     
     /* Use selectmenu jQuery UI plugin */
     $('select:not([multiple])').each(function(){

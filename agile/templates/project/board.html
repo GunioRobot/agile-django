@@ -85,10 +85,10 @@ $(function(){
         placeholder: "ui-state-highlight story-placeholder",
         containment: '#phases',
         stop: function(event, ui){
-            var $element = $(ui.item)
-            var number = $element.attr('data-number')
-            var index = $element.parent().children().index(ui.item);
-            var phase = $element.parent().parent().attr('data-id');
+            var $element = $(ui.item);
+            var number = $element.attr('data-number');
+            var index = $element.parents('.stories').children().index(ui.item);
+            var phase = $element.parents('.phase').attr('data-id');
             move_story(number, phase, index);
         },
         start: function(event, ui){
@@ -102,7 +102,7 @@ $(function(){
         var text = $.trim($this.text());
         var $textarea = $('<textarea/>').val(text).blur(function(){
             var $this = $(this);
-            var number = $this.parent().parent().attr('data-number')
+            var number = $this.parents('.story').attr('data-number')
             var text = $.trim($this.val());
             $this.parent().text(text);
             $.ajax({
