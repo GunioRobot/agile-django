@@ -243,6 +243,10 @@ def projects(user):
     return (user.own_projects.all() | user.member_projects.all()).distinct()
 User.projects = projects
 
+def agile_get_name(user):
+    return user.get_full_name() or user.username.title()
+User.agile_get_name = agile_get_name
+
 ################################################################################
 ## Signals
 ################################################################################

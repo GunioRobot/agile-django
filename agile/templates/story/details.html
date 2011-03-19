@@ -33,6 +33,13 @@
 .phase.current {
     background: #213;
 }
+.comment-user {
+    font-size: 75%;
+}
+span.ui-icon {
+    float: left;
+    margin-right: 7px;
+}
 </style>
 {% endblock %}
 
@@ -106,19 +113,22 @@ $(function(){
     </div>
     <div id="tabs">
         <ul>
-            <li><a href="#details">{% trans 'Details' %}</a></li>
-            <li><a href="#tasks">{% trans 'Tasks' %} ({{ story.tasks.all.count }})</a></li>
-            <li><a href="#comments">{% trans 'Comments' %} ({{ story.comments.all.count }})</a></li>
-            <li><a href="#files">{% trans 'Files' %}</a></li>
+            <li><a href="#details"><span class="ui-icon ui-icon-note"></span>{% trans 'Details' %}</a></li>
+            <li><a href="#tasks"><span class="ui-icon ui-icon-clipboard"></span>{% trans 'Tasks' %} ({{ story.tasks.all.count }})</a></li>
+            <li><a href="#comments"><span class="ui-icon ui-icon-comment"></span>{% trans 'Comments' %} ({{ story.comments.all.count }})</a></li>
+            <li><a href="#files"><span class="ui-icon ui-icon-document"></span>{% trans 'Files' %}</a></li>
         </ul>
         
-        <div id="details">{{ story.description|markdown }}</div>
+        <div id="details">{{ story.description|markdown|linebreaksbr }}</div>
         <div id="tasks"></div>
         <div id="comments">
             {% for comment in story.comments.all.select_related %}
             <div class="comment">
-                {% gravatar comment.user %} {{ comment.user }} - {{ comment.datetime }}
+                {% gravatar comment.user 32 %}
                 <div class="comment-text">{{ comment.text }}</div>
+                <div class="comment-user">
+                    {{ comment.user.agile_get_name }} @ {{ comment.datetime }}
+                </div>
             </div>
             {% endfor %}
         </div>

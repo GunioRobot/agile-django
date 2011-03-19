@@ -24,11 +24,7 @@
             <ul id="topmenu">
                 {% if user.is_authenticated %}
                     <li>
-                    {% if user.get_full_name %}
-                        {{ user.get_full_name }}
-                    {% else %}
-                        {{ user.username|capfirst }}
-                    {% endif %}
+                    {{ user.agile_get_name }}
                     </li>
                 <li>|</li>
                 {% endif %}
