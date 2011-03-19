@@ -1,10 +1,10 @@
-{% load gravatar markup %}
+{% load i18n gravatar markup %}
 <div class="comment ui-widget-content" id="comment-{{ comment.id }}" data-id="{{ comment.id }}">
     {% gravatar comment.user 32 %}
     <div class="comment-user">
         <a href="#comment-{{ comment.id }}">{{ comment.user.agile_get_name }} @ {{ comment.datetime }}</a> 
         {% if user == comment.user %}
-        <span class="button comment-delete">Delete</span>
+        <span class="button comment-delete">{% trans 'Delete' %}</span>
         {% endif %}
     </div>
     <div class="comment-text">{{ comment.text|markdown|linebreaksbr }}</div>

@@ -3,11 +3,6 @@
 
 {% block title %}{% trans 'Story' %} #{{ story.number }} -  {{ story.project.name }} - {{ block.super }}{% endblock %}
 
-{% block javascript %}
-{{ block.super }}
-<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui.toolbar.js"></script>
-{% endblock %}
-
 {% block css %}
 {{ block.super }}
 <link rel="stylesheet" href="{{ MEDIA_URL }}css/jquery-ui.toolbar.css" />
@@ -65,8 +60,9 @@ span.ui-icon {
 </style>
 {% endblock %}
 
-{% block head %}
+{% block javascript %}
 {{ block.super }}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui.toolbar.js"></script>
 <script type="text/javascript">
 var PROJECT_ID = {{ story.project.id }};
 $(function(){
@@ -124,10 +120,15 @@ $(function(){
     });
     $('.comment-delete').live('click', function(){
         var $this = $(this);
-        var id = $this.parents('.comment').attr('data-id');
-        alert(id)
+        var $comment = $this.parents('.comment');
+        var id = $comment.attr('data-id');
+        console.log(id)
+        $comment.slideUp(function(){
+            $comment.remove();
+        });
         
     });
+    gettext('Block')
 });
 </script>
 {% endblock %}

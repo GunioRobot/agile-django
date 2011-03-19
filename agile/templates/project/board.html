@@ -3,7 +3,7 @@
 
 {% block title %}{{ project.name }} - {% trans 'Board' %} - {{ block.super }}{% endblock %}
 
-{% block head %}
+{% block css %}
 {{ block.super }}
 <style>
 #phases {
@@ -60,8 +60,10 @@
     padding: 4px 0;
     float: left;
 }
-
 </style>
+{% endblock %}
+{% block javascript %}
+{{ block.super }}
 <script type="text/javascript">
 var PROJECT_ID = {{ project.id }};
 $(function(){
