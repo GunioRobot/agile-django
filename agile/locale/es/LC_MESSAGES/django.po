@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-17 21:59-0600\n"
-"PO-Revision-Date: 2011-03-18 08:25\n"
-"Last-Translator: Andres Torres Marroquin <andres@mydomedia.com.>\n"
+"POT-Creation-Date: 2011-03-19 18:05-0600\n"
+"PO-Revision-Date: 2011-03-19 19:07\n"
+"Last-Translator: admin melgoza <alejandra@hotmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,11 +18,11 @@ msgstr ""
 "X-Translated-Using: django-rosetta 0.5.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: models.py:16 models.py:42 models.py:61 models.py:157 models.py:231
+#: models.py:16 models.py:42 models.py:61 models.py:160 models.py:234
 msgid "name"
 msgstr "nombre"
 
-#: models.py:17 models.py:44 models.py:62 models.py:166
+#: models.py:17 models.py:44 models.py:62 models.py:169
 msgid "description"
 msgstr "descripción"
 
@@ -42,7 +42,7 @@ msgstr "proyecto"
 msgid "projects"
 msgstr "proyectos"
 
-#: models.py:43 models.py:60 models.py:164
+#: models.py:43 models.py:60 models.py:167
 msgid "index"
 msgstr "índice"
 
@@ -78,7 +78,7 @@ msgstr "creado en"
 msgid "color"
 msgstr "color"
 
-#: models.py:71 models.py:156 models.py:165 models.py:175 models.py:185
+#: models.py:71 models.py:159 models.py:168 models.py:178 models.py:188
 msgid "story"
 msgstr "historia"
 
@@ -86,125 +86,125 @@ msgstr "historia"
 msgid "stories"
 msgstr "historias"
 
-#: models.py:160
+#: models.py:163
 msgid "tag"
 msgstr "etiqueta"
 
-#: models.py:161
+#: models.py:164
 msgid "tags"
 msgstr "etiquetas"
 
-#: models.py:167
+#: models.py:170
 msgid "finished at"
 msgstr "terminó en"
 
-#: models.py:170
+#: models.py:173
 msgid "task"
 msgstr "tarea"
 
-#: models.py:171
+#: models.py:174
 msgid "tasks"
 msgstr "tareas"
 
-#: models.py:174 models.py:184 models.py:222 models.py:230
+#: models.py:177 models.py:187 models.py:225 models.py:233
 msgid "user"
 msgstr "usuario"
 
-#: models.py:176 models.py:186
+#: models.py:179 models.py:189
 msgid "datetime"
 msgstr "fecha y hora"
 
-#: models.py:177
+#: models.py:180
 msgid "text"
 msgstr "texto"
 
-#: models.py:180
+#: models.py:183
 msgid "comment"
 msgstr "comentario"
 
-#: models.py:181
+#: models.py:184
 msgid "comments"
 msgstr "comentarios"
 
-#: models.py:190
+#: models.py:193
 msgid "attachment"
 msgstr "archivo adjunto"
 
-#: models.py:191
+#: models.py:194
 msgid "attachments"
 msgstr "archivos adjuntos"
 
-#: models.py:223
+#: models.py:226
 msgid "jQuery UI Theme"
 msgstr "Tema jQuery UI "
 
-#: models.py:226
+#: models.py:229
 msgid "user profile"
 msgstr "perfil del usuario"
 
-#: models.py:227
+#: models.py:230
 msgid "user profiles"
 msgstr "perfiles de usuario"
 
-#: models.py:232
+#: models.py:235
 msgid "query"
 msgstr "consulta"
 
-#: models.py:233
+#: models.py:236
 msgid "shared"
 msgstr "compartida"
 
-#: models.py:236
+#: models.py:239
 msgid "filter"
 msgstr "filtro"
 
-#: models.py:237
+#: models.py:240
 msgid "filters"
 msgstr "filtros"
 
-#: models.py:262
+#: models.py:269
 msgid "Backlog"
 msgstr "Backlog"
 
-#: models.py:267
+#: models.py:274
 msgid "Ready"
 msgstr "Listo"
 
-#: models.py:271
+#: models.py:278
 msgid "Working"
 msgstr "Trabajando"
 
-#: models.py:275
+#: models.py:282
 msgid "Complete"
 msgstr "Completado"
 
-#: models.py:279
+#: models.py:286
 msgid "Archive"
 msgstr "Archivo"
 
-#: templates/base.html:35 templates/index.html:4
+#: templates/base.html:32 templates/index.html:4
 msgid "Home"
 msgstr "Inicio"
 
-#: templates/base.html:37 templates/login.html:4 templates/login.html.py:19
+#: templates/base.html:34 templates/login.html:4 templates/login.html.py:19
 #: templates/signup.html:16
 msgid "Login"
 msgstr "Iniciar sesión"
 
-#: templates/base.html:38 templates/signup.html:4
+#: templates/base.html:35 templates/signup.html:4
 msgid "Signup"
 msgstr "Registrarse"
 
-#: templates/base.html:40 templates/project/add.html:4
-#: templates/project/add.html.py:21
+#: templates/base.html:37 templates/project/add.html:4
+#: templates/project/add.html.py:16
 msgid "Projects"
 msgstr "Proyectos"
 
-#: templates/base.html:41 templates/profile/profile.html:5
+#: templates/base.html:38 templates/profile/profile.html:5
 msgid "Profile"
 msgstr "Perfil"
 
-#: templates/base.html:42
+#: templates/base.html:39
 msgid "Logout"
 msgstr "Cerrar sesión"
 
@@ -235,20 +235,20 @@ msgid "The form was saved successfully."
 msgstr "El formulario se guardó correctamente."
 
 #: templates/profile/profile.html:36 templates/profile/profile.html.py:51
-#: templates/profile/profile.html:66 templates/project/add.html:49
-#: templates/project/board.html:184
+#: templates/profile/profile.html:66 templates/project/add.html:44
+#: templates/project/board.html:202
 msgid "Submit"
 msgstr "Enviar"
 
-#: templates/project/add.html:22
+#: templates/project/add.html:17
 msgid "Add project"
 msgstr "Añadir proyecto"
 
-#: templates/project/add.html:35
+#: templates/project/add.html:30
 msgid "(No description available)"
 msgstr "(Descripción no disponible)"
 
-#: templates/project/add.html:37
+#: templates/project/add.html:32
 msgid "By"
 msgstr "Por"
 
@@ -256,37 +256,55 @@ msgstr "Por"
 msgid "Board"
 msgstr "Tablero"
 
-#: templates/project/board.html:160
+#: templates/project/board.html:178
 msgid "Add story"
 msgstr "Añadir historia"
 
-#: templates/project/board.html:179
+#: templates/project/board.html:197
 msgid "Error!"
 msgstr "¡Error!"
 
-#: templates/project/board.html:180
+#: templates/project/board.html:198
 msgid "Validation errors:"
 msgstr "Los errores de validación:"
 
-#: templates/project/story.html:11
+#: templates/project/story.html:10
 msgid "Not assigned"
 msgstr "No asignado"
+
+#: templates/story/comment.html:7
+msgid "Delete"
+msgstr "Eliminar"
 
 #: templates/story/details.html:4
 msgid "Story"
 msgstr "Historia"
 
-#: templates/story/details.html:106
-msgid "Details"
-msgstr "Detalles"
+#: templates/story/details.html:193
+msgid "Description"
+msgstr "Descripción"
 
-#: templates/story/details.html:107
+#: templates/story/details.html:196
+msgid "Tasks"
+msgstr "Tareas"
+
+#: templates/story/details.html:199
 msgid "Comments"
 msgstr "Comentarios"
 
-#: templates/story/details.html:108
-msgid "Files"
-msgstr "Archivos"
+#: templates/story/details.html:202
+msgid "Attachments"
+msgstr "Archivos adjuntos"
+
+#: templates/story/details.html:221
+msgid "Leave comment"
+msgstr "Dejar comentario"
+
+#~ msgid "Details"
+#~ msgstr "Detalles"
+
+#~ msgid "Files"
+#~ msgstr "Archivos"
 
 #~ msgid "process"
 #~ msgstr "proceso"

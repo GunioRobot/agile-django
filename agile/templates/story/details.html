@@ -40,9 +40,14 @@ span.ui-icon {
     float: left;
     margin-right: 7px;
 }
-.comment.ui-widget-content {
+.comment {
 	padding: 15px;
+    margin: 10px;
 }
+.task {
+    padding: 15px;
+    margin: 10px;
+} 
 .comment img {
     float: left;
     margin-right: 15px;
@@ -61,6 +66,10 @@ span.ui-icon {
     width: 600px;
     height: 300px;
 }
+#tabs {
+    min-height: 400px;
+}
+
 </style>
 {% endblock %}
 
@@ -188,7 +197,7 @@ $(function(){
     <div id="tabs">
         <ul>
             <li>
-                <a href="#details"><span class="ui-icon ui-icon-note"></span>{% trans 'Details' %}</a>
+                <a href="#details"><span class="ui-icon ui-icon-note"></span>{% trans 'Description' %}</a>
             </li>
             <li>
                 <a href="#tasks"><span class="ui-icon ui-icon-clipboard"></span>{% trans 'Tasks' %} (<span id="tasks-count">{{ story.tasks.all.count }}</span>)</a>
@@ -204,7 +213,8 @@ $(function(){
         <div id="details" data-description="{{ story.description }}">{{ story.description|markdown|linebreaksbr }}</div>
         <div id="tasks">
             {% for task in story.tasks.all.select_related %}
-            <div class="task">
+            <div class="task ui-widget-content ui-corner-all">
+                {{ task.description }}
             </div>
             {% endfor %}
         </div>
