@@ -149,10 +149,22 @@ def story_ajax(request, project_id, story_number, action=None):
         story.move(new_phase_id=new_phase_id, new_index=new_index)
         
     elif action == 'edit':
-        name = request.POST.get('name')
-        name = StoryForm.base_fields['name'].clean(name)
-        story.name = name 
-        story.save()
+        if request.POST.has_key('name'):
+            name = request.POST.get('name')
+            name = StoryForm.base_fields['name'].clean(name)
+            story.name = name
+            story.save()
+            
+        if request.POST.has_key('description'):
+            description = request.POST.get('description')
+            description = StoryForm.base_fields['description'].clean(description)
+            story.description = description
+            story.save()
+            return {
+                'html': render_to_string('story/description.html', {
+                    'story': story,
+                }, RequestContext(request)),
+            }
         
     elif action == 'comment':
         comment_form = CommentForm(request.POST)
@@ -162,7 +174,6 @@ def story_ajax(request, project_id, story_number, action=None):
             comment.story = story
             comment.save()
             return {
-                'success': True,
                 'html': render_to_string('story/comment.html', {
                     'comment': comment,
                 }, RequestContext(request)),
@@ -193,7 +204,6 @@ def story_add(request, project_id):
         story = story_form.save(commit=False)
         story.save()
         return {
-            'success': True,
             'html': render_to_string('project/story.html', {
                 'story': story,
             }, RequestContext(request)),

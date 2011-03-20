@@ -26,7 +26,10 @@ def render_to_json(function, **jsonargs):
             result = {
                 'success': True
             }
-            
+        if not result.has_key('success'):
+            result.update({
+                'success': True
+            })
         r.write(json.dumps(result, indent=indent, **jsonargs))
         return r
     return wrap

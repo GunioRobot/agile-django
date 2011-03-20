@@ -57,6 +57,10 @@ span.ui-icon {
 .comment:hover .comment-delete {
     display: inline-block;
 }
+#details textarea {
+    width: 600px;
+    height: 300px;
+}
 </style>
 {% endblock %}
 
@@ -128,7 +132,34 @@ $(function(){
         });
         
     });
-    gettext('Block')
+    
+    $('#details').dblclick(function(){
+        var $this = $(this);
+        var html = $this.html();
+        var markdown = $this.attr('data-description');
+        var number = $('#story').attr('data-number');
+        var $textarea = $('<textarea/>').val(markdown).blur(function(){
+            $.ajax({
+                url: '/project/' + PROJECT_ID + '/story/' + number + '/edit', 
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    'description': $textarea.val()
+                },
+                success: function(response){
+                    if(response.success){
+                        $this.html(response.html);
+                        $this.attr('data-description', $textarea.val());
+                    } else {
+                        $this.html(html);
+                    }
+                }
+            });
+            
+        });
+        $this.html($textarea);
+        $textarea.focus();
+    });
 });
 </script>
 {% endblock %}
@@ -170,7 +201,7 @@ $(function(){
             </li>
         </ul>
         
-        <div id="details">{{ story.description|markdown|linebreaksbr }}</div>
+        <div id="details" data-description="{{ story.description }}">{{ story.description|markdown|linebreaksbr }}</div>
         <div id="tasks">
             {% for task in story.tasks.all.select_related %}
             <div class="task">
