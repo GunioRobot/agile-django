@@ -29,6 +29,9 @@
                 {% else %}
                     <p>{% trans '(No description available)' %}</p>
                 {% endif %}
+                <br/>
+                <p>({{ project.stories.count }}) {% trans 'stories.' %}</p>
+                <p>({{ project.users.count }}) {% trans 'members.' %}</p>
                 <p style="text-align:right;">{% trans 'By' %} {{ project.owner }}</p>
             </div>
         </div>

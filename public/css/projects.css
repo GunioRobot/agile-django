@@ -1,8 +1,8 @@
 #sortable { list-style-type: none; width: auto; padding-bottom: 100px; margin: 0; padding: 0; }
-#sortable li { margin: 3px 3px 3px 0; padding: 1px; width: 400px; text-align: center; display:inline-block;}
-.portlet { margin: 0 1em 1em 0; height: 100px; }
-.portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; }
+#sortable li { margin: 3px 3px 3px 0; padding: 1px; width: 400px; text-align: left; display:inline-block;}
+.portlet { margin: 0 1em 1em 0; }
+.portlet-header { margin: 0.3em; padding: 4px 15px; }
 .portlet-header .ui-icon { float: right; }
-.portlet-content { padding: 0.4em; }
+.portlet-content { padding: 1.4em; }
 .ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
 .ui-sortable-placeholder * { visibility: hidden; }
