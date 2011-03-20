@@ -183,6 +183,7 @@ class Comment(models.Model):
     class Meta:
         verbose_name = _(u'comment')
         verbose_name_plural = _(u'comments')
+        ordering = ('datetime',)
 
 class Attachment(models.Model):
     user = models.ForeignKey(User, verbose_name=_(u'user'), related_name='attachments')

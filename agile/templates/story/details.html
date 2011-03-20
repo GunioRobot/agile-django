@@ -120,8 +120,9 @@ $(function(){
             success: function(response){
                 if(response.success){
                     $this.get(0).reset();
-                    var $comment = $(response.html);
+                    var $comment = $(response.html).hide();
                     $('#comments-container').append($comment);
+                    $comment.slideDown();
                     var $comments_count = $('#comments-count');
                     var comments_count = +$comments_count.text();
                     $comments_count.text(comments_count + 1);
