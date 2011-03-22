@@ -62,6 +62,9 @@ span.ui-icon {
 .comment:hover .comment-delete {
     display: inline-block;
 }
+#details {
+    padding: 20px;
+}
 #details textarea {
     width: 600px;
     height: 300px;
@@ -80,6 +83,11 @@ span.ui-icon {
 var PROJECT_ID = {{ story.project.id }};
 var STORY_NUMBER = {{ story.number }};
 $(function(){
+    function update_comments_count(){
+        var $comments_count = $('#comments-count');
+        $comments_count.text($('.comment').length);
+    }
+    /* Toolbar setup */
     $('#toolbar').toolbar({
         buttons: [
             {
@@ -98,8 +106,11 @@ $(function(){
         ]
     });
     
+    /* Phases setup */
     $('.ui-widget-content.phase').hover(function(){
-       $(this).toggleClass('ui-state-focus'); 
+       $(this).addClass('ui-state-hover'); 
+    }, function(){
+       $(this).removeClass('ui-state-hover'); 
     }).click(function(){
         var $this = $(this);
         var phase = $this.attr('data-id')
@@ -123,9 +134,7 @@ $(function(){
                     var $comment = $(response.html).hide();
                     $('#comments-container').append($comment);
                     $comment.slideDown();
-                    var $comments_count = $('#comments-count');
-                    var comments_count = +$comments_count.text();
-                    $comments_count.text(comments_count + 1);
+                    update_comments_count();
                     $comment.find('.button').button();
                 }
             }
@@ -144,6 +153,7 @@ $(function(){
                 if(response.success){
                     $comment.slideUp(function(){
                         $comment.remove();
+                        update_comments_count();
                     });
                 }
             }

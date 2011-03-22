@@ -16,10 +16,15 @@ jQuery(function($){
 				if (typeof val === "undefined")
 					return;
                 
-				if( val.uiIcon != undefined )
+				if(val.uiIcon != undefined)
 					txt = "<span class='ui-icon " + val.uiIcon + "'></span>";
                 
 				$("<button/>")
+                .hover(function(){
+                   $(this).addClass('ui-state-hover'); 
+                }, function(){
+                   $(this).removeClass('ui-state-hover'); 
+                })
 				.html(txt + val.name)
 				.bind('click', val.click)
 				.appendTo($elem)
@@ -32,6 +37,6 @@ jQuery(function($){
 			.first().addClass('ui-corner-left').end()
 			.last().addClass('ui-corner-right').end();
 			
-		})
+		});
 	}
-})
+});
