@@ -154,6 +154,13 @@ class Story(models.Model):
             self.number = (project.phases.aggregate(max=Max('stories__number'))['max'] or 0) + 1
             self.index = (self.phase.stories.aggregate(max=Max('index'))['max'] or 0) + 1
         super(Story, self).save(*args, **kwargs)
+        
+    @transaction.commit_on_success()
+    def delete(self, *args, **kwargs):
+        super(Story, self).delete(*args, **kwargs)
+        # FIXME: this code is being repeated
+        stories = self.phase.stories.all()
+        stories.filter(index__gt=self.index).update(index=F('index') - 1)
     
 class Tag(models.Model):
     story = models.ForeignKey('Story', verbose_name=_(u'story'), related_name='tags')
