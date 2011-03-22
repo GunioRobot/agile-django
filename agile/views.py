@@ -188,6 +188,9 @@ def story_ajax(request, project_id, story_number, action=None):
                 'success': False,
                 'error': errors, 
             }
+    
+    elif action == 'delete':
+        story.delete()
         
 
 

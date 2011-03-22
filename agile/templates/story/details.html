@@ -101,7 +101,19 @@ $(function(){
             },{
                 name: gettext('Delete'),
                 uiIcon: 'ui-icon-cancel',
-                click: function(){}
+                click: function(){
+                    $.ajax({
+                        url: '/project/' + PROJECT_ID + '/story/' + STORY_NUMBER + '/delete',
+                        dataType: 'json',
+                        type: 'post',
+                        success: function(response){
+                            if(response.success){
+                                window.location = '..';
+                            }
+                        }
+                    });
+                    
+                }
             }
         ]
     });
