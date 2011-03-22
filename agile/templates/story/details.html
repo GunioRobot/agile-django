@@ -78,6 +78,7 @@ span.ui-icon {
 <script type="text/javascript" src="{{ MEDIA_URL }}agile/js/jquery-ui.toolbar.js"></script>
 <script type="text/javascript">
 var PROJECT_ID = {{ story.project.id }};
+var STORY_NUMBER = {{ story.number }};
 $(function(){
     $('#toolbar').toolbar({
         buttons: [
@@ -102,8 +103,7 @@ $(function(){
     }).click(function(){
         var $this = $(this);
         var phase = $this.attr('data-id')
-        var number = $('#story').attr('data-number');
-        move_story(number, phase, function(){
+        move_story(STORY_NUMBER, phase, function(){
             var $phases = $this.parent().find('.phase');
             $phases.removeClass('ui-state-default ui-state-active');
             $this.addClass('ui-state-active');
@@ -136,10 +136,20 @@ $(function(){
         var $this = $(this);
         var $comment = $this.parents('.comment');
         var id = $comment.attr('data-id');
-        console.log(id)
-        $comment.slideUp(function(){
-            $comment.remove();
-        });
+        $.ajax({
+            url: '/project/' + PROJECT_ID + '/story/' + STORY_NUMBER + '/comment/' + id + '/delete',
+            dataType: 'json',
+            type: 'post',
+            success: function(response){
+                if(response.success){
+                    $comment.slideUp(function(){
+                        $comment.remove();
+                    });
+                }
+            }
+            
+        })
+        
         
     });
     
@@ -147,10 +157,9 @@ $(function(){
         var $this = $(this);
         var html = $this.html();
         var markdown = $this.attr('data-description');
-        var number = $('#story').attr('data-number');
         var $textarea = $('<textarea/>').val(markdown).blur(function(){
             $.ajax({
-                url: '/project/' + PROJECT_ID + '/story/' + number + '/edit', 
+                url: '/project/' + PROJECT_ID + '/story/' + STORY_NUMBER + '/edit', 
                 type: 'post',
                 dataType: 'json',
                 data: {

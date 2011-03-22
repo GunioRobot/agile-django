@@ -12,6 +12,8 @@ urlpatterns = patterns('agile.views',
     url(r'^project/(?P<project_id>\d+)/story/(?P<story_number>\d+)/?$', 'story', name='agile_story'),
     url(r'^project/(?P<project_id>\d+)/story/(?P<story_number>\d+)/(?P<action>(move|edit|comment))/?$', 'story_ajax', name='agile_story_ajax'),
     url(r'^project/(?P<project_id>\d+)/story/add/?$', 'story_add', name='agile_story_add'),
+    
+    url(r'^project/(?P<project_id>\d+)/story/(?P<story_number>\d+)/comment/(?P<comment_id>\d+)/(?P<action>(delete|edit))/?$', 'comment', name='agile_comment'),
 
 )
 
