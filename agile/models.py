@@ -43,7 +43,8 @@ class Phase(models.Model):
     index = models.PositiveIntegerField(_(u'index'))
     description = models.TextField(_(u'description'), blank=True)
     limit = models.PositiveIntegerField(_(u'limit'), blank=True, null=True)
-    deletable = models.BooleanField(_(u'deletable'), default=True)
+    is_backlog = models.BooleanField(_(u'is backlog'), default=False)
+    is_archive = models.BooleanField(_(u'is archive'), default=False)
     
     class Meta:
         verbose_name = _(u'phase')
@@ -276,7 +277,7 @@ def create_project(sender, instance, created, **kwargs):
         phases.create(
             index=0,
             name=_(u'Backlog'),
-            deletable=False,
+            is_backlog=True,
         )
         phases.create(
             index=1,
@@ -293,7 +294,7 @@ def create_project(sender, instance, created, **kwargs):
         phases.create(
             index=4,
             name=_(u'Archive'),
-            deletable=False,
+            is_archive=True,
         )
         
 post_save.connect(create_project, sender=Project)
