@@ -196,8 +196,9 @@ class Comment(models.Model):
 class Attachment(models.Model):
     user = models.ForeignKey(User, verbose_name=_(u'user'), related_name='attachments')
     story = models.ForeignKey('Story', verbose_name=_(u'story'), related_name='attachments')
+    description = models.CharField(_(u'description'), max_length=50)
     datetime = models.DateTimeField(_(u'datetime'), auto_now=True)
-    file = models.CharField(max_length=100)
+    file = models.FileField(upload_to='attachments')
         
     class Meta:
         verbose_name = _(u'attachment')

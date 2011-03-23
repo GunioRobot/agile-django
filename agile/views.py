@@ -9,6 +9,7 @@ from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 from django.template import RequestContext
 from django.db import transaction
+from django.views.decorators.cache import never_cache
 
 from agile.forms import *
 from agile.models import *

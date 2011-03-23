@@ -69,6 +69,9 @@ span.ui-icon {
     width: 600px;
     height: 300px;
 }
+#details ul, #details ol {
+    padding-left: 40px;
+}
 #tabs {
     min-height: 400px;
 }
@@ -242,7 +245,7 @@ $(function(){
             </li>
         </ul>
         
-        <div id="details" data-description="{{ story.description }}">{{ story.description|markdown|linebreaksbr }}</div>
+        <div id="details" data-description="{{ story.description }}">{{ story.description|markdown }}</div>
         <div id="tasks">
             {% for task in story.tasks.all.select_related %}
             <div class="task ui-widget-content ui-corner-all">
@@ -264,6 +267,7 @@ $(function(){
         <div id="attachments">
             {% for attachment in story.attachments.all.select_related %}
             <div class="attach">
+                <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
             </div>
             {% endfor %}
         </div>
