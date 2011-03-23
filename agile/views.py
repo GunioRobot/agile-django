@@ -11,6 +11,8 @@ from django.template import RequestContext
 from django.db import transaction
 from django.views.decorators.cache import never_cache
 
+from gravatar.templatetags.gravatar import gravatar
+
 from agile.forms import *
 from agile.models import *
 from agile.decorators import *
@@ -167,6 +169,24 @@ def story_ajax(request, project_id, story_number, action=None):
                 'html': render_to_string('story/description.html', {
                     'story': story,
                 }, RequestContext(request)),
+            }
+        
+        if request.POST.has_key('owner'):
+            owner = request.POST.get('owner')
+            owner = StoryForm.base_fields['owner'].clean(owner)
+            story.owner = owner
+            story.save()
+            return {
+                'img': gravatar(owner, size=30) if owner else '',
+            }
+            
+        if request.POST.has_key('creator'):
+            creator = request.POST.get('creator')
+            creator = StoryForm.base_fields['creator'].clean(creator)
+            story.creator = creator
+            story.save()
+            return {
+                'img': gravatar(creator, size=30) if creator else '',
             }
         
     elif action == 'comment':

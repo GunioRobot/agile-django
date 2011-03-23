@@ -89,12 +89,15 @@
     display: table-cell;
     vertical-align: middle;
 }
-.user img {
-    float: left;
-    padding: 0 12px 0 0;
-}
 .user select {
     width: 200px;
+}
+.user .gravatar {
+    float: left;
+    width: 30px;
+    height: 30px;
+    padding: 1px;
+    margin: 0 12px 0 0;
 }
 </style>
 {% endblock %}
@@ -224,6 +227,43 @@ $(function(){
         $this.html($textarea);
         $textarea.focus();
     });
+    
+   /* Select Creator */
+   $('#id_owner').change(function(){
+       var $this = $(this);
+       $.ajax({
+            url: '/project/' + PROJECT_ID + '/story/' + STORY_NUMBER + '/edit', 
+            type: 'post',
+            dataType: 'json',
+            data: {
+                'owner': $this.val()
+            },
+            success: function(response){
+                if(response.success){
+                    $('#owner .gravatar').html(response.img)
+                }
+            }
+        });
+   });
+   
+   /* Select Owner */
+   $('#id_creator').change(function(){
+       var $this = $(this);
+       $.ajax({
+            url: '/project/' + PROJECT_ID + '/story/' + STORY_NUMBER + '/edit', 
+            type: 'post',
+            dataType: 'json',
+            data: {
+                'creator': $this.val()
+            },
+            success: function(response){
+                if(response.success){
+                    $('#creator .gravatar').html(response.img)
+                }
+            }
+        });
+   });
+   
 });
 </script>
 {% endblock %}
@@ -238,15 +278,19 @@ $(function(){
         {% endfor %}
     </div>
     <div id="creator" class="user ui-widget-content">
+        <div class="gravatar ui-widget-content">
         {% if story.creator %}
-            {% gravatar story.creator 32 %}
+            {% gravatar story.creator 30 %}
         {% endif %}
+        </div>
         {{ story_form.creator }}
     </div>
     <div id="owner" class="user ui-widget-content">
+        <div class="gravatar ui-widget-content">
         {% if story.owner %}
-            {% gravatar story.owner 32 %}
+            {% gravatar story.owner 30 %}
         {% endif %}
+        </div>
         {{ story_form.owner }}
     </div>
     <div id="toolbar"></div>
