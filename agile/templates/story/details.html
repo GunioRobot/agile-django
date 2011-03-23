@@ -36,10 +36,6 @@
 .comment-user {
     font-size: 85%;
 }
-span.ui-icon {
-    float: left;
-    margin-right: 7px;
-}
 .comment {
 	padding: 15px;
     margin: 10px;
@@ -75,7 +71,31 @@ span.ui-icon {
 #tabs {
     min-height: 400px;
 }
-
+#tabs ul li a span.ui-icon {
+    float: left;
+    margin-right: 7px;
+}
+.tag {
+    padding: 4px 0 2px 4px;
+    font-size: 95%;
+    display: inline-block;
+}
+.tag span.ui-icon {
+    float: right;
+    margin-top: -1px;
+}
+.user {
+    padding: 12px;
+    display: table-cell;
+    vertical-align: middle;
+}
+.user img {
+    float: left;
+    padding: 0 12px 0 0;
+}
+.user select {
+    width: 200px;
+}
 </style>
 {% endblock %}
 
@@ -214,8 +234,20 @@ $(function(){
     <div id="story-name" class="ui-widget-content">{{ story.name }}</div>
     <div id="tags" class="ui-widget-content">
         {% for tag in story.tags.all.select_related %}
-            {{ tag.name }}
+            <div class="tag ui-widget-content ui-corner-all" data-id="{{ tag.id }}">{{ tag.name }}<span class="ui-icon ui-icon-close"></span></div>
         {% endfor %}
+    </div>
+    <div id="creator" class="user ui-widget-content">
+        {% if story.creator %}
+            {% gravatar story.creator 32 %}
+        {% endif %}
+        {{ story_form.creator }}
+    </div>
+    <div id="owner" class="user ui-widget-content">
+        {% if story.owner %}
+            {% gravatar story.owner 32 %}
+        {% endif %}
+        {{ story_form.owner }}
     </div>
     <div id="toolbar"></div>
     <div id="phases">
