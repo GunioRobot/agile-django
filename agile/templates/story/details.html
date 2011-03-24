@@ -108,6 +108,7 @@
 <script type="text/javascript">
 var PROJECT_ID = {{ story.project.id }};
 var STORY_NUMBER = {{ story.number }};
+var STORY_EDIT_URL = '/project/' + PROJECT_ID + '/story/' + STORY_NUMBER + '/edit';
 $(function(){
     function update_comments_count(){
         var $comments_count = $('#comments-count');
@@ -207,7 +208,7 @@ $(function(){
         var markdown = $this.attr('data-description');
         var $textarea = $('<textarea/>').val(markdown).blur(function(){
             $.ajax({
-                url: '/project/' + PROJECT_ID + '/story/' + STORY_NUMBER + '/edit', 
+                url: STORY_EDIT_URL,
                 type: 'post',
                 dataType: 'json',
                 data: {
@@ -227,38 +228,21 @@ $(function(){
         $this.html($textarea);
         $textarea.focus();
     });
-    
-   /* Select Creator */
-   $('#id_owner').change(function(){
+       
+   /* Select Creator, Owner */
+   $('#id_creator, #id_owner').change(function(){
+       var user = this.id.slice(3);
        var $this = $(this);
+       var data = {};
+       data[user] = $this.val();
        $.ajax({
-            url: '/project/' + PROJECT_ID + '/story/' + STORY_NUMBER + '/edit', 
+            url: STORY_EDIT_URL, 
             type: 'post',
             dataType: 'json',
-            data: {
-                'owner': $this.val()
-            },
+            data: data,
             success: function(response){
                 if(response.success){
-                    $('#owner .gravatar').html(response.img)
-                }
-            }
-        });
-   });
-   
-   /* Select Owner */
-   $('#id_creator').change(function(){
-       var $this = $(this);
-       $.ajax({
-            url: '/project/' + PROJECT_ID + '/story/' + STORY_NUMBER + '/edit', 
-            type: 'post',
-            dataType: 'json',
-            data: {
-                'creator': $this.val()
-            },
-            success: function(response){
-                if(response.success){
-                    $('#creator .gravatar').html(response.img)
+                    $this.prev().html(response.html);
                 }
             }
         });
