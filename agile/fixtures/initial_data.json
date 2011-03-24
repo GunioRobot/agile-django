@@ -441,7 +441,7 @@
    "is_active": true, 
    "is_superuser": true, 
    "is_staff": true, 
-   "last_login": "2011-03-22 15:19:39", 
+   "last_login": "2011-03-23 20:01:18", 
    "groups": [], 
    "user_permissions": [], 
    "password": "sha1$30c75$b7cc017b2a168db3281c26c2735738ebd1865a12", 
@@ -481,7 +481,7 @@
    "groups": [], 
    "user_permissions": [], 
    "password": "sha1$47cde$831b8b60a92edf1541049d63f160b6ed037b23f9", 
-   "email": "", 
+   "email": "user2@example.com", 
    "date_joined": "2011-03-04 12:56:24"
   }
  }, 
@@ -499,7 +499,7 @@
    "groups": [], 
    "user_permissions": [], 
    "password": "sha1$2c52c$5800be5db4d7f7f8c1523c4ad21025eb2ecbdd08", 
-   "email": "", 
+   "email": "user3@example.com", 
    "date_joined": "2011-03-04 12:56:30"
   }
  }, 
@@ -508,7 +508,7 @@
   "model": "auth.user", 
   "fields": {
    "username": "user4", 
-   "first_name": "", 
+   "first_name": "User4", 
    "last_name": "", 
    "is_active": true, 
    "is_superuser": false, 
@@ -517,7 +517,7 @@
    "groups": [], 
    "user_permissions": [], 
    "password": "sha1$7ba97$66e26edc37daf0d64e36a7061ac481c71eaa53bc", 
-   "email": "", 
+   "email": "user4@example.com", 
    "date_joined": "2011-03-04 12:56:35"
   }
  }, 
@@ -528,8 +528,14 @@
    "owner": 1, 
    "is_active": true, 
    "name": "Project 1", 
-   "members": [], 
-   "description": ""
+   "members": [
+    1, 
+    2, 
+    3, 
+    4, 
+    5
+   ], 
+   "description": "Test project for AgileDjango project."
   }
  }, 
  {
@@ -619,11 +625,11 @@
   "fields": {
    "index": 0, 
    "description": "", 
-   "creator": null, 
+   "creator": 3, 
    "color": "ffffff", 
    "created_at": "2011-03-10 07:09:45", 
    "number": 3, 
-   "owner": null, 
+   "owner": 5, 
    "phase": 1, 
    "blocked": "", 
    "name": "C"
@@ -635,11 +641,11 @@
   "fields": {
    "index": 0, 
    "description": "This is a title\r\n========\r\n\r\n**Supports Markdown**\r\n\r\n\r\n*Test Story*\r\n\r\n", 
-   "creator": null, 
+   "creator": 4, 
    "color": "ffffff", 
    "created_at": "2011-03-10 07:09:54", 
    "number": 4, 
-   "owner": null, 
+   "owner": 2, 
    "phase": 2, 
    "blocked": "", 
    "name": "D Long name Long name Long name Long name Long name Long name Long name Long name Long name Long nam"
@@ -679,12 +685,92 @@
  }, 
  {
   "pk": 1, 
+  "model": "agile.tag", 
+  "fields": {
+   "story": 4, 
+   "name": "design"
+  }
+ }, 
+ {
+  "pk": 2, 
+  "model": "agile.tag", 
+  "fields": {
+   "story": 4, 
+   "name": "new-feature"
+  }
+ }, 
+ {
+  "pk": 3, 
+  "model": "agile.tag", 
+  "fields": {
+   "story": 3, 
+   "name": "sprint-1"
+  }
+ }, 
+ {
+  "pk": 4, 
+  "model": "agile.tag", 
+  "fields": {
+   "story": 1, 
+   "name": "sprint-1"
+  }
+ }, 
+ {
+  "pk": 5, 
+  "model": "agile.tag", 
+  "fields": {
+   "story": 5, 
+   "name": "sprint-2"
+  }
+ }, 
+ {
+  "pk": 1, 
+  "model": "agile.task", 
+  "fields": {
+   "index": 0, 
+   "story": 4, 
+   "description": "Design all the whole site.", 
+   "finished_at": "2011-03-23 19:00:05"
+  }
+ }, 
+ {
+  "pk": 2, 
+  "model": "agile.task", 
+  "fields": {
+   "index": 1, 
+   "story": 4, 
+   "description": "Implement site.", 
+   "finished_at": null
+  }
+ }, 
+ {
+  "pk": 2, 
+  "model": "agile.comment", 
+  "fields": {
+   "text": "Another comment", 
+   "story": 4, 
+   "user": 1, 
+   "datetime": "2011-03-23 20:02:27"
+  }
+ }, 
+ {
+  "pk": 1, 
   "model": "agile.comment", 
   "fields": {
    "text": "Nicely done!", 
    "story": 4, 
    "user": 2, 
-   "datetime": "2011-03-18 08:26:38"
+   "datetime": "2011-03-23 20:02:40"
+  }
+ }, 
+ {
+  "pk": 3, 
+  "model": "agile.comment", 
+  "fields": {
+   "text": "Testing", 
+   "story": 4, 
+   "user": 5, 
+   "datetime": "2011-03-23 20:02:52"
   }
  }, 
  {

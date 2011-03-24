@@ -175,7 +175,7 @@ class Task(models.Model):
     index = models.PositiveIntegerField(_(u'index'))
     story = models.ForeignKey('Story', verbose_name=_(u'story'), related_name='tasks')
     description = models.TextField(_(u'description'))
-    finished_at = models.DateTimeField(_(u'finished at'), blank=True)
+    finished_at = models.DateTimeField(_(u'finished at'), blank=True, null=True)
       
     class Meta:
         verbose_name = _(u'task')
