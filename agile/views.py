@@ -154,39 +154,33 @@ def story_ajax(request, project_id, story_number, action=None):
         story.move(new_phase_id=new_phase_id, new_index=new_index)
         
     elif action == 'edit':
-        if request.POST.has_key('name'):
-            name = request.POST.get('name')
-            name = StoryForm.base_fields['name'].clean(name)
-            story.name = name
+        story_form = StoryForm(project=project)
+        def change_value(key):
+            value = request.POST.get(key)
+            value = story_form.fields[key].clean(value)
+            setattr(story, key, value)
             story.save()
+        
+        if request.POST.has_key('name'):
+            change_value('name')
             
         if request.POST.has_key('description'):
-            description = request.POST.get('description')
-            description = StoryForm.base_fields['description'].clean(description)
-            story.description = description
-            story.save()
+            change_value('description')
             return {
                 'html': render_to_string('story/description.html', {
                     'story': story,
                 }, RequestContext(request)),
             }
         
-        if request.POST.has_key('owner'):
-            owner = request.POST.get('owner')
-            owner = StoryForm.base_fields['owner'].clean(owner)
-            story.owner = owner
-            story.save()
+        if request.POST.has_key('owner') or request.POST.has_key('creator'):
+            if request.POST.has_key('owner'):
+                key = 'owner'
+            elif request.POST.has_key('creator'):
+                key = 'creator'
+            change_value(key)
+            user = getattr(story, key)
             return {
-                'img': gravatar(owner, size=30) if owner else '',
-            }
-            
-        if request.POST.has_key('creator'):
-            creator = request.POST.get('creator')
-            creator = StoryForm.base_fields['creator'].clean(creator)
-            story.creator = creator
-            story.save()
-            return {
-                'img': gravatar(creator, size=30) if creator else '',
+                'html': gravatar(user, size=30) if user else '',
             }
         
     elif action == 'comment':
