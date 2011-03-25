@@ -99,6 +99,18 @@
     padding: 1px;
     margin: 0 12px 0 0;
 }
+.task .ui-icon-arrow-4 {
+    float: left;
+    margin: 0 15px 0 0;
+    cursor: move;
+}
+.task .ui-icon-circle-close {
+    float: right;
+    cursor: pointer;
+}
+.task-description.task-finished {
+    text-decoration: line-through;
+}
 </style>
 {% endblock %}
 
@@ -309,7 +321,16 @@ $(function(){
         <div id="tasks">
             {% for task in story.tasks.all.select_related %}
             <div class="task ui-widget-content ui-corner-all">
-                {{ task.description }}
+                <span class="ui-icon ui-icon-arrow-4"></span>
+                {% if task.finished_at %}
+                    <input type="checkbox" checked="checked" />
+                    <span class="task-description task-finished ui-state-disabled">{{ task.description }}</span>
+                    <span class="ui-state-disabled">({{ task.finished_by.agile_get_name }} @ {{ task.finished_at }})</span>
+                {% else %}
+                    <input type="checkbox" />
+                    <span class="task-description">{{ task.description }}</span>
+                {% endif %}
+                <span class="ui-icon ui-icon-circle-close"></span>
             </div>
             {% endfor %}
         </div>
