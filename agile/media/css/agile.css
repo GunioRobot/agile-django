@@ -127,3 +127,20 @@ span.error {
 #add-story-form-errors {
     display: none;    
 }
+
+ul#bar-menu {
+    list-style: none;
+    height: 20px;
+    padding: 0 15px;
+}
+ul#bar-menu li {
+    float: left;
+    padding: 0 4px;
+}
+ul#bar-menu li a {
+    font-size: 12px;
+    text-decoration: none;
+}
+ul#bar-menu li.current a {
+    font-weight: bold;
+}

@@ -2,22 +2,14 @@
 {% load i18n %}
 
 {% block menu %}
-<style type="text/css">
-ul#bar-menu {
-    list-style: none;
-    height: 20px;
-    padding: 0 15px;
-}
-ul#bar-menu li {
-    float: left;
-    padding: 0 4px;
-}
-</style>
 <ul id="bar-menu" class="ui-widget-content">
-    <li><a href="#">{% trans 'Details' %}</a></li>
+    {% block menu_details %}<li><a href="#">{% trans 'Details' %}</a></li>{% endblock %}
+    {% block menu_stories %}<li><a href="{{ project.get_url }}">{% trans 'Stories' %}</a></li>{% endblock %}
+    {% if user.is_superuser %}
+    {% block menu_phases %}<li><a href="{{ project.get_phases_url }}">{% trans 'Phases' %}</a></li>{% endblock %}
+    {% endif %}
+    <li>|</li>
     <li><a id="add-story" href="javascript:;">{% trans 'Add story' %}</a></li>
-    <li><a href="{{ project.get_url }}">{% trans 'Stories' %}</a></li>
-    <li><a href="{{ project.get_phases_url }}">{% trans 'Phases' %}</a></li>
 </ul>
 {% endblock %}
 
