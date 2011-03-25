@@ -149,6 +149,7 @@ def story(request, project_id, story_number):
     story_form = StoryForm(instance=story, project=project)
     
     return render_to_response('story/details.html', RequestContext(request, {
+        'project': project,
         'story': story,
         'story_form': story_form,
         'comment_form': comment_form,

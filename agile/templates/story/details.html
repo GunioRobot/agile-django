@@ -1,7 +1,7 @@
 {% extends 'project/base.html' %}
 {% load i18n markup gravatar %}
 
-{% block title %}{% trans 'Story' %} #{{ story.number }} -  {{ story.project.name }} - {{ block.super }}{% endblock %}
+{% block title %}{% trans 'Story' %} #{{ story.number }} -  {{ project.name }} - {{ block.super }}{% endblock %}
 
 {% block css %}
 {{ block.super }}
@@ -121,9 +121,12 @@
 {{ block.super }}
 <script type="text/javascript" src="{{ MEDIA_URL }}agile/js/jquery-ui.toolbar.js"></script>
 <script type="text/javascript">
-var PROJECT_ID = {{ story.project.id }};
+var PROJECT_ID = {{ project.id }};
 var STORY_NUMBER = {{ story.number }};
-var STORY_EDIT_URL = '/project/' + PROJECT_ID + '/story/' + STORY_NUMBER + '/edit';
+var PROJECT_URL = '/project/' + PROJECT_ID;
+var STORY_BASE_URL = PROJECT_URL + '/story/' + STORY_NUMBER;
+var STORY_EDIT_URL = STORY_BASE_URL + '/edit';
+var STORY_DELETE_URL = STORY_BASE_URL + '/delete';
 $(function(){
     function update_comments_count(){
         var $comments_count = $('#comments-count');
@@ -145,12 +148,12 @@ $(function(){
                 uiIcon: 'ui-icon-cancel',
                 click: function(){
                     $.ajax({
-                        url: '/project/' + PROJECT_ID + '/story/' + STORY_NUMBER + '/delete',
+                        url: STORY_DELETE_URL,
                         dataType: 'json',
                         type: 'post',
                         success: function(response){
                             if(response.success){
-                                window.location = '..';
+                                window.location = PROJECT_URL;
                             }
                         }
                     });
@@ -336,7 +339,7 @@ $(function(){
         <table>
             <tbody>
                 <tr>
-                {% for phase in story.project.phases.all %}
+                {% for phase in project.phases.all %}
                     <td class="ui-widget-content phase{% if phase.index < story.phase.index %} ui-state-default{% endif %}{% if phase == story.phase %} ui-state-active{% endif %}" data-id="{{ phase.id }}">{{ phase.name }}</td>
                 {% endfor %}
                 </tr>
@@ -408,5 +411,4 @@ $(function(){
         </div>
     </div>
 </div>
-<a href="{{ story.project.get_url }}">go back</a>
 {% endblock %}
