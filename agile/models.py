@@ -170,6 +170,18 @@ class Tag(models.Model):
     class Meta:
         verbose_name = _(u'tag')
         verbose_name_plural = _(u'tags')
+
+class TaskManager(models.Manager):
+    
+    def finished(self):
+        return self.filter(finished_at__isnull=False)
+    
+    def get_percentage_finished(self):
+        # We will need to iterate over the elements
+        # that's the reason for use len() instead count()
+        total = float(len(self.all()))
+        finished = float(len(self.finished()))
+        return '%s%%' % int(finished / total * 100)
     
 class Task(models.Model):
     index = models.PositiveIntegerField(_(u'index'))
@@ -177,6 +189,8 @@ class Task(models.Model):
     description = models.TextField(_(u'description'))
     finished_at = models.DateTimeField(_(u'finished at'), blank=True, null=True)
     finished_by = models.ForeignKey(User, verbose_name=_(u'user'), related_name='finished_tasks', blank=True, null=True)
+    
+    objects = TaskManager()
       
     class Meta:
         verbose_name = _(u'task')
