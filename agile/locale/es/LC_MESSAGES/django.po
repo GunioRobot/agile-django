@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-20 13:43-0600\n"
-"PO-Revision-Date: 2011-03-20 14:43\n"
-"Last-Translator: Andres Torres <andres@mydomedia.com>\n"
+"POT-Creation-Date: 2011-03-25 14:40-0600\n"
+"PO-Revision-Date: 2011-03-25 15:41\n"
+"Last-Translator: admin  <admin@example.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,15 +18,15 @@ msgstr ""
 "X-Translated-Using: django-rosetta 0.5.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: models.py:16 models.py:42 models.py:61 models.py:160 models.py:236
+#: models.py:16 models.py:42 models.py:62 models.py:168 models.py:258
 msgid "name"
 msgstr "nombre"
 
-#: models.py:17 models.py:44 models.py:62 models.py:169
+#: models.py:17 models.py:44 models.py:63 models.py:187 models.py:212
 msgid "description"
 msgstr "descripción"
 
-#: models.py:18 models.py:65
+#: models.py:18 models.py:66
 msgid "owner"
 msgstr "propietario"
 
@@ -42,7 +42,7 @@ msgstr "proyecto"
 msgid "projects"
 msgstr "proyectos"
 
-#: models.py:43 models.py:60 models.py:167
+#: models.py:43 models.py:61 models.py:185
 msgid "index"
 msgstr "índice"
 
@@ -51,134 +51,138 @@ msgid "limit"
 msgstr "límite"
 
 #: models.py:46
-msgid "deletable"
-msgstr "eliminable"
+msgid "is backlog"
+msgstr "es backlog"
 
-#: models.py:49 models.py:63
+#: models.py:47
+msgid "is archive"
+msgstr "es archivo"
+
+#: models.py:50 models.py:64
 msgid "phase"
 msgstr "fase"
 
-#: models.py:50
+#: models.py:51
 msgid "phases"
 msgstr "fases"
 
-#: models.py:59
+#: models.py:60
 msgid "number"
 msgstr "número"
 
-#: models.py:64
+#: models.py:65
 msgid "creator"
 msgstr "creador"
 
-#: models.py:66
+#: models.py:67
 msgid "created at"
 msgstr "creado en"
 
-#: models.py:68
+#: models.py:69
 msgid "color"
 msgstr "color"
 
-#: models.py:71 models.py:159 models.py:168 models.py:179 models.py:190
+#: models.py:72 models.py:167 models.py:186 models.py:200 models.py:211
 msgid "story"
 msgstr "historia"
 
-#: models.py:72
+#: models.py:73
 msgid "stories"
 msgstr "historias"
 
-#: models.py:163
+#: models.py:171
 msgid "tag"
 msgstr "etiqueta"
 
-#: models.py:164
+#: models.py:172
 msgid "tags"
 msgstr "etiquetas"
 
-#: models.py:170
+#: models.py:188
 msgid "finished at"
 msgstr "terminó en"
 
-#: models.py:173
-msgid "task"
-msgstr "tarea"
-
-#: models.py:174
-msgid "tasks"
-msgstr "tareas"
-
-#: models.py:178 models.py:189 models.py:227 models.py:235
+#: models.py:189 models.py:199 models.py:210 models.py:249 models.py:257
 msgid "user"
 msgstr "usuario"
 
-#: models.py:180 models.py:191
+#: models.py:194
+msgid "task"
+msgstr "tarea"
+
+#: models.py:195
+msgid "tasks"
+msgstr "tareas"
+
+#: models.py:201 models.py:213
 msgid "datetime"
 msgstr "fecha y hora"
 
-#: models.py:181
+#: models.py:202
 msgid "text"
 msgstr "texto"
 
-#: models.py:184
+#: models.py:205
 msgid "comment"
 msgstr "comentario"
 
-#: models.py:185
+#: models.py:206
 msgid "comments"
 msgstr "comentarios"
 
-#: models.py:195
+#: models.py:217
 msgid "attachment"
 msgstr "archivo adjunto"
 
-#: models.py:196
+#: models.py:218
 msgid "attachments"
 msgstr "archivos adjuntos"
 
-#: models.py:228
+#: models.py:250
 msgid "jQuery UI Theme"
 msgstr "Tema jQuery UI "
 
-#: models.py:231
+#: models.py:253
 msgid "user profile"
 msgstr "perfil del usuario"
 
-#: models.py:232
+#: models.py:254
 msgid "user profiles"
 msgstr "perfiles de usuario"
 
-#: models.py:237
+#: models.py:259
 msgid "query"
 msgstr "consulta"
 
-#: models.py:238
+#: models.py:260
 msgid "shared"
 msgstr "compartida"
 
-#: models.py:241
+#: models.py:263
 msgid "filter"
 msgstr "filtro"
 
-#: models.py:242
+#: models.py:264
 msgid "filters"
 msgstr "filtros"
 
-#: models.py:271
+#: models.py:293
 msgid "Backlog"
 msgstr "Backlog"
 
-#: models.py:276
+#: models.py:298
 msgid "Ready"
 msgstr "Listo"
 
-#: models.py:280
+#: models.py:302
 msgid "Working"
 msgstr "Trabajando"
 
-#: models.py:284
+#: models.py:306
 msgid "Complete"
 msgstr "Completado"
 
-#: models.py:288
+#: models.py:310
 msgid "Archive"
 msgstr "Archivo"
 
@@ -236,7 +240,7 @@ msgstr "El formulario se guardó correctamente."
 
 #: templates/profile/profile.html:36 templates/profile/profile.html.py:51
 #: templates/profile/profile.html:66 templates/project/add.html:47
-#: templates/project/board.html:202
+#: templates/project/board.html:203
 msgid "Submit"
 msgstr "Enviar"
 
@@ -264,15 +268,15 @@ msgstr "Por"
 msgid "Board"
 msgstr "Tablero"
 
-#: templates/project/board.html:178
+#: templates/project/board.html:179
 msgid "Add story"
 msgstr "Añadir historia"
 
-#: templates/project/board.html:197
+#: templates/project/board.html:198
 msgid "Error!"
 msgstr "¡Error!"
 
-#: templates/project/board.html:198
+#: templates/project/board.html:199
 msgid "Validation errors:"
 msgstr "Los errores de validación:"
 
@@ -288,25 +292,40 @@ msgstr "Eliminar"
 msgid "Story"
 msgstr "Historia"
 
-#: templates/story/details.html:201
+#: templates/story/details.html:349
 msgid "Description"
 msgstr "Descripción"
 
-#: templates/story/details.html:204
+#: templates/story/details.html:352
 msgid "Tasks"
 msgstr "Tareas"
 
-#: templates/story/details.html:207
+#: templates/story/details.html:354
+msgid "of"
+msgstr "de"
+
+#: templates/story/details.html:361
 msgid "Comments"
 msgstr "Comentarios"
 
-#: templates/story/details.html:210
+#: templates/story/details.html:364
 msgid "Attachments"
 msgstr "Archivos adjuntos"
 
-#: templates/story/details.html:230
+#: templates/story/details.html:372
+msgid "Add Task"
+msgstr "Añadir Tarea"
+
+#: templates/story/details.html:394
+msgid "This story has no comments yet."
+msgstr "Esta historia no tiene ningún comentario."
+
+#: templates/story/details.html:399
 msgid "Leave comment"
 msgstr "Dejar comentario"
+
+#~ msgid "deletable"
+#~ msgstr "eliminable"
 
 #~ msgid "Details"
 #~ msgstr "Detalles"
