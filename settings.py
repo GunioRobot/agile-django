@@ -122,7 +122,7 @@ if DEBUG:
     
     MIDDLEWARE_CLASSES += (
         #'debug_toolbar.middleware.DebugToolbarMiddleware',
-        'agile.middleware.ColorSQLMiddleware',
+        #'agile.middleware.ColorSQLMiddleware',
     )
     
     LOG_COLORSQL_VERBOSE = True
