@@ -40,10 +40,6 @@
 	padding: 15px;
     margin: 10px;
 }
-.task {
-    padding: 15px;
-    margin: 10px;
-} 
 .comment img {
     float: left;
     margin-right: 15px;
@@ -99,6 +95,10 @@
     padding: 1px;
     margin: 0 12px 0 0;
 }
+.task {
+    padding: 15px;
+    margin: 10px;
+} 
 .task .ui-icon-arrow-4 {
     float: left;
     margin: 0 15px 0 0;
@@ -110,6 +110,9 @@
 }
 .task-description.task-finished {
     text-decoration: line-through;
+}
+.task-placeholder {
+    margin: 10px;
 }
 </style>
 {% endblock %}
@@ -241,25 +244,42 @@ $(function(){
         $textarea.focus();
     });
        
-   /* Select Creator, Owner */
-   $('#id_creator, #id_owner').change(function(){
-       var user = this.id.slice(3);
-       var $this = $(this);
-       var data = {};
-       data[user] = $this.val();
-       $.ajax({
-            url: STORY_EDIT_URL, 
-            type: 'post',
-            dataType: 'json',
-            data: data,
-            success: function(response){
-                if(response.success){
-                    $this.prev().html(response.html);
-                }
-            }
-        });
-   });
+    /* Select Creator, Owner */
+    $('#id_creator, #id_owner').change(function(){
+        var user = this.id.slice(3);
+        var $this = $(this);
+        var data = {};
+        data[user] = $this.val();
+        $.ajax({
+             url: STORY_EDIT_URL, 
+             type: 'post',
+             dataType: 'json',
+             data: data,
+             success: function(response){
+                 if(response.success){
+                     $this.prev().html(response.html);
+                 }
+             }
+         });
+    });
    
+    /* Sortable Tasks*/
+    $('#tasks').sortable({
+        distance: 15,
+        revert: true,
+        opacity: 0.9,
+        placeholder: "ui-state-highlight task-placeholder",
+        handle: '.ui-icon.ui-icon-arrow-4',
+        containment: '#tasks',
+        start: function(event, ui){
+            var height = $(ui.item).height();
+            // because margin top and bottom = 10px
+            // and the borders take 4 pixels
+            $('.task-placeholder').height(height + 20 - 4); 
+        }
+    }).disableSelection();
+   
+  
 });
 </script>
 {% endblock %}
@@ -307,7 +327,13 @@ $(function(){
                 <a href="#details"><span class="ui-icon ui-icon-note"></span>{% trans 'Description' %}</a>
             </li>
             <li>
-                <a href="#tasks"><span class="ui-icon ui-icon-clipboard"></span>{% trans 'Tasks' %} (<span id="tasks-count">{{ story.tasks.finished.count }} {% trans 'of' %} {{ story.tasks.count }}</span>) - {{ story.tasks.get_percentage_finished }}</a>
+                <a href="#tasks"><span class="ui-icon ui-icon-clipboard"></span>{% trans 'Tasks' %}
+                    {% if story.tasks.exists %}
+                    (<span id="tasks-count">{{ story.tasks.finished.count }} {% trans 'of' %} {{ story.tasks.count }}</span>) - {{ story.tasks.get_percentage_finished }}
+                    {% else %}
+                    (<span id="tasks-count">0</span>) 
+                    {% endif %}
+                </a>
             </li>
             <li>
                 <a href="#comments"><span class="ui-icon ui-icon-comment"></span>{% trans 'Comments' %} (<span id="comments-count">{{ story.comments.all.count }}</span>)</a>
@@ -319,6 +345,10 @@ $(function(){
         
         <div id="details" data-description="{{ story.description }}">{{ story.description|markdown }}</div>
         <div id="tasks">
+            <form method="post" action="">
+            {{ task_form.description }}
+            <input type="submit" value="{% trans 'Add Task' %}"/>
+            </form>
             {% for task in story.tasks.all.select_related %}
             <div class="task ui-widget-content ui-corner-all" data-id="{{ task.id }}">
                 <span class="ui-icon ui-icon-arrow-4"></span>
@@ -338,9 +368,11 @@ $(function(){
             <div id="comments-container">
             {% for comment in story.comments.all.select_related %}
                 {% include 'story/comment.html' %}
+            {% empty %}
+                {% trans 'This story has no comments yet.' %}
             {% endfor %}
             </div>
-            <form method="post" action="{{ story.get_comment_url }}">
+            <form method="post" action="{{ story.get_add_comment_url }}">
             {{ comment_form.text }}
             <input type="submit" value="{% trans 'Leave comment' %}"/>
             </form>

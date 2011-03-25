@@ -87,7 +87,7 @@ class Story(models.Model):
     def get_url(self):
         return reverse('agile_story', args=[self.project_id, self.number])
     
-    def get_comment_url(self):
+    def get_add_comment_url(self):
         return reverse('agile_story_ajax', args=[self.project_id, self.number, 'comment'])
     
     @transaction.commit_on_success()

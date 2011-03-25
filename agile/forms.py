@@ -25,6 +25,13 @@ class StoryForm(forms.ModelForm):
         exclude = ('index', 'number', 'blocked', 'color',)
         
 class TaskForm(forms.ModelForm):
+    
+    def __init__(self, project=None, *args, **kwargs):
+        super(TaskForm, self).__init__(*args, **kwargs)
+        if project:
+            self.fields['finished_by'].queryset = project.users
+            self.fields['story'].queryset = project.stories
+    
     class Meta:
         model = Task
         

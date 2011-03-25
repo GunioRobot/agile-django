@@ -114,7 +114,11 @@ def projects(request):
 @login_required
 def project(request, project_id):
     project = request.user.projects.get(id=project_id)
-    story_form = StoryForm(project)
+    initial = {
+        'owner': request.user,
+        'creator': request.user,
+    }
+    story_form = StoryForm(initial=initial, project=project)
     
     return render_to_response('project/board.html', RequestContext(request, {
         'project': project,
@@ -128,12 +132,14 @@ def story(request, project_id, story_number):
     story = project.stories.get(number=story_number)
     
     comment_form = CommentForm()
+    task_form = TaskForm(project=project)
     story_form = StoryForm(instance=story, project=project)
     
     return render_to_response('story/details.html', RequestContext(request, {
         'story': story,
         'story_form': story_form,
         'comment_form': comment_form,
+        'task_form': task_form,
     }))
 
 

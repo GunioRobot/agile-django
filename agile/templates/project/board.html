@@ -42,7 +42,6 @@
     font-size: 60%;
 }
 .ui-state-highlight.story-placeholder {
-    height: 40px;
     margin: 10px 5px;
 }
 .story-header a .ui-icon {
@@ -68,7 +67,6 @@
 var PROJECT_ID = {{ project.id }};
 $(function(){
     $(window).resize(function(){
-        //$('.phase:nth(1)').hide("slide", { direction: "left" }, 1000, function(){$(window).resize()}); 
         var phases_number = $('.phase:visible').length; 
         var phase_width = Math.floor($('#phases').width() / phases_number - 5);
         $('#phases').height($(window).height() - 105); 
@@ -82,13 +80,14 @@ $(function(){
         }).css('min-height', min_height);
     }).resize();
 	
+    /* Sortable Stories */
     $('.stories').sortable({
         connectWith: ".stories",
         distance: 15,
         revert: true,
         opacity: 0.9,
-        handle: '.story-header',
         placeholder: "ui-state-highlight story-placeholder",
+        handle: '.story-header',
         containment: '#phases',
         stop: function(event, ui){
             var $element = $(ui.item);
@@ -121,6 +120,7 @@ $(function(){
                 },
                 dataType: 'json',
                 success: function(response){
+                    // TODO: confirmation message
                 }
             });
         })
@@ -137,6 +137,7 @@ $(function(){
         title: gettext('Add story'),
         close: function(){
             $('#add-story-form-errors').hide();
+            $('#id_phase, #id_creator, #id_owner').selectmenu('value', '');
             $('#add-story-dialog form')[0].reset();
         }
     });
