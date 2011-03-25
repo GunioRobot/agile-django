@@ -278,8 +278,30 @@ $(function(){
             $('.task-placeholder').height(height + 20 - 4); 
         }
     }).disableSelection();
-   
-  
+    
+    /* Edit Story name */
+    $('#story-name').live('dblclick', function(){
+        var $this = $(this);
+        var text = $.trim($this.text());
+        var $textarea = $('<textarea/>').val(text).blur(function(){
+            var $this = $(this);
+            var text = $.trim($this.val());
+            $this.parent().text(text);
+            $.ajax({
+                url: STORY_EDIT_URL,
+                type: 'post',
+                data: {
+                    name: text
+                },
+                dataType: 'json',
+                success: function(response){
+                    // TODO: confirmation message
+                }
+            });
+        })
+        $this.html($textarea);
+        $textarea.focus();
+    });
 });
 </script>
 {% endblock %}
