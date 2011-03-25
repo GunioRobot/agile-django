@@ -41,8 +41,11 @@
                 {% endif %}
             </ul>
         </div>
-        <div id="content">
-            {% block content %}{% endblock %}
+        <div id="wrapper">
+            {% block wrapper %}
+                {% block menu %}{% endblock %}
+                <div id="content">{% block content %}{% endblock %}</div>
+            {% endblock %}
         </div>
     </body>
 </html>

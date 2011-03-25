@@ -176,7 +176,7 @@ $(function(){
 {% endblock %}
 
 {% block content %}
-<a id="add-story" href="javascript:;">{% trans 'Add story' %}</a>
+{{ block.super }}
 
 <div id="phases">
     {% for phase in project.phases.all %}
