@@ -441,7 +441,7 @@
    "is_active": true, 
    "is_superuser": true, 
    "is_staff": true, 
-   "last_login": "2011-03-23 20:01:18", 
+   "last_login": "2011-03-25 08:43:39", 
    "groups": [], 
    "user_permissions": [], 
    "password": "sha1$30c75$b7cc017b2a168db3281c26c2735738ebd1865a12", 
@@ -729,6 +729,7 @@
   "fields": {
    "index": 0, 
    "story": 4, 
+   "finished_by": 2, 
    "description": "Design all the whole site.", 
    "finished_at": "2011-03-23 19:00:05"
   }
@@ -739,6 +740,7 @@
   "fields": {
    "index": 1, 
    "story": 4, 
+   "finished_by": null, 
    "description": "Implement site.", 
    "finished_at": null
   }
