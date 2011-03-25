@@ -735,6 +735,17 @@
   }
  }, 
  {
+  "pk": 4, 
+  "model": "agile.task", 
+  "fields": {
+   "index": 0, 
+   "story": 3, 
+   "finished_by": 1, 
+   "description": "Huh?", 
+   "finished_at": "2011-03-25 07:55:25"
+  }
+ }, 
+ {
   "pk": 2, 
   "model": "agile.task", 
   "fields": {
@@ -742,6 +753,17 @@
    "story": 4, 
    "finished_by": null, 
    "description": "Implement site.", 
+   "finished_at": null
+  }
+ }, 
+ {
+  "pk": 3, 
+  "model": "agile.task", 
+  "fields": {
+   "index": 2, 
+   "story": 4, 
+   "finished_by": null, 
+   "description": "Another one", 
    "finished_at": null
   }
  }, 

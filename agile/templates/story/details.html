@@ -320,7 +320,7 @@ $(function(){
         <div id="details" data-description="{{ story.description }}">{{ story.description|markdown }}</div>
         <div id="tasks">
             {% for task in story.tasks.all.select_related %}
-            <div class="task ui-widget-content ui-corner-all" data-id="{{ story.id }}">
+            <div class="task ui-widget-content ui-corner-all" data-id="{{ task.id }}">
                 <span class="ui-icon ui-icon-arrow-4"></span>
                 {% if task.finished_at %}
                     <input type="checkbox" checked="checked" />

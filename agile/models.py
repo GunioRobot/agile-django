@@ -177,10 +177,8 @@ class TaskManager(models.Manager):
         return self.filter(finished_at__isnull=False)
     
     def get_percentage_finished(self):
-        # We will need to iterate over the elements
-        # that's the reason for use len() instead count()
-        total = float(len(self.all()))
-        finished = float(len(self.finished()))
+        total = float(self.all().count())
+        finished = float(self.finished().count())
         return '%s%%' % int(finished / total * 100)
     
 class Task(models.Model):
