@@ -143,4 +143,5 @@ LOGOUT_URL = '/logout/'
 try:
     from local_settings import *
 except ImportError:
-    pass
+    raise Exception('Make a copy of the local_settings_example.py '
+                    'file and rename it to local_settings.py')
