@@ -113,7 +113,7 @@ def projects(request):
     
 @login_required
 def project(request, project_id):
-    project = request.user.projects.get(id=project_id)
+    project = request.user.projects.get(pk=project_id)
     initial = {
         'creator': request.user,
     }
@@ -126,7 +126,7 @@ def project(request, project_id):
     
 @login_required
 def phases(request, project_id):
-    project = request.user.projects.get(id=project_id)
+    project = request.user.projects.get(pk=project_id)
 #    initial = {
 #        'owner': request.user,
 #        'creator': request.user,
@@ -141,7 +141,7 @@ def phases(request, project_id):
 @login_required
 def story(request, project_id, story_number):
     
-    project = request.user.projects.get(id=project_id)
+    project = request.user.projects.get(pk=project_id)
     story = project.stories.get(number=story_number)
     
     comment_form = CommentForm()
@@ -164,7 +164,7 @@ def story_ajax(request, project_id, story_number, action=None):
     if not (request.method == 'POST' and request.is_ajax()):
         raise Http404
     
-    project = request.user.projects.get(id=project_id)
+    project = request.user.projects.get(pk=project_id)
     story = project.stories.get(number=story_number)
     
     if action == 'move':
@@ -238,7 +238,7 @@ def story_add(request, project_id):
     if not (request.method == 'POST' and request.is_ajax()):
         raise Http404
         
-    project = request.user.projects.get(id=project_id)
+    project = request.user.projects.get(pk=project_id)
     story_form = StoryForm(project, request.POST)
     if story_form.is_valid():
         story = story_form.save(commit=False)
@@ -271,6 +271,6 @@ def comment(request, project_id, story_number, comment_id, action=None):
     if not (request.method == 'POST' and request.is_ajax()):
         raise Http404
     
-    comment = request.user.comments.get(id=comment_id)
+    comment = request.user.comments.get(pk=comment_id)
     if action == 'delete':
         comment.delete()
