@@ -1,0 +1,207 @@
+{% extends 'agile/base.html' %}
+{% load i18n %}
+
+{% block title %}{{ project.name }} - {% trans 'Board' %} - {{ block.super }}{% endblock %}
+
+{% block menu_stories %}<li class="current"><a href="{{ project.get_url }}">{% trans 'Stories' %}</a></li>{% endblock %}
+
+{% block css %}
+{{ block.super }}
+<style type="text/css">
+#phases {
+    border: 1px solid #CCC;
+    overflow: auto;
+}
+.phase {
+    border: 0px solid black;
+    float:left;
+}
+.phase-name {
+    text-align: center;
+    padding: 10px 0 7px 0;
+    font-size: 120%;	
+}
+.stories {
+    min-height: 30px;
+}
+.story {
+    min-height: 75px;
+    margin: 10px 5px;
+}
+.story.disabled {
+    opacity: 0.4;
+}
+.story-header {
+    padding: 1px 7px
+}
+.story-name {
+    margin: 5px 7px;
+    overflow: hidden;
+    font-size: 75%
+}
+.story-owner {
+    float: right;
+    font-size: 60%;
+}
+.ui-state-highlight.story-placeholder {
+    margin: 10px 5px;
+}
+.story-header a .ui-icon {
+    float: left;
+    padding-right: 2px;
+    display: none;
+}
+.story:hover .story-header a .ui-icon {
+    display: inline;
+}
+.story-owner img {
+    margin-left: 5px;
+}
+.story-owner-name {
+    padding: 4px 0;
+    float: left;
+}
+</style>
+{% endblock %}
+{% block javascript %}
+{{ block.super }}
+<script type="text/javascript">
+var PROJECT_ID = {{ project.id }};
+$(function(){
+    $(window).resize(function(){
+        var phases_number = $('.phase:visible').length; 
+        var phase_width = Math.floor($('#phases').width() / phases_number - 5);
+        $('#phases').height($(window).height() - 105); 
+        $('.phase').width(phase_width);
+        
+        var min_height = 0;
+        $('.phase').each(function(){
+            var height = $(this).height();
+            if(height > min_height)
+                min_height = height;
+        }).css('min-height', min_height);
+    }).resize();
+	
+    /* Sortable Stories */
+    $('.stories').sortable({
+        connectWith: ".stories",
+        distance: 15,
+        revert: true,
+        opacity: 0.9,
+        placeholder: "ui-state-highlight story-placeholder",
+        handle: '.story-header',
+        containment: '#phases',
+        stop: function(event, ui){
+            var $element = $(ui.item);
+            var number = $element.attr('data-number');
+            var index = $element.parents('.stories').children().index(ui.item);
+            var phase = $element.parents('.phase').attr('data-id');
+            move_story(number, phase, index);
+        },
+        start: function(event, ui){
+            var height = $(ui.item).height();
+            // because margin top and bottom = 10px
+            // and the borders take 4 pixels
+            $('.story-placeholder').height(height - 20 + 4); 
+        }
+    }).disableSelection()
+    
+    $('.story-name').live('dblclick', function(){
+        var $this = $(this);
+        var text = $.trim($this.text());
+        var $textarea = $('<textarea/>').val(text).blur(function(){
+            var $this = $(this);
+            var number = $this.parents('.story').attr('data-number')
+            var text = $.trim($this.val());
+            $this.parent().text(text);
+            $.ajax({
+                url: '/project/' + PROJECT_ID + '/story/' + number + '/edit',
+                type: 'post',
+                data: {
+                    name: text
+                },
+                dataType: 'json',
+                success: function(response){
+                    // TODO: confirmation message
+                }
+            });
+        })
+        $this.html($textarea);
+        $textarea.focus();
+    });
+    
+    $("#add-story-dialog").dialog({
+        height: 650,
+        width: 480,
+        autoOpen: false,
+        modal: true,
+        title: gettext('Add story'),
+        close: function(){
+            $('#add-story-form-errors').hide();
+            $('#id_phase, #id_creator, #id_owner').selectmenu('value', '');
+            $('#add-story-dialog form')[0].reset();
+        }
+    });
+    
+    
+    $('#add-story-dialog form').submit(function(){
+        var $this = $(this);
+        $.ajax({
+            url: $this.attr('action'),
+            type: $this.attr('method'),
+            data: $this.serialize(),
+            dataType: 'json',
+            success: function(response){
+                if(response.success){
+                    $('#add-story-dialog').dialog('close');
+                    var $story = $(response.html);
+                    $('.stories:nth(' + response.phase_index + ')').append($story).sortable('refresh');
+                } else {
+                    $('#add-story-form-errors').show()
+                    $('#add-story-form-errors .errors').html('<br/>')
+                    $.each(response.error, function(index, value){
+                        $('#add-story-form-errors .errors').append(index + ": " + value + '<br/>')
+                    })
+                    
+                }
+            }
+        });
+        return false;
+    });
+    
+    $('#add-story').click(function(){
+        $('#add-story-dialog').dialog('open');
+    });
+});
+</script>
+{% endblock %}
+
+{% block content %}
+{{ block.super }}
+
+<div id="phases">
+    {% for phase in project.phases.all %}
+    <div class="phase" data-id="{{ phase.id }}">
+    	<div class="phase-name">{{ phase.name }}</div>
+        <div class="stories">
+    	{% for story in phase.stories.all.select_related %}
+            {% include 'agile/project/story.html' %}
+    	{% endfor %}
+    	</div>
+    </div>
+    {% endfor %}
+</div>
+
+<div id="add-story-dialog">
+    <form method="post" action="{% url agile_story_add project.id %}">
+        <div id="add-story-form-errors" class="ui-state-error ui-corner-all">
+            <span class="ui-icon ui-icon-alert"></span>
+            <strong>{% trans 'Error!' %}</strong>
+            {% trans 'Validation errors:' %}<br/>
+            <div class="errors"></div>
+        </div>
+        {{ story_form.as_p }}
+        <input type="submit" value="{% trans 'Submit' %}">
+    </form>
+</div>
+{% endblock %}

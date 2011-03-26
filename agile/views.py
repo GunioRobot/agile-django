@@ -35,7 +35,7 @@ def login(request):
             auth_login(request, form.get_user())
             return HttpResponseRedirect(request.GET.get('next', reverse('agile_index')))
         
-    return render_to_response('login.html', RequestContext(request, {
+    return render_to_response('agile/login.html', RequestContext(request, {
         'form': form,
     }))
     
@@ -54,7 +54,7 @@ def signup(request):
             user = form.save()
             return HttpResponseRedirect(reverse('agile_index'))
         
-    return render_to_response('signup.html', RequestContext(request, {
+    return render_to_response('agile/signup.html', RequestContext(request, {
         'form': form,
     }))
 
@@ -88,7 +88,7 @@ def profile(request):
                 settings_form.save()
                 form_saved = 'settings'
     
-    return render_to_response('profile/profile.html', RequestContext(request, {
+    return render_to_response('agile/profile/profile.html', RequestContext(request, {
         'password_form': password_form,
         'user_form': user_form,
         'settings_form': settings_form,
@@ -107,7 +107,7 @@ def projects(request):
             form.save_m2m()
             return HttpResponseRedirect(reverse('agile_projects'))
     
-    return render_to_response('project/add.html', RequestContext(request, {
+    return render_to_response('agile/project/add.html', RequestContext(request, {
         'form': form,
     }))
     
@@ -119,7 +119,7 @@ def project(request, project_id):
     }
     story_form = StoryForm(initial=initial, project=project)
     
-    return render_to_response('project/board.html', RequestContext(request, {
+    return render_to_response('agile/project/board.html', RequestContext(request, {
         'project': project,
         'story_form': story_form,
     }))
@@ -148,7 +148,7 @@ def story(request, project_id, story_number):
     task_form = TaskForm(project=project)
     story_form = StoryForm(instance=story, project=project)
     
-    return render_to_response('story/details.html', RequestContext(request, {
+    return render_to_response('agile/story/details.html', RequestContext(request, {
         'project': project,
         'story': story,
         'story_form': story_form,
@@ -187,7 +187,7 @@ def story_ajax(request, project_id, story_number, action=None):
         if request.POST.has_key('description'):
             change_value('description')
             return {
-                'html': render_to_string('story/description.html', {
+                'html': render_to_string('agile/story/description.html', {
                     'story': story,
                 }, RequestContext(request)),
             }
@@ -211,7 +211,7 @@ def story_ajax(request, project_id, story_number, action=None):
             comment.story = story
             comment.save()
             return {
-                'html': render_to_string('story/comment.html', {
+                'html': render_to_string('agile/story/comment.html', {
                     'comment': comment,
                 }, RequestContext(request)),
             }
@@ -244,7 +244,7 @@ def story_add(request, project_id):
         story = story_form.save(commit=False)
         story.save()
         return {
-            'html': render_to_string('project/story.html', {
+            'html': render_to_string('agile/project/story.html', {
                 'story': story,
             }, RequestContext(request)),
             'phase_index': story.phase.index,

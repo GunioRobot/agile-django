@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Projects' %} - {{ block.super }}{% endblock %}
+
+{% block head %}
+{{ block.super }}
+<link rel="stylesheet" href="{{ MEDIA_URL }}agile/css/projects.css" />
+<script type="text/javascript" src="{{ MEDIA_URL}}agile/js/projects.js"></script>
+{% endblock %}
+
+{% block content %}
+<div id="project">
+<div id="tabs">
+    <ul>
+        <li><a href="#projects">{% trans 'Projects' %}</a></li>
+        <li><a href="#add-project">{% trans 'Add project' %}</a></li>
+    </ul>
+    
+    <div id="projects">
+        <ul id="sortable">
+        {% for project in user.projects %}
+        <li>
+        <div class="portlet">
+            <div class="portlet-header"><a href="{{ project.get_url }}">{{ project.name }}</a></div>
+            <div class="portlet-content">
+                {% if project.description %}
+                    <p>{{ project.description }}</p>
+                {% else %}
+                    <p>{% trans '(No description available)' %}</p>
+                {% endif %}
+                <br/>
+                <p>({{ project.stories.count }}) {% trans 'stories.' %}</p>
+                <p>({{ project.users.count }}) {% trans 'members.' %}</p>
+                <p style="text-align:right;">{% trans 'By' %} {{ project.owner }}</p>
+            </div>
+        </div>
+        </li>
+        {% endfor %}
+        </ul>
+    </div>
+    
+    <div id="add-project">
+        <form method="post" style="width:370px;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="{% trans 'Submit' %}">
+        </form>
+    </div>
+</div>
+</div>
+{% endblock %}

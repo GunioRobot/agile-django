@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load gravatar %}
+
+{% block title %}{% trans 'Profile' %} - {{ block.super }}{% endblock %}
+
+{% block css %}
+{{ block.super }}
+<style>
+#tabs {
+    height: 450px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="tabs">
+    <ul>
+        <li><a href="#user-information">{% trans 'User information' %}</a></li>
+        <li><a href="#change-password">{% trans 'Change password' %}</a></li>
+        <li><a href="#settings">{% trans 'Settings' %}</a></li>
+    </ul>
+    <div id="user-information">
+        <div id="gravatar">{% gravatar user 100 %}</div>
+        <form method="post">
+            {% if form_saved == 'user' %}
+            <div class="ui-state-highlight ui-corner-all">
+                <span class="ui-icon ui-icon-info"></span>
+                <strong>{% trans 'Success!' %}</strong>
+                {% trans 'The form was saved successfully.' %}
+            </div>
+            {% endif %}
+            {% csrf_token %}
+            <input type="hidden" name="form" value="user">
+            {{ user_form.as_p }}
+            <input type="submit" value="{% trans 'Submit' %}">
+        </form>
+    </div>
+    <div id="change-password">
+        <form method="post">
+            {% if form_saved == 'password' %}
+            <div class="ui-state-highlight ui-corner-all">
+                <span class="ui-icon ui-icon-info"></span>
+                <strong>{% trans 'Success!' %}</strong>
+                {% trans 'The form was saved successfully.' %}
+            </div>
+            {% endif %}
+            {% csrf_token %}
+            <input type="hidden" name="form" value="password">
+            {{ password_form.as_p }}
+            <input type="submit" value="{% trans 'Submit' %}">
+        </form>
+    </div>
+    <div id="settings">
+        <form method="post">
+            {% if form_saved == 'settings' %}
+            <div class="ui-state-highlight ui-corner-all">
+                <span class="ui-icon ui-icon-info"></span>
+                <strong>{% trans 'Success!' %}</strong>
+                {% trans 'The form was saved successfully.' %}
+            </div>
+            {% endif %}
+            {% csrf_token %}
+            <input type="hidden" name="form" value="settings">
+            {{ settings_form.as_p }}
+            <input type="submit" value="{% trans 'Submit' %}">
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,444 @@
+{% extends 'agile/base.html' %}
+{% load i18n markup gravatar %}
+
+{% block title %}{% trans 'Story' %} #{{ story.number }} -  {{ project.name }} - {{ block.super }}{% endblock %}
+
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{{ MEDIA_URL }}agile/css/jquery-ui.toolbar.css" />
+<style type="text/css">
+#story-number {
+    width: 100px;
+    padding: 15px 7px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#story-name {
+    width: 400px;
+    padding: 15px 40px;
+    font-size: 20px;
+    font-weight: bold;
+}
+#tags {
+    padding: 15px 7px;
+    width: 100px;
+    font-size: 12px;
+}
+.phase {
+    padding: 5px 20px;
+    cursor: pointer;
+}
+.phase.current {
+    background: #213;
+}
+.comment-user {
+    font-size: 85%;
+}
+.comment {
+	padding: 15px;
+    margin: 10px;
+}
+.comment img {
+    float: left;
+    margin-right: 15px;
+    border: 1px solid #000;
+    padding: 1px;
+    background: white;
+}
+.comment-delete {
+    display: none;
+    float: right;
+}
+.comment:hover .comment-delete {
+    display: inline-block;
+}
+#details {
+    padding: 20px;
+}
+#details textarea {
+    width: 600px;
+    height: 300px;
+}
+#details ul, #details ol {
+    padding-left: 40px;
+}
+#tabs {
+    min-height: 400px;
+}
+#tabs ul li a span.ui-icon {
+    float: left;
+    margin-right: 7px;
+}
+.tag {
+    padding: 4px 0 2px 4px;
+    font-size: 95%;
+    display: inline-block;
+}
+.tag span.ui-icon {
+    float: right;
+    margin-top: -1px;
+}
+.tag-delete {
+    cursor: pointer;
+}
+.user {
+    padding: 12px;
+    display: table-cell;
+    vertical-align: middle;
+}
+.user select {
+    width: 200px;
+}
+.user .gravatar {
+    float: left;
+    width: 30px;
+    height: 30px;
+    padding: 1px;
+    margin: 0 12px 0 0;
+}
+.task {
+    padding: 15px;
+    margin: 10px;
+} 
+.task .ui-icon-arrow-4 {
+    float: left;
+    margin: 0 15px 0 0;
+    cursor: move;
+}
+.task .ui-icon-circle-close {
+    float: right;
+    cursor: pointer;
+}
+.task-description.task-finished {
+    text-decoration: line-through;
+}
+.task-placeholder {
+    margin: 10px;
+}
+.task-delete {
+    cursor: pointer;
+}
+</style>
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+<script type="text/javascript" src="{{ MEDIA_URL }}agile/js/jquery-ui.toolbar.js"></script>
+<script type="text/javascript">
+var PROJECT_ID = {{ project.id }};
+var STORY_NUMBER = {{ story.number }};
+var PROJECT_URL = '/project/' + PROJECT_ID;
+var STORY_BASE_URL = PROJECT_URL + '/story/' + STORY_NUMBER;
+var STORY_EDIT_URL = STORY_BASE_URL + '/edit';
+var STORY_DELETE_URL = STORY_BASE_URL + '/delete';
+$(function(){
+    function update_comments_count(){
+        var $comments_count = $('#comments-count');
+        $comments_count.text($('.comment').length);
+    }
+    /* Toolbar setup */
+    $('#toolbar').toolbar({
+        buttons: [
+            {
+                name: gettext('Block'),
+                uiIcon: 'ui-icon-circle-close',
+                click: function(){}
+            },{
+                name: gettext('Mark as Ready'),
+                uiIcon: 'ui-icon-check',
+                click: function(){}
+            },{
+                name: gettext('Delete'),
+                uiIcon: 'ui-icon-cancel',
+                click: function(){
+                    $.ajax({
+                        url: STORY_DELETE_URL,
+                        dataType: 'json',
+                        type: 'post',
+                        success: function(response){
+                            if(response.success){
+                                window.location = PROJECT_URL;
+                            }
+                        }
+                    });
+                    
+                }
+            }
+        ]
+    });
+    
+    /* Phases setup */
+    $('.ui-widget-content.phase').hover(function(){
+       $(this).addClass('ui-state-hover'); 
+    }, function(){
+       $(this).removeClass('ui-state-hover'); 
+    }).click(function(){
+        var $this = $(this);
+        var phase = $this.attr('data-id')
+        move_story(STORY_NUMBER, phase, function(){
+            var $phases = $this.parent().find('.phase');
+            $phases.removeClass('ui-state-default ui-state-active');
+            $this.addClass('ui-state-active');
+            $this.prevAll().addClass('ui-state-default')
+        });
+    });
+    $('#comments form').submit(function(){
+        var $this = $(this);
+        $.ajax({
+            url: $this.attr('action'),
+            type: $this.attr('method'),
+            data: $this.serialize(),
+            dataType: 'json',
+            success: function(response){
+                if(response.success){
+                    $this.get(0).reset();
+                    var $comment = $(response.html).hide();
+                    $('#comments-container').append($comment);
+                    $comment.slideDown();
+                    update_comments_count();
+                    $comment.find('.button').button();
+                }
+            }
+        });
+        return false;
+    });
+    
+    /* Comment delete */
+    $('.comment-delete').live('click', function(){
+        var $this = $(this);
+        var $comment = $this.parents('.comment');
+        var id = $comment.attr('data-id');
+        $.ajax({
+            url: STORY_BASE_URL + '/comment/' + id + '/delete',
+            dataType: 'json',
+            type: 'post',
+            success: function(response){
+                if(response.success){
+                    $comment.slideUp(function(){
+                        $comment.remove();
+                        update_comments_count();
+                    });
+                }
+            }
+        });
+    });
+    
+    /* Edit story details */
+    $('#details').dblclick(function(){
+        var $this = $(this);
+        var html = $this.html();
+        var markdown = $this.attr('data-description');
+        var $textarea = $('<textarea/>').val(markdown).blur(function(){
+            $.ajax({
+                url: STORY_EDIT_URL,
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    'description': $textarea.val()
+                },
+                success: function(response){
+                    if(response.success){
+                        $this.html(response.html);
+                        $this.attr('data-description', $textarea.val());
+                    } else {
+                        $this.html(html);
+                    }
+                }
+            });
+            
+        });
+        $this.html($textarea);
+        $textarea.focus();
+    });
+       
+    /* Select Creator, Owner */
+    $('#id_creator, #id_owner').change(function(){
+        var user = this.id.slice(3);
+        var $this = $(this);
+        var data = {};
+        data[user] = $this.val();
+        $.ajax({
+             url: STORY_EDIT_URL, 
+             type: 'post',
+             dataType: 'json',
+             data: data,
+             success: function(response){
+                 if(response.success){
+                     $this.prev().html(response.html);
+                 }
+             }
+         });
+    });
+   
+    /* Sortable Tasks*/
+    $('#tasks').sortable({
+        distance: 15,
+        revert: true,
+        opacity: 0.9,
+        placeholder: "ui-state-highlight task-placeholder",
+        handle: '.ui-icon.ui-icon-arrow-4',
+        containment: '#tasks',
+        start: function(event, ui){
+            var height = $(ui.item).height();
+            // because margin top and bottom = 10px
+            // and the borders take 4 pixels
+            $('.task-placeholder').height(height + 20 - 4); 
+        }
+    }).disableSelection();
+    
+    /* Edit Story name */
+    $('#story-name').live('dblclick', function(){
+        var $this = $(this);
+        var text = $.trim($this.text());
+        var $textarea = $('<textarea/>').val(text).blur(function(){
+            var $this = $(this);
+            var text = $.trim($this.val());
+            $this.parent().text(text);
+            $.ajax({
+                url: STORY_EDIT_URL,
+                type: 'post',
+                data: {
+                    name: text
+                },
+                dataType: 'json',
+                success: function(response){
+                    // TODO: confirmation message
+                }
+            });
+        });
+        $this.html($textarea);
+        $textarea.focus();
+    });
+    
+    /* Remove task */
+    $('.task-delete').live('click', function(){
+        var $this = $(this);
+        var id = $this.parent().attr('data-id');
+        alert(id)
+    });
+    
+    /* Remove tag */
+    $('.tag-delete').live('click', function(){
+        var $this = $(this);
+        var id = $this.parent().attr('data-id');
+        $.ajax({
+            url: STORY_BASE_URL + '/tag/' + id + '/delete',
+            dataType: 'json',
+            type: 'post',
+            success: function(response){
+                if(response.success){
+                    $this.parent().remove();
+                }
+            }
+        });
+    });
+    
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div id="story" data-number="{{ story.number }}">
+    <div id="story-number" class="ui-widget-content"># {{ story.number }}</div>
+    <div id="story-name" class="ui-widget-content">{{ story.name }}</div>
+    <div id="tags" class="ui-widget-content">
+        {% for tag in story.tags.all.select_related %}
+            <div class="tag ui-widget-content ui-corner-all" data-id="{{ tag.id }}">{{ tag.name }}<span class="tag-delete ui-icon ui-icon-close"></span></div>
+        {% endfor %}
+    </div>
+    <div id="creator" class="user ui-widget-content">
+        <div class="gravatar ui-widget-content">
+        {% if story.creator %}
+            {% gravatar story.creator 30 %}
+        {% endif %}
+        </div>
+        {{ story_form.creator }}
+    </div>
+    <div id="owner" class="user ui-widget-content">
+        <div class="gravatar ui-widget-content">
+        {% if story.owner %}
+            {% gravatar story.owner 30 %}
+        {% endif %}
+        </div>
+        {{ story_form.owner }}
+    </div>
+    <div id="toolbar"></div>
+    <div id="phases">
+        <table>
+            <tbody>
+                <tr>
+                {% for phase in project.phases.all %}
+                    <td class="ui-widget-content phase{% if phase.index < story.phase.index %} ui-state-default{% endif %}{% if phase == story.phase %} ui-state-active{% endif %}" data-id="{{ phase.id }}">{{ phase.name }}</td>
+                {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="tabs">
+        <ul>
+            <li>
+                <a href="#details"><span class="ui-icon ui-icon-note"></span>{% trans 'Description' %}</a>
+            </li>
+            <li>
+                <a href="#tasks"><span class="ui-icon ui-icon-clipboard"></span>{% trans 'Tasks' %}
+                    {% if story.tasks.exists %}
+                    (<span id="tasks-count">{{ story.tasks.finished.count }} {% trans 'of' %} {{ story.tasks.count }}</span>) - {{ story.tasks.get_percentage_finished }}
+                    {% else %}
+                    (<span id="tasks-count">0</span>) 
+                    {% endif %}
+                </a>
+            </li>
+            <li>
+                <a href="#comments"><span class="ui-icon ui-icon-comment"></span>{% trans 'Comments' %} (<span id="comments-count">{{ story.comments.all.count }}</span>)</a>
+            </li>
+            <li>
+                <a href="#attachments"><span class="ui-icon ui-icon-document"></span>{% trans 'Attachments' %} (<span id="attachments-count">{{ story.attachments.all.count }}</span>)</a>
+            </li>
+        </ul>
+        
+        <div id="details" data-description="{{ story.description }}">{{ story.description|markdown }}</div>
+        <div id="tasks">
+            <form method="post" action="">
+            {{ task_form.description }}
+            <input type="submit" value="{% trans 'Add Task' %}"/>
+            </form>
+            {% for task in story.tasks.all.select_related %}
+            <div class="task ui-widget-content ui-corner-all" data-id="{{ task.id }}">
+                <span class="ui-icon ui-icon-arrow-4"></span>
+                {% if task.finished_at %}
+                    <input type="checkbox" checked="checked" />
+                    <span class="task-description task-finished ui-state-disabled">{{ task.description }}</span>
+                    <span class="ui-state-disabled">({{ task.finished_by.agile_get_name }} @ {{ task.finished_at }})</span>
+                {% else %}
+                    <input type="checkbox" />
+                    <span class="task-description">{{ task.description }}</span>
+                {% endif %}
+                <span class="task-delete ui-icon ui-icon-circle-close"></span>
+            </div>
+            {% endfor %}
+        </div>
+        <div id="comments">
+            <div id="comments-container">
+            {% for comment in story.comments.all.select_related %}
+                {% include 'agile/story/comment.html' %}
+            {% empty %}
+                {% trans 'This story has no comments yet.' %}
+            {% endfor %}
+            </div>
+            <form method="post" action="{{ story.get_add_comment_url }}">
+            {{ comment_form.text }}
+            <input type="submit" value="{% trans 'Leave comment' %}"/>
+            </form>
+        </div>
+        <div id="attachments">
+            {% for attachment in story.attachments.all.select_related %}
+            <div class="attach">
+                <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
