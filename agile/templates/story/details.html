@@ -204,12 +204,14 @@ $(function(){
         });
         return false;
     });
+    
+    /* Comment delete */
     $('.comment-delete').live('click', function(){
         var $this = $(this);
         var $comment = $this.parents('.comment');
         var id = $comment.attr('data-id');
         $.ajax({
-            url: '/project/' + PROJECT_ID + '/story/' + STORY_NUMBER + '/comment/' + id + '/delete',
+            url: STORY_BASE_URL + '/comment/' + id + '/delete',
             dataType: 'json',
             type: 'post',
             success: function(response){
@@ -223,6 +225,7 @@ $(function(){
         });
     });
     
+    /* Edit story details */
     $('#details').dblclick(function(){
         var $this = $(this);
         var html = $this.html();
@@ -320,7 +323,16 @@ $(function(){
     $('.tag-delete').live('click', function(){
         var $this = $(this);
         var id = $this.parent().attr('data-id');
-        alert(id)
+        $.ajax({
+            url: STORY_BASE_URL + '/tag/' + id + '/delete',
+            dataType: 'json',
+            type: 'post',
+            success: function(response){
+                if(response.success){
+                    $this.parent().remove();
+                }
+            }
+        });
     });
     
 });

@@ -274,3 +274,16 @@ def comment(request, project_id, story_number, comment_id, action=None):
     comment = request.user.comments.get(pk=comment_id)
     if action == 'delete':
         comment.delete()
+        
+@login_required
+@render_to_json
+def tag(request, project_id, story_number, tag_id, action=None):
+    
+    if not (request.method == 'POST' and request.is_ajax()):
+        raise Http404
+    
+    project = request.user.projects.get(pk=project_id)
+    tag = project.stories.get(number=story_number).tags.get(pk=tag_id)
+    
+    if action == 'delete':
+        tag.delete()
