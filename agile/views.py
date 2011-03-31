@@ -35,7 +35,7 @@ def login(request):
             auth_login(request, form.get_user())
             return HttpResponseRedirect(request.GET.get('next', reverse('agile_index')))
         
-    return render_to_response('agile/login.html', RequestContext(request, {
+    return render_to_response('login.html', RequestContext(request, {
         'form': form,
     }))
     
@@ -54,7 +54,7 @@ def signup(request):
             user = form.save()
             return HttpResponseRedirect(reverse('agile_index'))
         
-    return render_to_response('agile/signup.html', RequestContext(request, {
+    return render_to_response('signup.html', RequestContext(request, {
         'form': form,
     }))
 
