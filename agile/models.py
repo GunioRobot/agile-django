@@ -289,6 +289,7 @@ post_save.connect(create_user_profile, sender=User)
         
 def create_project(sender, instance, created, **kwargs):
     if created:
+        # We need the no lazy ugettext here.
         from django.utils.translation import ugettext as _
         phases = instance.phases
         phases.create(
