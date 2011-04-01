@@ -59,10 +59,7 @@ ul#topmenu img {
 form {
     margin: 0 auto;
     width: 300px;
-    padding-top: 40px;
-    padding-bottom: 80px;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding: 40px 30px 80px 30px;
     border: 1px solid #CCC;
     background-color: #F5F5EF;
     -moz-border-radius-bottomright: 30px;

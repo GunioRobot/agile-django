@@ -187,7 +187,7 @@ class TaskManager(models.Manager):
 class Task(models.Model):
     index = models.PositiveIntegerField(_(u'index'))
     story = models.ForeignKey('Story', verbose_name=_(u'story'), related_name='tasks')
-    description = models.TextField(_(u'description'))
+    description = models.CharField(_(u'description'), max_length=512)
     finished_at = models.DateTimeField(_(u'finished at'), blank=True, null=True)
     finished_by = models.ForeignKey(User, verbose_name=_(u'user'), related_name='finished_tasks', blank=True, null=True)
     
