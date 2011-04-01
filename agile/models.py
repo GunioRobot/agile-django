@@ -69,6 +69,7 @@ class Story(models.Model):
     owner = models.ForeignKey(User, verbose_name=_(u'owner'), related_name='own_stories', blank=True, null=True)
     created_at = models.DateTimeField(_(u'created at'), auto_now_add=True)
     blocked = models.CharField(max_length=100, blank=True, null=True)
+    ready = models.BooleanField(default=False)
     color = models.CharField(_(u'color'), max_length=6, default='ffffff')
     
     class Meta:
