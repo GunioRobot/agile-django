@@ -5,7 +5,11 @@
 
 {% block head %}
 {{ block.super }}
-<script type="text/javascript" src="{{ MEDIA_URL }}agile/js/login.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('#id_username').focus();
+})
+</script>
 {% endblock %}
 
 {% block content %}
