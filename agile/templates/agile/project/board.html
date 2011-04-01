@@ -67,6 +67,7 @@
 {{ block.super }}
 <script type="text/javascript">
 var PROJECT_ID = {{ project.id }};
+var USER_ID = {{ user.id }};
 $(function(){
     $(window).resize(function(){
         var phases_number = $('.phase:visible').length; 
@@ -138,7 +139,9 @@ $(function(){
         title: gettext('Add story'),
         close: function(){
             $('#add-story-form-errors').hide();
-            $('#id_phase, #id_creator, #id_owner').selectmenu('value', '');
+            $('#id_phase, #id_owner').selectmenu('value', '');
+            $('#id_creator').selectmenu('value', USER_ID);
+            
             $('#add-story-dialog form')[0].reset();
         }
     });
