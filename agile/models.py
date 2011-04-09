@@ -296,23 +296,28 @@ def create_project(sender, instance, created, **kwargs):
         phases.create(
             index=0,
             name=_(u'Backlog'),
+            description=_(u'Stories that will be worked on someday'),
             is_backlog=True,
         )
         phases.create(
             index=1,
             name=_(u'Ready'),
+            description=_(u'Stories that are ready to be worked on'),
         )
         phases.create(
             index=2,
             name=_(u'Working'),
+            description=_(u'Stories that are currently being worked on'),
         )
         phases.create(
             index=3,
             name=_(u'Complete'),
+            description=_(u'Stories that have been completed'),
         )
         phases.create(
             index=4,
             name=_(u'Archive'),
+            description=_(u'Stories that are history'),
             is_archive=True,
         )
         

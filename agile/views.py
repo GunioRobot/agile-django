@@ -127,16 +127,11 @@ def project(request, project_id):
 @login_required
 def phases(request, project_id):
     project = request.user.projects.get(pk=project_id)
-#    initial = {
-#        'owner': request.user,
-#        'creator': request.user,
-#    }
-#    story_form = StoryForm(initial=initial, project=project)
-#    
-#    return render_to_response('project/board.html', RequestContext(request, {
-#        'project': project,
-#        'story_form': story_form,
-#    }))
+    phase_form = PhaseForm()
+    return render_to_response('agile/phase/process.html', RequestContext(request, {
+        'project': project,
+        'phase_form': phase_form,
+    }))
     
 @login_required
 def story(request, project_id, story_number):

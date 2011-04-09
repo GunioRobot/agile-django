@@ -6,6 +6,11 @@ class ProjectForm(forms.ModelForm):
         model = Project
         exclude = ('owner', 'is_active',)
         
+class PhaseForm(forms.ModelForm):
+    class Meta:
+        model = Phase
+        exclude = ('owner', 'is_active',)
+        
 class StoryForm(forms.ModelForm):
     
     def __init__(self, project=None, *args, **kwargs):

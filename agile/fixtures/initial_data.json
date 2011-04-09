@@ -441,7 +441,7 @@
    "is_active": true, 
    "is_superuser": true, 
    "is_staff": true, 
-   "last_login": "2011-03-25 08:43:39", 
+   "last_login": "2011-04-09 11:50:22", 
    "groups": [], 
    "user_permissions": [], 
    "password": "sha1$30c75$b7cc017b2a168db3281c26c2735738ebd1865a12", 
@@ -548,7 +548,7 @@
    "is_backlog": true, 
    "limit": null, 
    "is_archive": false, 
-   "description": ""
+   "description": "Stories that will be worked on someday"
   }
  }, 
  {
@@ -561,7 +561,7 @@
    "is_backlog": false, 
    "limit": null, 
    "is_archive": false, 
-   "description": ""
+   "description": "Stories that are ready to be worked on"
   }
  }, 
  {
@@ -574,7 +574,7 @@
    "is_backlog": false, 
    "limit": null, 
    "is_archive": false, 
-   "description": ""
+   "description": "Stories that are currently being worked on"
   }
  }, 
  {
@@ -587,7 +587,7 @@
    "is_backlog": false, 
    "limit": null, 
    "is_archive": false, 
-   "description": ""
+   "description": "Stories that have been completed"
   }
  }, 
  {
@@ -600,7 +600,7 @@
    "is_backlog": false, 
    "limit": null, 
    "is_archive": true, 
-   "description": ""
+   "description": "Stories that are history"
   }
  }, 
  {
@@ -608,6 +608,7 @@
   "model": "agile.story", 
   "fields": {
    "index": 0, 
+   "ready": false, 
    "description": "", 
    "creator": null, 
    "color": "ffffff", 
@@ -624,6 +625,7 @@
   "model": "agile.story", 
   "fields": {
    "index": 0, 
+   "ready": false, 
    "description": "", 
    "creator": 3, 
    "color": "ffffff", 
@@ -640,6 +642,7 @@
   "model": "agile.story", 
   "fields": {
    "index": 0, 
+   "ready": false, 
    "description": "This is a title\r\n========\r\n\r\n**Supports Markdown**\r\n\r\n\r\n*Test Story*\r\n\r\n", 
    "creator": 4, 
    "color": "ffffff", 
@@ -656,6 +659,7 @@
   "model": "agile.story", 
   "fields": {
    "index": 1, 
+   "ready": false, 
    "description": "", 
    "creator": null, 
    "color": "ffffff", 
@@ -672,6 +676,7 @@
   "model": "agile.story", 
   "fields": {
    "index": 1, 
+   "ready": false, 
    "description": "", 
    "creator": null, 
    "color": "ffffff", 
