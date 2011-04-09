@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-25 15:07-0600\n"
-"PO-Revision-Date: 2011-03-25 16:07\n"
+"POT-Creation-Date: 2011-04-09 12:12-0500\n"
+"PO-Revision-Date: 2011-04-09 12:14\n"
 "Last-Translator: admin  <admin@example.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,15 +18,15 @@ msgstr ""
 "X-Translated-Using: django-rosetta 0.5.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: models.py:16 models.py:45 models.py:65 models.py:171 models.py:261
+#: models.py:16 models.py:45 models.py:69 models.py:176 models.py:266
 msgid "name"
 msgstr "nombre"
 
-#: models.py:17 models.py:47 models.py:66 models.py:190 models.py:215
+#: models.py:17 models.py:47 models.py:70 models.py:195 models.py:220
 msgid "description"
 msgstr "descripción"
 
-#: models.py:18 models.py:69
+#: models.py:18 models.py:73
 msgid "owner"
 msgstr "propietario"
 
@@ -42,7 +42,7 @@ msgstr "proyecto"
 msgid "projects"
 msgstr "proyectos"
 
-#: models.py:46 models.py:64 models.py:188
+#: models.py:46 models.py:68 models.py:193
 msgid "index"
 msgstr "índice"
 
@@ -58,7 +58,7 @@ msgstr "es backlog"
 msgid "is archive"
 msgstr "es archivo"
 
-#: models.py:53 models.py:67
+#: models.py:53 models.py:71
 msgid "phase"
 msgstr "fase"
 
@@ -66,145 +66,164 @@ msgstr "fase"
 msgid "phases"
 msgstr "fases"
 
-#: models.py:63
+#: models.py:67
 msgid "number"
 msgstr "número"
 
-#: models.py:68
+#: models.py:72
 msgid "creator"
 msgstr "creador"
 
-#: models.py:70
+#: models.py:74
 msgid "created at"
 msgstr "creado en"
 
-#: models.py:72
+#: models.py:77
 msgid "color"
 msgstr "color"
 
-#: models.py:75 models.py:170 models.py:189 models.py:203 models.py:214
+#: models.py:80 models.py:175 models.py:194 models.py:208 models.py:219
 msgid "story"
 msgstr "historia"
 
-#: models.py:76
+#: models.py:81
 msgid "stories"
 msgstr "historias"
 
-#: models.py:174
+#: models.py:179
 msgid "tag"
 msgstr "etiqueta"
 
-#: models.py:175
+#: models.py:180
 msgid "tags"
 msgstr "etiquetas"
 
-#: models.py:191
+#: models.py:196
 msgid "finished at"
 msgstr "terminó en"
 
-#: models.py:192 models.py:202 models.py:213 models.py:252 models.py:260
+#: models.py:197 models.py:207 models.py:218 models.py:257 models.py:265
 msgid "user"
 msgstr "usuario"
 
-#: models.py:197
+#: models.py:202
 msgid "task"
 msgstr "tarea"
 
-#: models.py:198
+#: models.py:203
 msgid "tasks"
 msgstr "tareas"
 
-#: models.py:204 models.py:216
+#: models.py:209 models.py:221
 msgid "datetime"
 msgstr "fecha y hora"
 
-#: models.py:205
+#: models.py:210
 msgid "text"
 msgstr "texto"
 
-#: models.py:208
+#: models.py:213
 msgid "comment"
 msgstr "comentario"
 
-#: models.py:209
+#: models.py:214
 msgid "comments"
 msgstr "comentarios"
 
-#: models.py:220
+#: models.py:225
 msgid "attachment"
 msgstr "archivo adjunto"
 
-#: models.py:221
+#: models.py:226
 msgid "attachments"
 msgstr "archivos adjuntos"
 
-#: models.py:253
+#: models.py:258
 msgid "jQuery UI Theme"
 msgstr "Tema jQuery UI "
 
-#: models.py:256
+#: models.py:261
 msgid "user profile"
 msgstr "perfil del usuario"
 
-#: models.py:257
+#: models.py:262
 msgid "user profiles"
 msgstr "perfiles de usuario"
 
-#: models.py:262
+#: models.py:267
 msgid "query"
 msgstr "consulta"
 
-#: models.py:263
+#: models.py:268
 msgid "shared"
 msgstr "compartida"
 
-#: models.py:266
+#: models.py:271
 msgid "filter"
 msgstr "filtro"
 
-#: models.py:267
+#: models.py:272
 msgid "filters"
 msgstr "filtros"
 
-#: models.py:296
+#: models.py:302
 msgid "Backlog"
 msgstr "Backlog"
 
-#: models.py:301
+#: models.py:303
+msgid "Stories that will be worked on someday"
+msgstr "Historias que se trabajarán algún día"
+
+#: models.py:308
 msgid "Ready"
 msgstr "Listo"
 
-#: models.py:305
+#: models.py:309
+msgid "Stories that are ready to be worked on"
+msgstr "Historias que están listas para ser trabajadas"
+
+#: models.py:313
 msgid "Working"
 msgstr "Trabajando"
 
-#: models.py:309
+#: models.py:314
+msgid "Stories that are currently being worked on"
+msgstr "Historias que en la actualidad se están trabajando"
+
+#: models.py:318
 msgid "Complete"
 msgstr "Completado"
 
-#: models.py:313
+#: models.py:319
+msgid "Stories that have been completed"
+msgstr "Historias que han completado"
+
+#: models.py:323
 msgid "Archive"
 msgstr "Archivo"
+
+#: models.py:324
+msgid "Stories that are history"
+msgstr "Historias que son historia"
 
 #: templates/base.html:32 templates/index.html:4
 msgid "Home"
 msgstr "Inicio"
 
-#: templates/base.html:34 templates/login.html:4 templates/login.html.py:19
-#: templates/signup.html:11
+#: templates/base.html:34 templates/login.html:4 templates/login.html.py:23
 msgid "Login"
 msgstr "Iniciar sesión"
 
-#: templates/base.html:35 templates/signup.html:4
+#: templates/base.html:35 templates/signup.html:4 templates/signup.html.py:11
 msgid "Signup"
 msgstr "Registrarse"
 
-#: templates/base.html:37 templates/project/add.html:4
-#: templates/project/add.html.py:16
+#: templates/base.html:37 templates/agile/project/add.html:4
+#: templates/agile/project/add.html:16
 msgid "Projects"
 msgstr "Proyectos"
 
-#: templates/base.html:38 templates/profile/profile.html:5
+#: templates/base.html:38 templates/agile/profile/profile.html:5
 msgid "Profile"
 msgstr "Perfil"
 
@@ -212,127 +231,137 @@ msgstr "Perfil"
 msgid "Logout"
 msgstr "Cerrar sesión"
 
-#: templates/login.html:15
+#: templates/login.html:19
 msgid "Incorrect username and/or password."
 msgstr "Nombre de usuario y/o contraseña incorrecto."
 
-#: templates/profile/profile.html:19
-msgid "User information"
-msgstr "Información del usuario"
-
-#: templates/profile/profile.html:20
-msgid "Change password"
-msgstr "Cambiar la contraseña"
-
-#: templates/profile/profile.html:21
-msgid "Settings"
-msgstr "Preferencias"
-
-#: templates/profile/profile.html:29 templates/profile/profile.html.py:44
-#: templates/profile/profile.html:59
-msgid "Success!"
-msgstr "Éxito!"
-
-#: templates/profile/profile.html:30 templates/profile/profile.html.py:45
-#: templates/profile/profile.html:60
-msgid "The form was saved successfully."
-msgstr "El formulario se guardó correctamente."
-
-#: templates/profile/profile.html:36 templates/profile/profile.html.py:51
-#: templates/profile/profile.html:66 templates/project/add.html:47
-#: templates/project/board.html:204
-msgid "Submit"
-msgstr "Enviar"
-
-#: templates/project/add.html:17
-msgid "Add project"
-msgstr "Añadir proyecto"
-
-#: templates/project/add.html:30
-msgid "(No description available)"
-msgstr "(Descripción no disponible)"
-
-#: templates/project/add.html:33
-msgid "stories."
-msgstr "historias."
-
-#: templates/project/add.html:34
-msgid "members."
-msgstr "miembros."
-
-#: templates/project/add.html:35
-msgid "By"
-msgstr "Por"
-
-#: templates/project/base.html:6
+#: templates/agile/base.html:7
 msgid "Details"
 msgstr "Detalles"
 
-#: templates/project/base.html:7 templates/project/board.html:6
+#: templates/agile/base.html:8 templates/agile/project/board.html:6
 msgid "Stories"
 msgstr "Historias"
 
-#: templates/project/base.html:8
+#: templates/agile/base.html:10 templates/agile/phase/process.html:6
 msgid "Phases"
 msgstr "Fases"
 
-#: templates/project/base.html:10
-msgid "Add story"
-msgstr "Añadir historia"
-
-#: templates/project/board.html:4
+#: templates/agile/phase/process.html:4 templates/agile/project/board.html:4
 msgid "Board"
 msgstr "Tablero"
 
-#: templates/project/board.html:199
+#: templates/agile/phase/process.html:11
+msgid "Add phase"
+msgstr "Añadir fase"
+
+#: templates/agile/phase/process.html:204
+#: templates/agile/project/board.html:208
 msgid "Error!"
 msgstr "¡Error!"
 
-#: templates/project/board.html:200
+#: templates/agile/phase/process.html:205
+#: templates/agile/project/board.html:209
 msgid "Validation errors:"
 msgstr "Los errores de validación:"
 
-#: templates/project/story.html:10
+#: templates/agile/phase/process.html:209
+#: templates/agile/profile/profile.html:36
+#: templates/agile/profile/profile.html:51
+#: templates/agile/profile/profile.html:66 templates/agile/project/add.html:47
+#: templates/agile/project/board.html:213
+msgid "Submit"
+msgstr "Enviar"
+
+#: templates/agile/profile/profile.html:19
+msgid "User information"
+msgstr "Información del usuario"
+
+#: templates/agile/profile/profile.html:20
+msgid "Change password"
+msgstr "Cambiar la contraseña"
+
+#: templates/agile/profile/profile.html:21
+msgid "Settings"
+msgstr "Preferencias"
+
+#: templates/agile/profile/profile.html:29
+#: templates/agile/profile/profile.html:44
+#: templates/agile/profile/profile.html:59
+msgid "Success!"
+msgstr "Éxito!"
+
+#: templates/agile/profile/profile.html:30
+#: templates/agile/profile/profile.html:45
+#: templates/agile/profile/profile.html:60
+msgid "The form was saved successfully."
+msgstr "El formulario se guardó correctamente."
+
+#: templates/agile/project/add.html:17
+msgid "Add project"
+msgstr "Añadir proyecto"
+
+#: templates/agile/project/add.html:30
+msgid "(No description available)"
+msgstr "(Descripción no disponible)"
+
+#: templates/agile/project/add.html:33
+msgid "stories."
+msgstr "historias."
+
+#: templates/agile/project/add.html:34
+msgid "members."
+msgstr "miembros."
+
+#: templates/agile/project/add.html:35
+msgid "By"
+msgstr "Por"
+
+#: templates/agile/project/board.html:11
+msgid "Add story"
+msgstr "Añadir historia"
+
+#: templates/agile/project/story.html:10
 msgid "Not assigned"
 msgstr "No asignado"
 
-#: templates/story/comment.html:7
+#: templates/agile/story/comment.html:7
 msgid "Delete"
 msgstr "Eliminar"
 
-#: templates/story/details.html:4
+#: templates/agile/story/details.html:4
 msgid "Story"
 msgstr "Historia"
 
-#: templates/story/details.html:349
+#: templates/agile/story/details.html:382
 msgid "Description"
 msgstr "Descripción"
 
-#: templates/story/details.html:352
+#: templates/agile/story/details.html:385
 msgid "Tasks"
 msgstr "Tareas"
 
-#: templates/story/details.html:354
+#: templates/agile/story/details.html:387
 msgid "of"
 msgstr "de"
 
-#: templates/story/details.html:361
+#: templates/agile/story/details.html:394
 msgid "Comments"
 msgstr "Comentarios"
 
-#: templates/story/details.html:364
+#: templates/agile/story/details.html:397
 msgid "Attachments"
 msgstr "Archivos adjuntos"
 
-#: templates/story/details.html:372
+#: templates/agile/story/details.html:405
 msgid "Add Task"
 msgstr "Añadir Tarea"
 
-#: templates/story/details.html:394
+#: templates/agile/story/details.html:427
 msgid "This story has no comments yet."
 msgstr "Esta historia no tiene ningún comentario."
 
-#: templates/story/details.html:399
+#: templates/agile/story/details.html:432
 msgid "Leave comment"
 msgstr "Dejar comentario"
 

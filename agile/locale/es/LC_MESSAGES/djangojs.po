@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-20 12:32-0600\n"
-"PO-Revision-Date: 2011-03-20 13:38\n"
-"Last-Translator: Andres Torres <andres@mydomedia.com>\n"
+"POT-Creation-Date: 2011-04-09 12:15-0500\n"
+"PO-Revision-Date: 2011-04-09 12:15\n"
+"Last-Translator: admin  <admin@example.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,18 +18,24 @@ msgstr ""
 "X-Translated-Using: django-rosetta 0.5.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/project/board.html:137
+#: templates/agile/phase/process.html:116
+msgid "Add phase"
+msgstr "Añadir fase"
+
+#: templates/agile/phase/process.html:159
+msgid "Edit"
+msgstr "Editar"
+
+#: templates/agile/phase/process.html:163
+msgid "Delete"
+msgstr "Eliminar"
+
+#: templates/agile/project/board.html:145
 msgid "Add story"
 msgstr "Añadir historia"
 
-#: templates/story/details.html:21
-msgid "Block"
-msgstr "Bloqueado"
+#~ msgid "Block"
+#~ msgstr "Bloqueado"
 
-#: templates/story/details.html:25
-msgid "Mark as Ready"
-msgstr "Marcar como Listo"
-
-#: templates/story/details.html:29
-msgid "Delete"
-msgstr "Eliminar"
+#~ msgid "Mark as Ready"
+#~ msgstr "Marcar como Listo"

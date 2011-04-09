@@ -5,6 +5,12 @@
 
 {% block menu_stories %}<li class="current"><a href="{{ project.get_url }}">{% trans 'Stories' %}</a></li>{% endblock %}
 
+{% block menu_elements %}
+{{ block.super }}
+<li>|</li>
+<li><a id="add-story" href="javascript:;">{% trans 'Add story' %}</a></li>
+{% endblock %}
+
 {% block css %}
 {{ block.super }}
 <style type="text/css">

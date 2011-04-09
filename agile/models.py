@@ -42,9 +42,9 @@ class Project(models.Model):
     
 class Phase(models.Model):
     project = models.ForeignKey('Project', verbose_name=_(u'project'), related_name='phases')
-    name = models.CharField(_(u'name'), max_length=100)
+    name = models.CharField(_(u'name'), max_length=30)
     index = models.PositiveIntegerField(_(u'index'))
-    description = models.TextField(_(u'description'), blank=True)
+    description = models.CharField(_(u'description'), max_length=100, blank=True)
     limit = models.PositiveIntegerField(_(u'limit'), blank=True, null=True)
     is_backlog = models.BooleanField(_(u'is backlog'), default=False)
     is_archive = models.BooleanField(_(u'is archive'), default=False)
@@ -56,6 +56,10 @@ class Phase(models.Model):
     
     def __unicode__(self):
         return '%s' % (self.name)
+    
+    @property
+    def is_deletable(self):
+        return not is_backlog or not is_archive
     
 #class Sprint(models.Model):    
 	

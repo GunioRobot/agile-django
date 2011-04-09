@@ -3,71 +3,48 @@
 
 {% block title %}{{ project.name }} - {% trans 'Board' %} - {{ block.super }}{% endblock %}
 
-{% block menu_stories %}<li class="current"><a href="{{ project.get_url }}">{% trans 'Stories' %}</a></li>{% endblock %}
+{% block menu_phases %}<li class="current"><a href="{{ project.get_phases_url }}">{% trans 'Phases' %}</a></li>{% endblock %}
+
+{% block menu_elements %}
+{{ block.super }}
+<li>|</li>
+<li><a id="add-phase" href="javascript:;">{% trans 'Add phase' %}</a></li>
+{% endblock %}
 
 {% block css %}
 {{ block.super }}
+<link rel="stylesheet" href="{{ MEDIA_URL }}agile/css/jquery-ui.toolbar.css" />
 <style type="text/css">
 #phases {
     border: 1px solid #CCC;
     overflow: auto;
 }
 .phase {
-    border: 0px solid black;
-    float:left;
+    border: 1px solid black;
+    float: left;
+    text-align: center;
 }
 .phase-name {
     text-align: center;
     padding: 10px 0 7px 0;
     font-size: 120%;	
 }
-.stories {
-    min-height: 30px;
-}
-.story {
-    min-height: 75px;
-    margin: 10px 5px;
-}
-.story.disabled {
-    opacity: 0.4;
-}
-.story-header {
-    padding: 1px 7px
-}
-.story-name {
-    margin: 5px 7px;
-    overflow: hidden;
-    font-size: 75%
-}
-.story-owner {
-    float: right;
-    font-size: 60%;
-}
 .ui-state-highlight.story-placeholder {
     margin: 10px 5px;
 }
-.story-header a .ui-icon {
-    float: left;
-    padding-right: 2px;
-    display: none;
+.toolbar {
+    visibility: hidden;
 }
-.story:hover .story-header a .ui-icon {
-    display: inline;
-}
-.story-owner img {
-    margin-left: 5px;
-}
-.story-owner-name {
-    padding: 4px 0;
-    float: left;
+.phase:hover .toolbar {
+    visibility: visible;
 }
 </style>
 {% endblock %}
 {% block javascript %}
 {{ block.super }}
+<script type="text/javascript" src="{{ MEDIA_URL }}agile/js/jquery-ui.toolbar.js"></script>
 <script type="text/javascript">
 var PROJECT_ID = {{ project.id }};
-var USER_ID = {{ user.id }};
 $(function(){
     $(window).resize(function(){
         var phases_number = $('.phase:visible').length; 
@@ -83,7 +60,7 @@ $(function(){
         }).css('min-height', min_height);
     }).resize();
 	
-    /* Sortable Stories */
+    /* Sortable Stories 
     $('.stories').sortable({
         connectWith: ".stories",
         distance: 15,
@@ -129,20 +106,17 @@ $(function(){
         })
         $this.html($textarea);
         $textarea.focus();
-    });
+    });*/
     
-    $("#add-story-dialog").dialog({
+    $("#add-phase-dialog").dialog({
         height: 650,
         width: 480,
         autoOpen: false,
         modal: true,
-        title: gettext('Add story'),
+        title: gettext('Add phase'),
         close: function(){
-            $('#add-story-form-errors').hide();
-            $('#id_phase, #id_owner').selectmenu('value', '');
-            $('#id_creator').selectmenu('value', USER_ID);
-            
-            $('#add-story-dialog form')[0].reset();
+            $('#add-phase-form-errors').hide();
+            $('#add-phase-dialog form')[0].reset();
         }
     });
     
@@ -172,8 +146,37 @@ $(function(){
         return false;
     });
     
-    $('#phase-story').click(function(){
-        $('#phase-story-dialog').dialog('open');
+    $('#add-phase').click(function(){
+        $('#add-phase-dialog').dialog('open');
+    });
+    
+    
+    
+    /* Toolbar setup */
+    $('.toolbar').toolbar({
+        buttons: [
+            {
+                name: gettext('Edit'),
+                uiIcon: 'ui-icon-pencil',
+                click: function(){}
+            },{
+                name: gettext('Delete'),
+                uiIcon: 'ui-icon-circle-close',
+                click: function(){
+                    $.ajax({
+                        url: STORY_DELETE_URL,
+                        dataType: 'json',
+                        type: 'post',
+                        success: function(response){
+                            if(response.success){
+                                window.location = PROJECT_URL;
+                            }
+                        }
+                    });
+                    
+                }
+            }
+        ]
     });
 });
 </script>
@@ -187,6 +190,9 @@ $(function(){
     <div class="phase" data-id="{{ phase.id }}">
     	<div class="phase-name">{{ phase.name }}</div>
         <div class="phase-description">{{ phase.description }}</div>
+        <div class="phase-controls">
+            <div class="toolbar"></div>
+        </div>
     </div>
     {% endfor %}
 </div>

@@ -9,7 +9,7 @@ class ProjectForm(forms.ModelForm):
 class PhaseForm(forms.ModelForm):
     class Meta:
         model = Phase
-        exclude = ('owner', 'is_active',)
+        exclude = ('project', 'is_backlog', 'is_archive', 'index')
         
 class StoryForm(forms.ModelForm):
     
@@ -27,7 +27,7 @@ class StoryForm(forms.ModelForm):
         
     class Meta:
         model = Story
-        exclude = ('index', 'number', 'blocked', 'color',)
+        exclude = ('index', 'number', 'blocked', 'color', 'ready')
         
 class TaskForm(forms.ModelForm):
     
