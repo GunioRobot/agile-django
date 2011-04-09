@@ -20,7 +20,7 @@
     overflow: auto;
 }
 .phase {
-    border: 1px solid black;
+    padding: 20px 0;
     float: left;
     text-align: center;
 }
@@ -29,13 +29,16 @@
     padding: 10px 0 7px 0;
     font-size: 120%;	
 }
+.phase-description {
+    font-size: 80%;
+}
 .ui-state-highlight.story-placeholder {
     margin: 10px 5px;
 }
-.toolbar {
+.phase-controls {
     visibility: hidden;
 }
-.phase:hover .toolbar {
+.phase:hover .phase-controls {
     visibility: visible;
 }
 </style>
@@ -134,10 +137,10 @@ $(function(){
                     var $story = $(response.html);
                     $('.stories:nth(' + response.phase_index + ')').append($story).sortable('refresh');
                 } else {
-                    $('#add-story-form-errors').show()
-                    $('#add-story-form-errors .errors').html('<br/>')
+                    $('#add-phase-form-errors').show()
+                    $('#add-phase-form-errors .errors').html('<br/>')
                     $.each(response.error, function(index, value){
-                        $('#add-story-form-errors .errors').append(index + ": " + value + '<br/>')
+                        $('#add-phase-form-errors .errors').append(index + ": " + value + '<br/>')
                     })
                     
                 }
@@ -153,7 +156,7 @@ $(function(){
     
     
     /* Toolbar setup */
-    $('.toolbar').toolbar({
+    $('.phase-controls').toolbar({
         buttons: [
             {
                 name: gettext('Edit'),
@@ -187,12 +190,10 @@ $(function(){
 
 <div id="phases">
     {% for phase in project.phases.all %}
-    <div class="phase" data-id="{{ phase.id }}">
+    <div class="phase ui-widget-content" data-id="{{ phase.id }}">
     	<div class="phase-name">{{ phase.name }}</div>
         <div class="phase-description">{{ phase.description }}</div>
-        <div class="phase-controls">
-            <div class="toolbar"></div>
-        </div>
+        <div class="phase-controls"></div>
     </div>
     {% endfor %}
 </div>
