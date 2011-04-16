@@ -125,13 +125,25 @@ def project(request, project_id):
     }))
     
 @login_required
-def phases(request, project_id):
+def phase(request, project_id):
     project = request.user.projects.get(pk=project_id)
     phase_form = PhaseForm()
     return render_to_response('agile/phase/process.html', RequestContext(request, {
         'project': project,
         'phase_form': phase_form,
     }))
+    
+@login_required
+@render_to_json
+def phase_ajax(request, project_id, phase_id, action=None):
+    
+    if not (request.method == 'POST' and request.is_ajax()):
+        raise Http404
+    
+    if action == 'move':
+        project = request.user.projects.get(pk=project_id)
+        phase = project.phases.get(id=phase_id)
+        phase.move(request.POST.get('index'))
     
 @login_required
 def story(request, project_id, story_number):

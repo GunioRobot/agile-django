@@ -108,7 +108,6 @@ $(function(){
     });
     
     
-    
     /* Toolbar setup */
     $('.phase-controls').toolbar({
         buttons: [
@@ -141,22 +140,20 @@ $(function(){
         revert: true,
         opacity: 0.9,
         items: '.phase:not(.not-draggable)',
-        /*placeholder: "ui-state-highlight phase-placeholder",
-        /*handle: '.story-header',*/
         containment: '#phases',
         stop: function(event, ui){
-            /*var $element = $(ui.item);
-            var number = $element.attr('data-number');
-            var index = $element.parents('.stories').children().index(ui.item);
-            var phase = $element.parents('.phase').attr('data-id');
-            move_story(number, phase, index);*/
-        },
-        start: function(event, ui){
-            var height = $(ui.item).height();
-            // because margin top and bottom = 10px
-            // and the borders take 4 pixels
-            $('.phase-placeholder').height(height - 20 + 4);
+            var $element = $(ui.item);
+            var id = $element.attr('data-id');
+            var index = $element.parents('#phases').children().index(ui.item);
             
+            $.ajax({
+                url: '/project/' + PROJECT_ID + '/phase/' + id + '/move',
+                type: 'post',
+                data: {
+                    index: index
+                },
+                dataType: 'json'
+            });
         }
     }).disableSelection();
 });

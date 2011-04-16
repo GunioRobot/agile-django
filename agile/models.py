@@ -30,7 +30,7 @@ class Project(models.Model):
         return reverse('agile_project', args=[self.id])
     
     def get_phases_url(self):
-        return reverse('agile_phases', args=[self.id])
+        return reverse('agile_phase', args=[self.id])
     
     @property
     def stories(self):

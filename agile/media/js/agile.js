@@ -60,5 +60,5 @@ function move_story(number, phase, index, successCallback){
         },
         dataType: 'json',
         success: successCallback
-    });    
+    });
 }
