@@ -546,7 +546,7 @@
    "name": "Backlog", 
    "project": 1, 
    "is_backlog": true, 
-   "limit": null, 
+   "stories_limit": null, 
    "is_archive": false, 
    "description": "Stories that will be worked on someday"
   }
@@ -559,7 +559,7 @@
    "name": "Ready", 
    "project": 1, 
    "is_backlog": false, 
-   "limit": null, 
+   "stories_limit": null, 
    "is_archive": false, 
    "description": "Stories that are ready to be worked on"
   }
@@ -572,7 +572,7 @@
    "name": "Working", 
    "project": 1, 
    "is_backlog": false, 
-   "limit": null, 
+   "stories_limit": null, 
    "is_archive": false, 
    "description": "Stories that are currently being worked on"
   }
@@ -585,7 +585,7 @@
    "name": "Complete", 
    "project": 1, 
    "is_backlog": false, 
-   "limit": null, 
+   "stories_limit": null, 
    "is_archive": false, 
    "description": "Stories that have been completed"
   }
@@ -598,7 +598,7 @@
    "name": "Archive", 
    "project": 1, 
    "is_backlog": false, 
-   "limit": null, 
+   "stories_limit": null, 
    "is_archive": true, 
    "description": "Stories that are history"
   }

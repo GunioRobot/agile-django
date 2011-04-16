@@ -52,7 +52,7 @@ var PROJECT_ID = {{ project.id }};
 $(function(){
     $(window).resize(function(){
         var phases_number = $('.phase:visible').length; 
-        var phase_width = Math.floor($('#phases').width() / phases_number - 5 - (phases_number * 7));
+        var phase_width = Math.floor($('#phases').width() / phases_number - 5 - (phases_number * 10));
         $('#phases').height($(window).height() - 105); 
         $('.phase').width(phase_width);
         
