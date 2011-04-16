@@ -20,9 +20,10 @@
     overflow: auto;
 }
 .phase {
-    padding: 20px 0;
+    padding: 20px 10px;
     float: left;
     text-align: center;
+    margin: 10px;
 }
 .phase-name {
     text-align: center;
@@ -32,8 +33,8 @@
 .phase-description {
     font-size: 80%;
 }
-.ui-state-highlight.story-placeholder {
-    margin: 10px 5px;
+.ui-state-highlight.phase-placeholder {
+    margin: 10px;
 }
 .phase-controls {
     visibility: hidden;
@@ -51,7 +52,7 @@ var PROJECT_ID = {{ project.id }};
 $(function(){
     $(window).resize(function(){
         var phases_number = $('.phase:visible').length; 
-        var phase_width = Math.floor($('#phases').width() / phases_number - 5);
+        var phase_width = Math.floor($('#phases').width() / phases_number - 5 - (phases_number * 7));
         $('#phases').height($(window).height() - 105); 
         $('.phase').width(phase_width);
         
@@ -135,7 +136,29 @@ $(function(){
         ]
     });
     
-    $('#phases').sortable().disableSelection();
+    $('#phases').sortable({
+        distance: 15,
+        revert: true,
+        opacity: 0.9,
+        items: '.phase:not(.not-draggable)',
+        /*placeholder: "ui-state-highlight phase-placeholder",
+        /*handle: '.story-header',*/
+        containment: '#phases',
+        stop: function(event, ui){
+            /*var $element = $(ui.item);
+            var number = $element.attr('data-number');
+            var index = $element.parents('.stories').children().index(ui.item);
+            var phase = $element.parents('.phase').attr('data-id');
+            move_story(number, phase, index);*/
+        },
+        start: function(event, ui){
+            var height = $(ui.item).height();
+            // because margin top and bottom = 10px
+            // and the borders take 4 pixels
+            $('.phase-placeholder').height(height - 20 + 4);
+            
+        }
+    }).disableSelection();
 });
 </script>
 {% endblock %}
@@ -145,7 +168,7 @@ $(function(){
 
 <div id="phases">
     {% for phase in project.phases.all %}
-    <div class="phase ui-widget-content ui-corner-all" data-id="{{ phase.id }}">
+    <div class="phase ui-widget-content ui-corner-all{% if phase.is_backlog_or_archive %} not-draggable{% endif %}" data-id="{{ phase.id }}">
     	<div class="phase-name">{{ phase.name }}</div>
         <div class="phase-description">{{ phase.description }}</div>
         <div class="phase-controls"></div>

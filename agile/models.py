@@ -59,7 +59,11 @@ class Phase(models.Model):
     
     @property
     def is_deletable(self):
-        return not is_backlog or not is_archive
+        return not is_backlog_or_archive
+    
+    @property
+    def is_backlog_or_archive(self):
+        return self.is_backlog or self.is_archive 
     
 #class Sprint(models.Model):    
 	
