@@ -45,14 +45,14 @@ class Phase(models.Model):
     name = models.CharField(_(u'name'), max_length=30)
     index = models.PositiveIntegerField(_(u'index'))
     description = models.CharField(_(u'description'), max_length=100, blank=True)
-    limit = models.PositiveIntegerField(_(u'limit'), blank=True, null=True)
+    stories_limit = models.PositiveIntegerField(_(u'stories limit'), blank=True, null=True)
     is_backlog = models.BooleanField(_(u'is backlog'), default=False)
     is_archive = models.BooleanField(_(u'is archive'), default=False)
     
     class Meta:
         verbose_name = _(u'phase')
         verbose_name_plural = _(u'phases')
-        ordering = ('index',)
+        ordering = ('-is_backlog', 'is_archive', 'index')
     
     def __unicode__(self):
         return '%s' % (self.name)
@@ -63,7 +63,29 @@ class Phase(models.Model):
     
     @property
     def is_backlog_or_archive(self):
-        return self.is_backlog or self.is_archive 
+        return self.is_backlog or self.is_archive
+    
+    @transaction.commit_on_success()
+    def move(self, new_index):
+        new_index = int(new_index)
+        phases = self.project.phases
+        if new_index < self.index:
+                phases.filter(
+                    index__lt=self.index,
+                    index__gte=new_index
+                ).update(index=F('index') + 1)
+        elif new_index > self.index:
+            phases.filter(
+                index__gt=self.index,
+                index__lte=new_index
+            ).update(index=F('index') - 1)
+        else:
+            # Same index, we don't to save anything.
+            return
+        
+        self.index = new_index
+        self.save()
+            
 	
 class Story(models.Model):
     number = models.PositiveIntegerField(_(u'number'))
