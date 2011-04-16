@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-09 12:12-0500\n"
+"POT-Creation-Date: 2011-04-16 08:39-0500\n"
 "PO-Revision-Date: 2011-04-09 12:14\n"
 "Last-Translator: admin  <admin@example.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -255,17 +255,17 @@ msgstr "Tablero"
 msgid "Add phase"
 msgstr "Añadir fase"
 
-#: templates/agile/phase/process.html:204
+#: templates/agile/phase/process.html:205
 #: templates/agile/project/board.html:208
 msgid "Error!"
 msgstr "¡Error!"
 
-#: templates/agile/phase/process.html:205
+#: templates/agile/phase/process.html:206
 #: templates/agile/project/board.html:209
 msgid "Validation errors:"
 msgstr "Los errores de validación:"
 
-#: templates/agile/phase/process.html:209
+#: templates/agile/phase/process.html:210
 #: templates/agile/profile/profile.html:36
 #: templates/agile/profile/profile.html:51
 #: templates/agile/profile/profile.html:66 templates/agile/project/add.html:47
