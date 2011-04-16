@@ -64,8 +64,6 @@ class Phase(models.Model):
     @property
     def is_backlog_or_archive(self):
         return self.is_backlog or self.is_archive 
-    
-#class Sprint(models.Model):    
 	
 class Story(models.Model):
     number = models.PositiveIntegerField(_(u'number'))
