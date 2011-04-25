@@ -128,6 +128,13 @@ def project(request, project_id):
 def project_details(request, project_id):
     project = request.user.projects.get(pk=project_id)
     project_form = ProjectForm(instance=project)
+    
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, instance=project)
+        if form.is_valid():
+            project = form.save()
+            return HttpResponseRedirect(project.get_details_url())
+    
     return render_to_response('agile/project/details.html', RequestContext(request, {
         'project': project,
         'project_form': project_form,

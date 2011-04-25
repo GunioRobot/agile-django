@@ -15,7 +15,9 @@
 
 {% block content %}
 {{ block.super }}
-<form>
-    {{ project_form }}
+<form method="post" style="width:80%;">
+    {% csrf_token %}
+    {{ project_form.as_p }}
+    <input type="submit" value="{% trans 'Submit' %}">
 </form>
 {% endblock %}
