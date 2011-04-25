@@ -4,7 +4,7 @@
 {% block menu %}
 <ul id="bar-menu" class="ui-widget-content">
     {% block menu_elements %}
-        {% block menu_details %}<li><a href="#">{% trans 'Details' %}</a></li>{% endblock %}
+        {% block menu_details %}<li><a href="{{ project.get_details_url }}">{% trans 'Details' %}</a></li>{% endblock %}
         {% block menu_stories %}<li><a href="{{ project.get_url }}">{% trans 'Stories' %}</a></li>{% endblock %}
         {% if user.is_superuser %}
             {% block menu_phases %}<li><a href="{{ project.get_phases_url }}">{% trans 'Phases' %}</a></li>{% endblock %}
