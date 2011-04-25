@@ -14,7 +14,7 @@ TEMPLATE_DEBUG = DEBUG
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
 ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
+    ('Source ITech Developers', 'developers@sourceitech.com'),
 )
 
 MANAGERS = ADMINS
