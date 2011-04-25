@@ -1,7 +1,13 @@
 import os
-# Django settings for django_agile project.
+# Django settings for agile-django project.
 
-DEBUG = True
+try:
+    from local_settings import DEBUG
+except ImportError:
+    raise Exception('Make a copy of the local_settings_example.py '
+                    'file and rename it to local_settings.py\n'
+                    'cp local_settings_example.py local_settings.py')
+
 TEMPLATE_DEBUG = DEBUG
 
 # Where the project is
