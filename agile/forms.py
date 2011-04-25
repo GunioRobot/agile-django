@@ -2,6 +2,12 @@ from agile.models import *
 from django import forms
 
 class ProjectForm(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        super(ProjectForm, self).__init__(*args, **kwargs)
+        label_from_instance = lambda obj: obj.agile_get_name()
+        self.fields['members'].label_from_instance = label_from_instance
+    
     class Meta:
         model = Project
         exclude = ('owner', 'is_active',)
