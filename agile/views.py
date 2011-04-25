@@ -125,6 +125,13 @@ def project(request, project_id):
     }))
     
 @login_required
+def project_details(request, project_id):
+    project = request.user.projects.get(pk=project_id)
+    return render_to_response('agile/project/details.html', RequestContext(request, {
+        'project': project,
+    }))
+    
+@login_required
 def phase(request, project_id):
     project = request.user.projects.get(pk=project_id)
     phase_form = PhaseForm()

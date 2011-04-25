@@ -29,6 +29,9 @@ class Project(models.Model):
     def get_url(self):
         return reverse('agile_project', args=[self.id])
     
+    def get_details_url(self):
+        return reverse('agile_project_details', args=[self.id])
+    
     def get_phases_url(self):
         return reverse('agile_phase', args=[self.id])
     
