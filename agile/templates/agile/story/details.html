@@ -127,9 +127,8 @@
 {{ block.super }}
 <script type="text/javascript" src="{{ MEDIA_URL }}agile/js/jquery-ui.toolbar.js"></script>
 <script type="text/javascript">
-var PROJECT_ID = {{ project.id }};
 var STORY_NUMBER = {{ story.number }};
-var PROJECT_URL = '/project/' + PROJECT_ID;
+var PROJECT_URL = '{{ project.get_base_url }}';
 var STORY_BASE_URL = PROJECT_URL + '/story/' + STORY_NUMBER;
 var STORY_EDIT_URL = STORY_BASE_URL + '/edit';
 var STORY_DELETE_URL = STORY_BASE_URL + '/delete';

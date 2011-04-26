@@ -26,6 +26,9 @@ class Project(models.Model):
     def __unicode__(self):
         return '%s' % self.name
     
+    def get_base_url(self):
+        return '/'.join(self.get_url().split('/')[:-1])
+
     def get_url(self):
         return reverse('agile_project', args=[self.id])
     

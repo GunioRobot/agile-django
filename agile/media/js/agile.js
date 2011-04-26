@@ -52,7 +52,7 @@ function move_story(number, phase, index, successCallback){
     }
     successCallback = successCallback || null;
     $.ajax({
-        url: '/project/' + PROJECT_ID + '/story/' + number + '/move',
+        url: PROJECT_URL + '/story/' + number + '/move',
         type: 'post',
         data: {
             phase: phase,

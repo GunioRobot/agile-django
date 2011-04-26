@@ -72,7 +72,7 @@
 {% block javascript %}
 {{ block.super }}
 <script type="text/javascript">
-var PROJECT_ID = {{ project.id }};
+var PROJECT_URL = '{{ project.get_base_url }}';
 var USER_ID = {{ user.id }};
 $(function(){
     $(window).resize(function(){
@@ -122,7 +122,7 @@ $(function(){
             var text = $.trim($this.val());
             $this.parent().text(text);
             $.ajax({
-                url: '/project/' + PROJECT_ID + '/story/' + number + '/edit',
+                url: PROJECT_URL + '/story/' + number + '/edit',
                 type: 'post',
                 data: {
                     name: text

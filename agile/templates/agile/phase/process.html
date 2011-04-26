@@ -48,7 +48,7 @@
 {{ block.super }}
 <script type="text/javascript" src="{{ MEDIA_URL }}agile/js/jquery-ui.toolbar.js"></script>
 <script type="text/javascript">
-var PROJECT_ID = {{ project.id }};
+var PROJECT_URL = '{{ project.get_base_url }}';
 $(function(){
     $(window).resize(function(){
         var phases_number = $('.phase:visible').length; 
@@ -147,7 +147,7 @@ $(function(){
             var index = $element.parents('#phases').children().index(ui.item);
             
             $.ajax({
-                url: '/project/' + PROJECT_ID + '/phase/' + id + '/move',
+                url: PROJECT_URL + '/phase/' + id + '/move',
                 type: 'post',
                 data: {
                     index: index
