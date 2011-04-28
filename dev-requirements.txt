@@ -1,3 +1,6 @@
 django-extensions
 django-rosetta
 django-debug-toolbar
+lettuce
+splinter
+sure

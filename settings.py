@@ -124,6 +124,7 @@ if DEBUG:
         'django_extensions',
         'rosetta',
         'debug_toolbar',
+        'lettuce.django',
     )
     
     MIDDLEWARE_CLASSES += (
