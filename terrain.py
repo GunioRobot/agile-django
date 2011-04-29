@@ -11,6 +11,7 @@ def initial_setup(server):
     settings.LANGUAGES = (
         ('en', 'English'),
     )
+    settings.DATABASES['default']['NAME'] = 'test.sqlite'
     call_command('syncdb', interactive=False, verbosity=0)
     call_command('flush', interactive=False, verbosity=0)
     #call_command('migrate', interactive=False, verbosity=0)
