@@ -8,12 +8,15 @@ from django.conf import settings
 
 @before.harvest
 def initial_setup(server):
+    settings.LANGUAGES = (
+        ('en', 'English'),
+    )
     call_command('syncdb', interactive=False, verbosity=0)
     call_command('flush', interactive=False, verbosity=0)
     #call_command('migrate', interactive=False, verbosity=0)
     call_command('loaddata', 'all', verbosity=0)
     setup_test_environment()
-    world.browser = Browser('webdriver.firefox')
+    world.browser = Browser('webdriver.chrome')
 
 @after.harvest
 def cleanup(server):
