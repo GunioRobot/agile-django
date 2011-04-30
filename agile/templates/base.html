@@ -9,12 +9,12 @@
         <script type="text/javascript" src="{% url agile_js_translations %}"></script>
         <script type="text/javascript" src="{% if USE_CDN %}https://ajax.googleapis.com/ajax/libs/{% else %}{{ MEDIA_URL}}{% endif %}agile/jquery/1.5.2/jquery.min.js"></script>
         <script type="text/javascript" src="{% if USE_CDN %}https://ajax.googleapis.com/ajax/libs/{% else %}{{ MEDIA_URL}}{% endif %}agile/jqueryui/1.8.12/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="https://github.com/fnagel/jquery-ui/raw/selectmenu/ui/jquery.ui.selectmenu.js"></script>
+        <script type="text/javascript" src="{{ MEDIA_URL}}agile/jqueryui/selectmenu/jquery.ui.selectmenu.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL }}agile/js/agile.js"></script>
         {% endblock %}
         {% block css %}
         <link rel="stylesheet" href="{% if USE_CDN %}https://ajax.googleapis.com/ajax/libs/{% else %}{{ MEDIA_URL}}{% endif %}agile/jqueryui/1.8.12/themes/{{ user.agile_userprofile.jquery_ui_theme|default:'cupertino' }}/jquery-ui.css" />
-        <link rel="stylesheet" href="https://github.com/fnagel/jquery-ui/raw/selectmenu/themes/base/jquery.ui.selectmenu.css"/>
+        <link rel="stylesheet" href="{{ MEDIA_URL}}agile/jqueryui/selectmenu/jquery.ui.selectmenu.css"/>
         <link rel="stylesheet" href="{{ MEDIA_URL }}agile/css/agile.css" />
         {% endblock %}
         {% endblock %}
