@@ -9,11 +9,13 @@ def i_am_in_the_login_page(step):
 
 @step(u'see the login form')
 def see_the_login_form(step):
+    assert that(world.browser.title).equals('Login - AgileDjango'), 'This is not the login page.'
     step.then('see the form field "username"')
     step.then('see the form field "password"')
 
-@step(u'see the logged in homepage')
-def see_the_logged_in_homepage(step):
+@step(u'see the logged in home page')
+def see_the_logged_in_home_page(step):
+    assert that(world.browser.title).equals('Home - AgileDjango'), 'This is no the home page.'
     step.then('see the link "Home"')
     step.then('see the link "Projects"')
     step.then('see the link "Profile"')
@@ -29,7 +31,14 @@ def i_am_logged_in(step):
       | password | admin |
     ''')
     step.then('submit the form')
-    step.then('see the logged in homepage')
+    step.then('see the logged in home page')
+
+@step(u'see the logged out home page')
+def see_the_logged_out_home_page(step):
+    assert that(world.browser.title).equals('Home - AgileDjango'), 'This is no the home page.'
+    step.then('see the link "Home"')
+    step.then('see the link "Login"')
+    step.then('see the link "Signup"')
 
 # Common
 @step(u'see the form field "(.+)"')
