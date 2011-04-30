@@ -39,7 +39,6 @@ def see_the_form_field(step, field_name):
 
 @step('see the link "(.+)"')
 def see_the_link(step, text):
-    wait_for_condition(lambda: world.browser.find_link_by_text(text))
     found = world.browser.find_link_by_text(text)
     assert found, 'no links with the text "%s" were found' % text
     
@@ -59,13 +58,13 @@ def fill_the_form_with_the_next_info(step):
     for data in form_data:
         name = data['name']
         value = data['value']
-        is_input = world.browser.find_by_css('input[name=%s]' % name)
+        is_input = world.browser.find_by_css_selector('input[name=%s]' % name)
         if is_input:
             if value:
                 is_input.first.value = value
             continue
         
-        is_select = world.browser.find_by_css('select[name=%s]' % name)
+        is_select = world.browser.find_by_css_selector('select[name=%s]' % name)
         if is_select:
             world.browser.select(name, value)
             continue
@@ -78,7 +77,7 @@ def click_on_the_link(step, text):
 
 @step(u'submit the form')
 def submit_the_form(step):
-    submitter = world.browser.find_by_css("form input[type='submit']")
+    submitter = world.browser.find_by_css_selector("form input[type='submit']")
     assert submitter, 'no form submit inputs were found'
     submitter[0].click()
     
@@ -212,4 +211,4 @@ def wait_for_many_elements(selector, timeout=5, interval=0.5, for_at_least=1):
     if selector_type == 'xpath':
         return world.browser.find_by_xpath(selector)
 
-    return world.browser.find_by_css(selector)
+    return world.browser.find_by_css_selector(selector)
