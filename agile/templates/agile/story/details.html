@@ -92,11 +92,11 @@
     width: 200px;
 }
 .user .gravatar {
-    float: left;
+    float: right;
     width: 30px;
     height: 30px;
     padding: 1px;
-    margin: 0 12px 0 0;
+    margin: 0 0 0 12px;
 }
 .task {
     padding: 15px;
@@ -353,6 +353,7 @@ $(function(){
             {% gravatar story.creator 30 %}
         {% endif %}
         </div>
+        {{ story_form.creator.label }}
         {{ story_form.creator }}
     </div>
     <div id="owner" class="user ui-widget-content">
@@ -361,6 +362,7 @@ $(function(){
             {% gravatar story.owner 30 %}
         {% endif %}
         </div>
+        {{ story_form.owner.label }}
         {{ story_form.owner }}
     </div>
     <div id="toolbar"></div>
