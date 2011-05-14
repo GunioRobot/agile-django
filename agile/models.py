@@ -217,7 +217,18 @@ class TaskManager(models.Manager):
     def get_percentage_finished(self):
         total = float(self.all().count())
         finished = float(self.finished().count())
-        return '%.2f%%' % (finished / total * 100)
+        
+        if total:     
+            return '%.2f%%' % (finished / total * 100)
+        else:
+            return '0.00%'
+        
+    def get_formatted_count(self):
+        total = self.count()
+        if total:
+            return _(u'%s of %s') % (self.finished().count(), total)
+        else:
+            return '0'
     
 class Task(models.Model):
     index = models.PositiveIntegerField(_(u'index'))
