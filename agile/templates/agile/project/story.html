@@ -12,4 +12,10 @@
         </div>
     </div>
     <div class="story-name">{{ story.name }}</div>
+    {% if story.tasks.exists %}
+        <div class="story-name"><span class="ui-icon ui-icon-clipboard"></span>{% trans 'Tasks' %}: {{ story.tasks.get_formatted_count }}</div>
+    {% endif %}
+    {% if story.comments.exists %}
+        <div class="story-name"><span class="ui-icon ui-icon-comment"></span>{% trans 'Comments' %}: {{ story.comments.count }}</div>
+    {% endif %}
 </div>
