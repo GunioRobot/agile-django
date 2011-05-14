@@ -120,7 +120,7 @@
 .task-delete {
     cursor: pointer;
 }
-#comment-form {
+#comment-form, #task-form {
     margin: 10px;
     width: auto;
 }
@@ -405,7 +405,7 @@ $(function(){
         
         <div id="details" data-description="{{ story.description }}">{{ story.description|markdown }}</div>
         <div id="tasks">
-            <form method="post" action="">
+            <form id="task-form" method="post" action="">
             {{ task_form.description }}
             <input type="submit" value="{% trans 'Add Task' %}"/>
             </form>
