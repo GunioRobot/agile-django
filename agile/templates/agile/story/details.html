@@ -120,6 +120,10 @@
 .task-delete {
     cursor: pointer;
 }
+#comment-form {
+    margin: 10px;
+    width: auto;
+}
 </style>
 {% endblock %}
 
@@ -428,7 +432,7 @@ $(function(){
                 {% trans 'This story has no comments yet.' %}
             {% endfor %}
             </div>
-            <form method="post" action="{{ story.get_add_comment_url }}">
+            <form id="comment-form" method="post" action="{{ story.get_add_comment_url }}">
             {{ comment_form.text }}
             <input type="submit" value="{% trans 'Leave comment' %}"/>
             </form>
