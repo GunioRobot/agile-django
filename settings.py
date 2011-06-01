@@ -1,14 +1,20 @@
 import os
-# Django settings for django_agile project.
+# Django settings for agile-django project.
 
-DEBUG = True
+try:
+    from local_settings import DEBUG
+except ImportError:
+    raise Exception('Make a copy of the local_settings_example.py '
+                    'file and rename it to local_settings.py\n'
+                    'cp local_settings_example.py local_settings.py')
+
 TEMPLATE_DEBUG = DEBUG
 
 # Where the project is
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
 ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
+    ('Source ITech Developers', 'developers@sourceitech.com'),
 )
 
 MANAGERS = ADMINS
@@ -89,10 +95,11 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.locale.LocaleMiddleware'
+    'django.middleware.transaction.TransactionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 )
 
-ROOT_URLCONF = 'AgileDjango.urls'
+ROOT_URLCONF = 'agile-django.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -106,12 +113,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     #'django.contrib.sites',
     #'django.contrib.messages',
+    'django.contrib.admin',
+    'django.contrib.markup',
     'agile',
     'gravatar',
-    # Uncomment the next line to enable the admin:
-    'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
 )
 
 if DEBUG:
@@ -119,11 +124,15 @@ if DEBUG:
         'django_extensions',
         'rosetta',
         'debug_toolbar',
+        'lettuce.django',
     )
     
     MIDDLEWARE_CLASSES += (
-        'debug_toolbar.middleware.DebugToolbarMiddleware',
+        #'debug_toolbar.middleware.DebugToolbarMiddleware',
+        #'agile.middleware.ColorSQLMiddleware',
     )
+    
+    LOG_COLORSQL_VERBOSE = True
     
     DEBUG_TOOLBAR_CONFIG = {
         'INTERCEPT_REDIRECTS': False,
@@ -141,4 +150,5 @@ LOGOUT_URL = '/logout/'
 try:
     from local_settings import *
 except ImportError:
-    pass
+    raise Exception('Make a copy of the local_settings_example.py '
+                    'file and rename it to local_settings.py')

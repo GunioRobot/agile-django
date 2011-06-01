@@ -1,3 +1,6 @@
 django-extensions
 django-rosetta
 django-debug-toolbar
+lettuce>=0.1.26
+git+git://github.com/cobrateam/splinter.git#egg=splinter
+sure>=0.4.0

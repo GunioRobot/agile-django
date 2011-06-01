@@ -1,50 +1,32 @@
-{% load i18n %}
-{% load gravatar %}
-<html>
+{% load i18n gravatar %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         {% block head %}
         <title>{% block title %}AgileDjango{% endblock %}</title>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
-        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/smoothness/jquery-ui.css" />
-        <link rel="stylesheet" href="{{ MEDIA_URL }}css/agile.css" />
-        <script type="text/javascript">
-            $(function(){
-                $('input[type=submit]').addClass('ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only')
-                $('html').ajaxSend(function(event, xhr, settings) {
-                    function getCookie(name) {
-                        var cookieValue = null;
-                        if (document.cookie && document.cookie != '') {
-                            var cookies = document.cookie.split(';');
-                            for (var i = 0; i < cookies.length; i++) {
-                                var cookie = jQuery.trim(cookies[i]);
-                                // Does this cookie string begin with the name we want?
-                                if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                                    break;
-                                }
-                            }
-                        }
-                        return cookieValue;
-                    }
-                    if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-                        // Only send the token to relative URLs i.e. locally.
-                        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-                    }
-                });
-            })
-        </script>
+        {% block javascript %}
+        <script type="text/javascript" src="{% url agile_js_translations %}"></script>
+        <script type="text/javascript" src="{% if USE_CDN %}https://ajax.googleapis.com/ajax/libs/{% else %}{{ MEDIA_URL}}{% endif %}agile/jquery/1.5.2/jquery.min.js"></script>
+        <script type="text/javascript" src="{% if USE_CDN %}https://ajax.googleapis.com/ajax/libs/{% else %}{{ MEDIA_URL}}{% endif %}agile/jqueryui/1.8.12/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="{{ MEDIA_URL}}agile/jqueryui/selectmenu/jquery.ui.selectmenu.js"></script>
+        <script type="text/javascript" src="{{ MEDIA_URL }}agile/js/agile.js"></script>
+        {% endblock %}
+        {% block css %}
+        <link rel="stylesheet" href="{% if USE_CDN %}https://ajax.googleapis.com/ajax/libs/{% else %}{{ MEDIA_URL}}{% endif %}agile/jqueryui/1.8.12/themes/{{ user.agile_userprofile.jquery_ui_theme|default:'cupertino' }}/jquery-ui.css" />
+        <link rel="stylesheet" href="{{ MEDIA_URL}}agile/jqueryui/selectmenu/jquery.ui.selectmenu.css"/>
+        <link rel="stylesheet" href="{{ MEDIA_URL }}agile/css/agile.css" />
+        {% endblock %}
         {% endblock %}
     </head>
     <body>
-        <div id="header">
+        <div id="header" class="ui-widget-header">
             <span id="name">AgileDjango</span>
             <ul id="topmenu">
-                {% if user.is_authenticated and user.get_full_name %}
-                <li>{{ user.get_full_name }}</li>
-                <li>|</li>
-                {% else %}
-                <li>{{ user.username|capfirst }}</li>
+                {% if user.is_authenticated %}
+                    <li>
+                    {{ user.agile_get_name }}
+                    </li>
                 <li>|</li>
                 {% endif %}
                 <li><a href='{% url agile_index %}'>{% trans 'Home' %}</a></li>
@@ -59,8 +41,11 @@
                 {% endif %}
             </ul>
         </div>
-        <div id="content">
-            {% block content %}{% endblock %}
+        <div id="wrapper">
+            {% block wrapper %}
+                {% block menu %}{% endblock %}
+                <div id="content">{% block content %}{% endblock %}</div>
+            {% endblock %}
         </div>
     </body>
 </html>

@@ -1,5 +1,5 @@
 from functools import wraps
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 try:
     import json
 except ImportError: 
@@ -10,9 +10,15 @@ def render_to_json(function, **jsonargs):
     def wrap(request, *args, **kwargs):
         try:
             result = function(request, *args, **kwargs)
-        except Exception, e:
+        
+        # Leave Http404 pass through
+        except Http404:
+            raise Http404
+        
+        except Exception as e:
             result = {
-                'success': False
+                'success': False,
+                'error': ''
             }
         r = HttpResponse(mimetype='application/json')
         indent = jsonargs.pop('indent', None)
@@ -20,9 +26,10 @@ def render_to_json(function, **jsonargs):
             result = {
                 'success': True
             }
-            
-            
-            
+        if not result.has_key('success'):
+            result.update({
+                'success': True
+            })
         r.write(json.dumps(result, indent=indent, **jsonargs))
         return r
     return wrap

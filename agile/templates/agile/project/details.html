@@ -1,0 +1,23 @@
+{% extends 'agile/base.html' %}
+{% load i18n %}
+
+{% block title %}{{ project.name }} - {% trans 'Details' %} - {{ block.super }}{% endblock %}
+
+{% block menu_details %}<li class="current"><a href="{{ project.get_details_url }}">{% trans 'Details' %}</a></li>{% endblock %}
+
+{% block css %}
+{{ block.super }}
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+{% endblock %}
+
+{% block content %}
+{{ block.super }}
+<form method="post" style="width:80%;">
+    {% csrf_token %}
+    {{ project_form.as_p }}
+    <input type="submit" value="{% trans 'Submit' %}">
+</form>
+{% endblock %}

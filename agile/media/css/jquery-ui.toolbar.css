@@ -1,0 +1,32 @@
+.toolbar {
+	margin-bottom: 5px;
+}
+
+.toolbar .fg-button { 
+   outline: 0; 
+   padding: .4em .5em; 
+   text-decoration: none !important; 
+   cursor: pointer; 
+   position: relative; 
+   text-align: center; 
+   zoom: 1; 
+}
+
+.toolbar.fg-toolbar {
+	padding: .5em;
+	margin: 0;
+}
+
+.toolbar.fg-toolbar .fg-buttonset {
+	margin-right: 1.5em;
+	padding-left: 1px;
+}
+
+.toolbar.fg-toolbar .fg-button {
+	font-size: 1em;
+}
+
+.toolbar button span.ui-icon {
+    float: left;
+    margin-right: 5px;
+}

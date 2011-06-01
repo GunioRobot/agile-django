@@ -3,17 +3,12 @@
 
 {% block title %}{% trans 'Signup' %} - {{ block.super }}{% endblock %}
 
-{% block head %}
-{{ block.super }}
-<script type="text/javascript" src="{{ MEDIA_URL }}js/login.js"></script>
-{% endblock %}
-
 {% block content %}
 <div id="login">
 <form method="post">
 {% csrf_token %}
 {{ form.as_p }}
-<input type="submit" value="{% trans 'Login' %}">
+<input type="submit" value="{% trans 'Signup' %}"/>
 </form>
 </div>
 {% endblock %}

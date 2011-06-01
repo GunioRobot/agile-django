@@ -1,0 +1,188 @@
+{% extends 'agile/base.html' %}
+{% load i18n %}
+
+{% block title %}{{ project.name }} - {% trans 'Board' %} - {{ block.super }}{% endblock %}
+
+{% block menu_phases %}<li class="current"><a href="{{ project.get_phases_url }}">{% trans 'Phases' %}</a></li>{% endblock %}
+
+{% block menu_elements %}
+{{ block.super }}
+<li>|</li>
+<li><a id="add-phase" href="javascript:;">{% trans 'Add phase' %}</a></li>
+{% endblock %}
+
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" href="{{ MEDIA_URL }}agile/css/jquery-ui.toolbar.css" />
+<style type="text/css">
+#phases {
+    border: 1px solid #CCC;
+    overflow: auto;
+}
+.phase {
+    padding: 20px 10px;
+    float: left;
+    text-align: center;
+    margin: 10px;
+}
+.phase-name {
+    text-align: center;
+    padding: 10px 0 7px 0;
+    font-size: 120%;	
+}
+.phase-description {
+    font-size: 80%;
+}
+.ui-state-highlight.phase-placeholder {
+    margin: 10px;
+}
+.phase-controls {
+    visibility: hidden;
+}
+.phase:hover .phase-controls {
+    visibility: visible;
+}
+</style>
+{% endblock %}
+{% block javascript %}
+{{ block.super }}
+<script type="text/javascript" src="{{ MEDIA_URL }}agile/js/jquery-ui.toolbar.js"></script>
+<script type="text/javascript">
+var PROJECT_URL = '{{ project.get_base_url }}';
+$(function(){
+    $(window).resize(function(){
+        var phases_number = $('.phase:visible').length; 
+        var phase_width = Math.floor($('#phases').width() / phases_number - 5 - (phases_number * 10));
+        $('#phases').height($(window).height() - 105); 
+        $('.phase').width(phase_width);
+        
+        var min_height = 0;
+        $('.phase').each(function(){
+            var height = $(this).height();
+            if(height > min_height)
+                min_height = height;
+        }).css('min-height', min_height);
+    }).resize();
+	
+   
+    $("#add-phase-dialog").dialog({
+        height: 650,
+        width: 480,
+        autoOpen: false,
+        modal: true,
+        title: gettext('Add phase'),
+        close: function(){
+            $('#add-phase-form-errors').hide();
+            $('#add-phase-dialog form')[0].reset();
+        }
+    });
+    
+    
+    $('#phase-story-dialog form').submit(function(){
+        var $this = $(this);
+        $.ajax({
+            url: $this.attr('action'),
+            type: $this.attr('method'),
+            data: $this.serialize(),
+            dataType: 'json',
+            success: function(response){
+                if(response.success){
+                    $('#add-story-dialog').dialog('close');
+                    var $story = $(response.html);
+                    $('.stories:nth(' + response.phase_index + ')').append($story).sortable('refresh');
+                } else {
+                    $('#add-phase-form-errors').show()
+                    $('#add-phase-form-errors .errors').html('<br/>')
+                    $.each(response.error, function(index, value){
+                        $('#add-phase-form-errors .errors').append(index + ": " + value + '<br/>')
+                    })
+                    
+                }
+            }
+        });
+        return false;
+    });
+    
+    $('#add-phase').click(function(){
+        $('#add-phase-dialog').dialog('open');
+    });
+    
+    
+    /* Toolbar setup */
+    $('.phase-controls').toolbar({
+        buttons: [
+            {
+                name: gettext('Edit'),
+                uiIcon: 'ui-icon-pencil',
+                click: function(){}
+            },{
+                name: gettext('Delete'),
+                uiIcon: 'ui-icon-circle-close',
+                click: function(){
+                    $.ajax({
+                        url: STORY_DELETE_URL,
+                        dataType: 'json',
+                        type: 'post',
+                        success: function(response){
+                            if(response.success){
+                                window.location = PROJECT_URL;
+                            }
+                        }
+                    });
+                    
+                }
+            }
+        ]
+    });
+    
+    $('#phases').sortable({
+        distance: 50,
+        revert: true,
+        opacity: 0.9,
+        items: '.phase:not(.not-draggable)',
+        containment: '#phases',
+        stop: function(event, ui){
+            var $element = $(ui.item);
+            var id = $element.attr('data-id');
+            var index = $element.parents('#phases').children().index(ui.item);
+            
+            $.ajax({
+                url: PROJECT_URL + '/phase/' + id + '/move',
+                type: 'post',
+                data: {
+                    index: index
+                },
+                dataType: 'json'
+            });
+        }
+    }).disableSelection();
+});
+</script>
+{% endblock %}
+
+{% block content %}
+{{ block.super }}
+
+<div id="phases">
+    {% for phase in project.phases.all %}
+    <div class="phase ui-widget-content ui-corner-all{% if phase.is_backlog_or_archive %} not-draggable{% endif %}" data-id="{{ phase.id }}">
+    	<div class="phase-name">{{ phase.name }}</div>
+        <div class="phase-description">{{ phase.description }}</div>
+        <div class="phase-controls"></div>
+    </div>
+    {% endfor %}
+</div>
+
+<div id="add-phase-dialog">
+    <form method="post" action="{% url agile_story_add project.id %}">
+        <div id="add-phase-form-errors" class="ui-state-error ui-corner-all">
+            <span class="ui-icon ui-icon-alert"></span>
+            <strong>{% trans 'Error!' %}</strong>
+            {% trans 'Validation errors:' %}<br/>
+            <div class="errors"></div>
+        </div>
+        {{ phase_form.as_p }}
+        <input type="submit" value="{% trans 'Submit' %}">
+    </form>
+</div>
+{% endblock %}
