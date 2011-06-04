@@ -91,8 +91,7 @@ class Phase(models.Model):
         
         self.index = new_index
         self.save()
-            
-	
+
 class Story(models.Model):
     number = models.PositiveIntegerField(_(u'number'))
     index = models.PositiveIntegerField(_(u'index'))
@@ -168,8 +167,8 @@ class Story(models.Model):
         else:
             stories.filter(index__gt=self.index).update(index=F('index') - 1)
             self.phase_id = new_phase_id
-			
-			# Let's calculate the max + 1 index
+            
+            # Let's calculate the max + 1 index
             if new_index is None:
                 max = Story.objects.filter(
                     phase=new_phase_id).aggregate(max=Max('index'))['max']

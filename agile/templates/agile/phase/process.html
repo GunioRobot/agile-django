@@ -28,7 +28,7 @@
 .phase-name {
     text-align: center;
     padding: 10px 0 7px 0;
-    font-size: 120%;	
+    font-size: 120%;
 }
 .phase-description {
     font-size: 80%;
@@ -63,7 +63,6 @@ $(function(){
                 min_height = height;
         }).css('min-height', min_height);
     }).resize();
-	
    
     $("#add-phase-dialog").dialog({
         height: 650,
@@ -166,7 +165,7 @@ $(function(){
 <div id="phases">
     {% for phase in project.phases.all %}
     <div class="phase ui-widget-content ui-corner-all{% if phase.is_backlog_or_archive %} not-draggable{% endif %}" data-id="{{ phase.id }}">
-    	<div class="phase-name">{{ phase.name }}</div>
+        <div class="phase-name">{{ phase.name }}</div>
         <div class="phase-description">{{ phase.description }}</div>
         <div class="phase-controls"></div>
     </div>

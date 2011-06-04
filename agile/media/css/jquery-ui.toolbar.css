@@ -1,5 +1,5 @@
 .toolbar {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 
 .toolbar .fg-button { 
@@ -13,17 +13,17 @@
 }
 
 .toolbar.fg-toolbar {
-	padding: .5em;
-	margin: 0;
+    padding: .5em;
+    margin: 0;
 }
 
 .toolbar.fg-toolbar .fg-buttonset {
-	margin-right: 1.5em;
-	padding-left: 1px;
+    margin-right: 1.5em;
+    padding-left: 1px;
 }
 
 .toolbar.fg-toolbar .fg-button {
-	font-size: 1em;
+    font-size: 1em;
 }
 
 .toolbar button span.ui-icon {

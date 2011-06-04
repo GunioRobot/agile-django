@@ -1,17 +1,17 @@
 body {
-	background: #f0f0f0;
+    background: #f0f0f0;
 }
 
 * {
-	margin: 0;
-	padding: 0;
-	outline: none;
+    margin: 0;
+    padding: 0;
+    outline: none;
     font-family: "Lucida Grande", Verdana, Helvetica, Arial, Tahoma, sans-serif;
 }
 
 #header {
-	padding: 14px 21px;
-	height: 24px;
+    padding: 14px 21px;
+    height: 24px;
 }
 
 #name {
@@ -22,7 +22,7 @@ body {
 }
 
 ul#topmenu {
-	list-style: none;
+    list-style: none;
     float: right;
 }
 
