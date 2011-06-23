@@ -72,24 +72,24 @@ span.ui-icon {
     margin-right: 7px;
 }
 
-.left_hide {
+.left-hide {
     font-size: 10px;
     font-weight: bold;
     float: left;
     padding: 0 0 0 10px;
 }
-.left_hide:hover {
+.left-hide:hover {
     font-weight: bold;
     color: red;
     cursor: pointer;
 }
-.left_shows {
+.left-shows {
     font-size: 10px;
     font-weight: bold;
     float: left;
     padding: 0 0 0 10px;
 }
-.left_shows:hover {
+.left-shows:hover {
     font-weight: bold;
     color: red;
     cursor: pointer;
@@ -208,20 +208,20 @@ $(function(){
         $('#add-story-dialog').dialog('open');
     });
     
-    $('.left_hide').click(function(){
-        var current_phase=$(this).parent().parent();
-        var next_phase=current_phase.next();
+    $('.left-hide').click(function(){
+        var current_phase = $(this).parent().parent();
+        var next_phase = current_phase.next();
         current_phase.hide();
-        next_phase.find('div.phase-name').prepend('<label class="left_shows">>></label>')
+        next_phase.find('div.phase-name').prepend('<label class="left-shows">&gt;&gt;</label>')
         $(window).resize();
     });
 
-    $('.left_shows').live('click',function(){
-        var current_phase=$(this).parent().parent();
-        var prev_phase=current_phase.prev();
-        prev_phase.show();   
+    $('.left-shows').live('click', function(){
+        var current_phase = $(this).parent().parent();
+        var prev_phase = current_phase.prev();
+        prev_phase.show();
         $(window).resize();
-        $(this).remove();	
+        $(this).remove();
     });
 });
 </script>
@@ -235,7 +235,7 @@ $(function(){
     <div class="phase" data-id="{{ phase.id }}">
         <div class="phase-name">
             {% if phase.name == 'Backlog' %}
-                <label class="left_hide"><<</label>
+                <label class="left-hide">&lt;&lt;</label>
             {% endif %}
             {{ phase.name }}
         </div>
