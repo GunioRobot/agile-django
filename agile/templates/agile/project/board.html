@@ -78,7 +78,19 @@ span.ui-icon {
     float: left;
     padding: 0 0 0 10px;
 }
+.right-hide {
+    font-size: 10px;
+    font-weight: bold;
+    float: right;
+    padding: 0 10px 0 0;
+}
+
 .left-hide:hover {
+    font-weight: bold;
+    color: red;
+    cursor: pointer;
+}
+.right-hide:hover {
     font-weight: bold;
     color: red;
     cursor: pointer;
@@ -89,11 +101,23 @@ span.ui-icon {
     float: left;
     padding: 0 0 0 10px;
 }
+.right-shows {
+    font-size: 10px;
+    font-weight: bold;
+    float: right;
+    padding: 0 0 0 10px;
+}
 .left-shows:hover {
     font-weight: bold;
     color: red;
     cursor: pointer;
 }
+.right-shows:hover {
+    font-weight: bold;
+    color: red;
+    cursor: pointer;
+}
+
 </style>
 {% endblock %}
 {% block javascript %}
@@ -212,14 +236,29 @@ $(function(){
         var current_phase = $(this).parent().parent();
         var next_phase = current_phase.next();
         current_phase.hide();
-        next_phase.find('div.phase-name').prepend('<label class="left-shows">&gt;&gt;</label>')
+        next_phase.find('div.phase-name').prepend('<div class="left-shows">Backlog<p>&gt;&gt;</p><div>')
         $(window).resize();
     });
 
     $('.left-shows').live('click', function(){
-        var current_phase = $(this).parent().parent();
-        var prev_phase = current_phase.prev();
-        prev_phase.show();
+        var $current_phase = $(this).parent().parent();
+        var $prev_phase = $current_phase.prev();
+        $prev_phase.show();
+        $(window).resize();
+        $(this).remove();
+    });
+	$('.right-hide').click(function(){
+        var $current_phase = $(this).parent().parent();
+        var $prev_phase = $current_phase.prev();
+        $current_phase.hide();
+        $prev_phase.find('div.phase-name').prepend('<div class="right-shows">Archive<p>&lt;&lt;</p><div>')
+        $(window).resize();
+    });
+
+    $('.right-shows').live('click', function(){
+        var $current_phase = $(this).parent().parent();
+        var $next_phase = $current_phase.next();
+        $next_phase.show();
         $(window).resize();
         $(this).remove();
     });
@@ -235,9 +274,12 @@ $(function(){
     <div class="phase" data-id="{{ phase.id }}">
         <div class="phase-name">
             {% if phase.name == 'Backlog' %}
-                <label class="left-hide">&lt;&lt;</label>
+                <div class="left-hide">&lt;&lt;</div>
             {% endif %}
             {{ phase.name }}
+            {% if phase.name == 'Archive' %}
+                <div class="right-hide">&gt;&gt;</div>
+            {% endif %}
         </div>
         <div class="stories">
         {% for story in phase.stories.all.select_related %}
