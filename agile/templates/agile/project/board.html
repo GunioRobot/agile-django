@@ -224,8 +224,9 @@ $(function(){
     $('.left-hide').click(function(){
         var $current_phase = $(this).parent().parent();
         var $next_phase = $current_phase.next();
+        var $current_name = $current_phase.find('label').text();
         $current_phase.hide();
-        $next_phase.find('div.phase-name').prepend('<div class="left-shows">Backlog<p>&gt;&gt;</p><div>')
+        $next_phase.find('div.phase-name').prepend('<div class="left-shows">'+$current_name+'<p>&gt;&gt;</p><div>')
         $(window).resize();
     });
 
@@ -236,11 +237,12 @@ $(function(){
         $(window).resize();
         $(this).remove();
     });
-	$('.right-hide').click(function(){
+    $('.right-hide').click(function(){
         var $current_phase = $(this).parent().parent();
         var $prev_phase = $current_phase.prev();
+        var $current_name = $current_phase.find('label').text();
         $current_phase.hide();
-        $prev_phase.find('div.phase-name').prepend('<div class="right-shows">Archive<p>&lt;&lt;</p><div>')
+        $prev_phase.find('div.phase-name').prepend('<div class="right-shows"><label>'+$current_name+'</label><p>&lt;&lt;</p><div>')
         $(window).resize();
     });
 
@@ -265,7 +267,7 @@ $(function(){
             {% if phase.is_backlog %}
                 <div class="left-hide">&lt;&lt;</div>
             {% endif %}
-            {{ phase.name }}
+            <label>{{ phase.name }}</label>
             {% if phase.is_archive %}
                 <div class="right-hide">&gt;&gt;</div>
             {% endif %}
