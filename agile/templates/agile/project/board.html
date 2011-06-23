@@ -72,28 +72,27 @@ span.ui-icon {
     margin-right: 7px;
 }
 
-.left_hide{
-    font-size:10px;
-    font-weight:bold;
-	float:left;
-    padding:0 0 0 10px;  	
+.left_hide {
+    font-size: 10px;
+    font-weight: bold;
+    float: left;
+    padding: 0 0 0 10px;
 }
-.left_hide:hover{
-    font-weight:bold;
-	color:red;   
-	cursor:pointer;
+.left_hide:hover {
+    font-weight: bold;
+    color: red;
+    cursor: pointer;
 }
-.left_shows{
-	font-size:10px;
-    font-weight:bold; 
-	float:left;
-    padding:0 0 0 10px;  
+.left_shows {
+    font-size: 10px;
+    font-weight: bold;
+    float: left;
+    padding: 0 0 0 10px;
 }
-.left_shows:hover{
-    font-weight:bold;
-    color:red;   
-    cursor:pointer;
-	
+.left_shows:hover {
+    font-weight: bold;
+    color: red;
+    cursor: pointer;
 }
 </style>
 {% endblock %}
@@ -180,7 +179,6 @@ $(function(){
         }
     });
     
-    
     $('#add-story-dialog form').submit(function(){
         var $this = $(this);
         $.ajax({
@@ -209,25 +207,22 @@ $(function(){
     $('#add-story').click(function(){
         $('#add-story-dialog').dialog('open');
     });
-	
-	$('.left_hide').click(function(){
-		var current_phase=$(this).parent().parent();
-		var next_phase=current_phase.next();
-		current_phase.hide();	
-		next_phase.find('div.phase-name').prepend('<label class="left_shows">>></label>')			
-		$(window).resize();		
-	});
-	
-	$('.left_shows').live('click',function(){
-		console.log(1)
+    
+    $('.left_hide').click(function(){
+        var current_phase=$(this).parent().parent();
+        var next_phase=current_phase.next();
+        current_phase.hide();
+        next_phase.find('div.phase-name').prepend('<label class="left_shows">>></label>')
+        $(window).resize();
+    });
+
+    $('.left_shows').live('click',function(){
         var current_phase=$(this).parent().parent();
         var prev_phase=current_phase.prev();
         prev_phase.show();   
         $(window).resize();
-		$(this).remove();	
-        
+        $(this).remove();	
     });
-	
 });
 </script>
 {% endblock %}
@@ -239,11 +234,11 @@ $(function(){
     {% for phase in project.phases.all %}
     <div class="phase" data-id="{{ phase.id }}">
         <div class="phase-name">
-        	{% if phase.name == 'Backlog' %}
+            {% if phase.name == 'Backlog' %}
                 <label class="left_hide"><<</label>
             {% endif %}
-			{{ phase.name }}
-		</div>
+            {{ phase.name }}
+        </div>
         <div class="stories">
         {% for story in phase.stories.all.select_related %}
             {% include 'agile/project/story.html' %}
