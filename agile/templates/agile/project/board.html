@@ -85,7 +85,7 @@ span.ui-icon {
     padding: 0 10px 0 0;
 }
 
-.left-hide:hover,.right-hide:hover {
+.left-hide:hover, .right-hide:hover {
     font-weight: bold;
     color: red;
     cursor: pointer;
@@ -102,17 +102,11 @@ span.ui-icon {
     float: right;
     padding: 0 0 0 10px;
 }
-.left-shows:hover {
+.left-shows:hover, .right-shows:hover{
     font-weight: bold;
     color: red;
     cursor: pointer;
 }
-.right-shows:hover {
-    font-weight: bold;
-    color: red;
-    cursor: pointer;
-}
-
 </style>
 {% endblock %}
 {% block javascript %}
@@ -228,10 +222,10 @@ $(function(){
     });
     
     $('.left-hide').click(function(){
-        var current_phase = $(this).parent().parent();
-        var next_phase = current_phase.next();
-        current_phase.hide();
-        next_phase.find('div.phase-name').prepend('<div class="left-shows">Backlog<p>&gt;&gt;</p><div>')
+        var $current_phase = $(this).parent().parent();
+        var $next_phase = $current_phase.next();
+        $current_phase.hide();
+        $next_phase.find('div.phase-name').prepend('<div class="left-shows">Backlog<p>&gt;&gt;</p><div>')
         $(window).resize();
     });
 
@@ -268,11 +262,11 @@ $(function(){
     {% for phase in project.phases.all %}
     <div class="phase" data-id="{{ phase.id }}">
         <div class="phase-name">
-            {% if phase.name == 'Backlog' %}
+            {% if phase.is_backlog %}
                 <div class="left-hide">&lt;&lt;</div>
             {% endif %}
             {{ phase.name }}
-            {% if phase.name == 'Archive' %}
+            {% if phase.is_archive %}
                 <div class="right-hide">&gt;&gt;</div>
             {% endif %}
         </div>
