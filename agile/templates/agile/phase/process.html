@@ -50,6 +50,7 @@
 <script type="text/javascript">
 var PROJECT_URL = '{{ project.get_base_url }}';
 $(function(){
+    console.log(1);
     $(window).resize(function(){
         var phases_number = $('.phase:visible').length; 
         var phase_width = Math.floor($('#phases').width() / phases_number - 5 - (phases_number * 10));
