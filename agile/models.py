@@ -299,7 +299,7 @@ JQUERY_UI_THEMES = (
 class UserProfile(models.Model):
     user = models.OneToOneField(User, verbose_name=_(u'user'), related_name='agile_userprofile')
     jquery_ui_theme = models.CharField(_(u'jQuery UI Theme'), max_length=100, default='cupertino', choices=JQUERY_UI_THEMES)
-    user_language = models.CharField(_(u'user language'), max_length=5, default=None, choices=LANGUAGES, null=True, blank=True)
+    user_language = models.CharField(_(u'user language'), max_length=5, default=None, choices=LANGUAGES, null=True, blank=False)
         
     class Meta:
         verbose_name = _(u'user profile')
