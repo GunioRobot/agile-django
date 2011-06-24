@@ -226,7 +226,7 @@ $(function(){
         var $next_phase = $current_phase.next();
         var current_phase_name = $current_phase.find('label').text();
         $current_phase.hide();
-        $next_phase.find('div.phase-name').prepend('<div class="left-shows">'+current_phase_name+'<p>&gt;&gt;</p><div>')
+        $next_phase.find('div.phase-name').prepend('<div class="left-shows">' + current_phase_name + '<p>&gt;&gt;</p><div>')
         $(window).resize();
     });
 
@@ -242,7 +242,7 @@ $(function(){
         var $prev_phase = $current_phase.prev();
         var current_phase_name = $current_phase.find('label').text();
         $current_phase.hide();
-        $prev_phase.find('div.phase-name').prepend('<div class="right-shows"><label>'+current_phase_name+'</label><p>&lt;&lt;</p><div>')
+        $prev_phase.find('div.phase-name').prepend('<div class="right-shows"><label>' + current_phase_name + '</label><p>&lt;&lt;</p><div>')
         $(window).resize();
     });
 
