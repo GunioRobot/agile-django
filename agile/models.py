@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save, pre_delete
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 class AgileModelException(Exception):
     pass
@@ -296,6 +297,7 @@ JQUERY_UI_THEMES = (
 class UserProfile(models.Model):
     user = models.OneToOneField(User, verbose_name=_(u'user'), related_name='agile_userprofile')
     jquery_ui_theme = models.CharField(_(u'jQuery UI Theme'), max_length=100, default='cupertino', choices=JQUERY_UI_THEMES)
+    user_language = models.CharField(_(u'user language'), max_length=2, default=None, choices=settings.LANGUAGES, null=True, blank=True)
         
     class Meta:
         verbose_name = _(u'user profile')

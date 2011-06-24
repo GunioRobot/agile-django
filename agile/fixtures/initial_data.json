@@ -441,7 +441,7 @@
    "is_active": true, 
    "is_superuser": true, 
    "is_staff": true, 
-   "last_login": "2011-04-09 11:50:22", 
+   "last_login": "2011-06-23 13:26:16", 
    "groups": [], 
    "user_permissions": [], 
    "password": "sha1$30c75$b7cc017b2a168db3281c26c2735738ebd1865a12", 
@@ -544,9 +544,9 @@
   "fields": {
    "index": 0, 
    "name": "Backlog", 
+   "stories_limit": null, 
    "project": 1, 
    "is_backlog": true, 
-   "stories_limit": null, 
    "is_archive": false, 
    "description": "Stories that will be worked on someday"
   }
@@ -557,9 +557,9 @@
   "fields": {
    "index": 1, 
    "name": "Ready", 
+   "stories_limit": null, 
    "project": 1, 
    "is_backlog": false, 
-   "stories_limit": null, 
    "is_archive": false, 
    "description": "Stories that are ready to be worked on"
   }
@@ -570,9 +570,9 @@
   "fields": {
    "index": 2, 
    "name": "Working", 
+   "stories_limit": null, 
    "project": 1, 
    "is_backlog": false, 
-   "stories_limit": null, 
    "is_archive": false, 
    "description": "Stories that are currently being worked on"
   }
@@ -583,9 +583,9 @@
   "fields": {
    "index": 3, 
    "name": "Complete", 
+   "stories_limit": null, 
    "project": 1, 
    "is_backlog": false, 
-   "stories_limit": null, 
    "is_archive": false, 
    "description": "Stories that have been completed"
   }
@@ -596,9 +596,9 @@
   "fields": {
    "index": 4, 
    "name": "Archive", 
+   "stories_limit": null, 
    "project": 1, 
    "is_backlog": false, 
-   "stories_limit": null, 
    "is_archive": true, 
    "description": "Stories that are history"
   }
@@ -807,7 +807,8 @@
   "model": "agile.userprofile", 
   "fields": {
    "jquery_ui_theme": "start", 
-   "user": 1
+   "user": 1, 
+   "user_language": "en"
   }
  }, 
  {
@@ -815,7 +816,8 @@
   "model": "agile.userprofile", 
   "fields": {
    "jquery_ui_theme": "cupertino", 
-   "user": 2
+   "user": 2, 
+   "user_language": "en"
   }
  }, 
  {
@@ -823,7 +825,8 @@
   "model": "agile.userprofile", 
   "fields": {
    "jquery_ui_theme": "cupertino", 
-   "user": 3
+   "user": 3, 
+   "user_language": "en"
   }
  }, 
  {
@@ -831,7 +834,8 @@
   "model": "agile.userprofile", 
   "fields": {
    "jquery_ui_theme": "cupertino", 
-   "user": 4
+   "user": 4, 
+   "user_language": "es"
   }
  }, 
  {
@@ -839,7 +843,8 @@
   "model": "agile.userprofile", 
   "fields": {
    "jquery_ui_theme": "cupertino", 
-   "user": 5
+   "user": 5, 
+   "user_language": "es"
   }
  }
 ]
