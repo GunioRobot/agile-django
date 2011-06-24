@@ -85,7 +85,9 @@ def profile(request):
         elif request.POST.get('form') == 'settings':
             settings_form = UserProfileForm(request.POST, instance=userprofile)
             if settings_form.is_valid():
-                settings_form.save()
+                profile = settings_form.save()
+                request.session['django_language'] = profile.user_language
+                request.LANGUAGE_CODE = profile.user_language
                 form_saved = 'settings'
     
     return render_to_response('agile/profile/profile.html', RequestContext(request, {
