@@ -152,8 +152,23 @@ def phase(request, project_id):
     }))
 
 @login_required
+@render_to_json
 def add_phase(request, project_id):
-    pass
+    if not (request.method == 'POST' and request.is_ajax()):
+        raise Http404
+    project = request.user.projects.get(pk=project_id)
+    phase_form = PhaseForm(request.POST)
+    if phase_form.is_valid():
+        phase = phase_form.save()
+        phase.project = project
+        phase.save()
+        return {
+            'success': True
+        }
+    return {
+        'success': False,
+        'errors': phase_form.errors
+    }
 
 @login_required
 @render_to_json
@@ -212,7 +227,16 @@ def phase_ajax(request, project_id, phase_id, action=None):
     
     # TODO(Gerardo, gerardo.orozco.mosqueda@gmail.com): Code the delete view
     if action == 'delete':
-        pass
+        if phase.is_deletable:
+            phase.delete()
+            return {
+                'success': True
+            }
+        return {
+            'success': False,
+            'error': 'Unable to delete this phase.'+
+                'This phase has Stories or is Backlog or Archive'
+        }
 
 @login_required
 def story(request, project_id, story_number):
