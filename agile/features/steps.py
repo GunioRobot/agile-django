@@ -43,7 +43,7 @@ def see_the_logged_out_home_page(step):
 # Common
 @step(u'see the form field "(.+)"')
 def see_the_form_field(step, field_name):
-    found = world.wait_for_many_elements('select[name=%(field_name)s], input[name=%(field_name)s]'.format(field_name=field_name))
+    found = world.wait_for_many_elements('select[name=%s], input[name=%s]' % (field_name, field_name))
     assert found, 'no form fields named "%s" were found' % field_name
 
 @step('see the link "(.+)"')

@@ -49,6 +49,8 @@
 <script type="text/javascript" src="{{ MEDIA_URL }}agile/js/jquery-ui.toolbar.js"></script>
 <script type="text/javascript">
 var PROJECT_URL = '{{ project.get_base_url }}';
+var PHASES_BASE_URL = PROJECT_URL+'/phases/';
+var PHASE_BASE_URL = PROJECT_URL+'/phase/'
 $(function(){
     $(window).resize(function(){
         var phases_number = $('.phase:visible').length;
@@ -76,6 +78,17 @@ $(function(){
         }
     });
     
+    $("#edit-phase-dialog").dialog({
+        height: 650,
+        width: 480,
+        autoOpen: false,
+        modal: true,
+        title: gettext('Add phase'),
+        close: function(){
+            $('#edit-phase-form-errors').hide();
+            $('#edit-phase-dialog form')[0].reset();
+        }
+    });
     
     $('#phase-story-dialog form').submit(function(){
         var $this = $(this);
@@ -106,6 +119,25 @@ $(function(){
         $('#add-phase-dialog').dialog('open');
     });
     
+    $("#edit-phase-dialog form").live('submit', function() {
+        var $this = $(this);
+        $.ajax({
+            url: $this.attr('action'),
+            type: $this.attr('method'),
+            data: $this.serialize(),
+            dataType: 'json',
+            success: function(response) {
+                if(!response.success) {
+                    $("#edit-phase-dialog").html(response.html);
+                } else {
+                    $("#edit-phase-dialog").dialog('close');
+                    window.location = PHASES_BASE_URL;
+                }
+                return false;
+            }
+        });
+        return false;
+    });
     
     /* Toolbar setup */
     $('.phase-controls').toolbar({
@@ -113,23 +145,25 @@ $(function(){
             {
                 name: gettext('Edit'),
                 uiIcon: 'ui-icon-pencil',
-                click: function(){}
-            },{
-                name: gettext('Delete'),
-                uiIcon: 'ui-icon-circle-close',
                 click: function(){
+                    var phase_pk = $(this).parent().attr('data-phase-id');
+                    var PHASE_GET_URL = PHASE_BASE_URL+phase_pk+'/get/';
                     $.ajax({
-                        url: STORY_DELETE_URL,
-                        dataType: 'json',
+                        url: PHASE_GET_URL,
                         type: 'post',
-                        success: function(response){
-                            if(response.success){
-                                window.location = PROJECT_URL;
+                        dataType: 'json',
+                        success: function(response) {
+                            if( response.success ){
+                                $('#edit-phase-dialog').html(response.html);
+                                $('#edit-phase-dialog').dialog('open');
                             }
                         }
                     });
-                    
                 }
+            },{
+                name: gettext('Delete'),
+                uiIcon: 'ui-icon-circle-close',
+                click: function(){  }
             }
         ]
     });
@@ -167,13 +201,14 @@ $(function(){
     <div class="phase ui-widget-content ui-corner-all{% if phase.is_backlog_or_archive %} not-draggable{% endif %}" data-id="{{ phase.id }}">
         <div class="phase-name">{{ phase.name }}</div>
         <div class="phase-description">{{ phase.description }}</div>
-        <div class="phase-controls"></div>
+        <div class="phase-controls" data-phase-id="{{ phase.pk }}"></div>
     </div>
     {% endfor %}
 </div>
 
 <div id="add-phase-dialog">
-    <form method="post" action="{% url agile_story_add project.id %}">
+    <form method="post" action="{% url agile_phase_add project.id %}">
+        {% csrf_token %}
         <div id="add-phase-form-errors" class="ui-state-error ui-corner-all">
             <span class="ui-icon ui-icon-alert"></span>
             <strong>{% trans 'Error!' %}</strong>
@@ -184,4 +219,7 @@ $(function(){
         <input type="submit" value="{% trans 'Submit' %}">
     </form>
 </div>
+
+<div id="edit-phase-dialog"></div>
+
 {% endblock %}

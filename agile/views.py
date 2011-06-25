@@ -150,7 +150,11 @@ def phase(request, project_id):
         'project': project,
         'phase_form': phase_form,
     }))
-    
+
+@login_required
+def add_phase(request, project_id):
+    pass
+
 @login_required
 @render_to_json
 def phase_ajax(request, project_id, phase_id, action=None):
@@ -158,11 +162,58 @@ def phase_ajax(request, project_id, phase_id, action=None):
     if not (request.method == 'POST' and request.is_ajax()):
         raise Http404
     
+    project = request.user.projects.get(pk=project_id)
+    phase = project.phases.get(id=phase_id)
+    
     if action == 'move':
-        project = request.user.projects.get(pk=project_id)
-        phase = project.phases.get(id=phase_id)
         phase.move(request.POST.get('index'))
     
+    # This retrieves the requested phase data and renders the filled form
+    if action == 'get':
+        phase_form = PhaseForm(instance=phase)
+        print 1
+        return {
+            'html': render_to_string('agile/phase/update.html', {
+                'project': project,
+                'phase': phase,
+                'phase_form': phase_form,
+            }, RequestContext(request)),
+        }
+    
+    # This processes the posted data and updates the requested Phase object
+    if action == 'edit':
+        phase_form = PhaseForm(request.POST)
+        if phase_form.is_valid():
+            # We need to clean the posted data
+            if request.POST.has_key('name'):
+                phase.name = phase_form.fields['name'].clean(
+                    request.POST.get('name'))
+                
+            if request.POST.has_key('description'):
+                phase.description = phase_form.fields['description'].clean(
+                    request.POST.get('description'))
+                
+            if request.POST.has_key('stories_limit'):
+                phase.stories_limit = phase_form.fields['stories_limit'].clean(
+                    request.POST.get('stories_limit'))
+            phase.save()
+        else:
+            return {
+                'html': render_to_string('agile/phase/update.html', {
+                    'project': project,
+                    'phase': phase,
+                    'phase_form': phase_form,
+                }, RequestContext(request)),
+                'success': False,
+            }
+        return {
+            'success': True
+        }
+    
+    # TODO(Gerardo, gerardo.orozco.mosqueda@gmail.com): Code the delete view
+    if action == 'delete':
+        pass
+
 @login_required
 def story(request, project_id, story_number):
     
