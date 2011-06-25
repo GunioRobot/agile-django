@@ -1,12 +1,7 @@
 # -*- coding: utf-8 -*-
-'''
-Created on Jun 24, 2011
-@author: orozco
-'''
+
 from lettuce import step, world
 from sure import that
-
-#passchange.feature
 
 @step(u'see the password form')
 def see_the_password_form(step):
