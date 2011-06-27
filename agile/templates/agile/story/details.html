@@ -9,16 +9,16 @@
 <style type="text/css">
 
 #toolbar {
-    margin: 22px 0 0 140px;
+    margin: 40px 0 0 140px;
     width: 400px;
     height: 50px;
-    padding: 10px 10px 0 10px;
+    padding: 20px 10px 0 10px;
 }
 #story-head {
     width: 100%;
     margin: 0 auto;
     min-height: 100px;
-    position: relative;	
+    position: relative;
 }
 #phases {
     margin 0 auto;
@@ -96,7 +96,7 @@
 }
 #tabs {
     min-height: 400px;
-	margin-left:150px;
+    margin-left: 150px;
 }
 #tabs ul li a span.ui-icon {
     float: left;
@@ -211,12 +211,12 @@ $(function(){
        $(this).removeClass('ui-state-hover'); 
     }).click(function(){
         var $this = $(this);
-        var phase = $this.attr('data-id')
+        var phase = $this.attr('data-id');
         move_story(STORY_NUMBER, phase, function(){
-            var $phases = $this.parent().find('.phase');
+            var $phases = $this.parent().parent().find('.phase');
             $phases.removeClass('ui-state-default ui-state-active');
             $this.addClass('ui-state-active');
-            $this.prevAll().addClass('ui-state-default')
+            $this.parent().prevAll().find('td').addClass('ui-state-default');
         });
     });
     $('#comments form').submit(function(){
@@ -416,10 +416,9 @@ $(function(){
                 {% for tag in story.tags.all.select_related %}
                     <div class="tag ui-widget-content ui-corner-all" data-id="{{ tag.id }}">{{ tag.name }}<span class="tag-delete ui-icon ui-icon-close"></span></div>
                 {% endfor %}
-            </div>    
+            </div>
         </div>
- poiuyt
- </div>
+    </div>
     <div id="toolbar"></div>
     <div id="tabs">
         <ul>
