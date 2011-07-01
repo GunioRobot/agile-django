@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import activate
 from django.template import RequestContext
 from django.db import transaction
 from django.views.decorators.cache import never_cache
@@ -86,6 +87,7 @@ def profile(request):
             settings_form = UserProfileForm(request.POST, instance=userprofile)
             if settings_form.is_valid():
                 profile = settings_form.save()
+                activate(profile.user_language)
                 request.session['django_language'] = profile.user_language
                 request.LANGUAGE_CODE = profile.user_language
                 form_saved = 'settings'
