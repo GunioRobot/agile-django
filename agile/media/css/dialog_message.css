@@ -1,24 +1,34 @@
 #agile-error-message {
+    display: none;
+    padding: 8px;
+#37a062;    text-align: center;
     width: 300px;
     height: auto;
-    min-height: 40px;
+    min-height: 30px;
     position: fixed;
     z-index: 1000000;
     top: 10px;
     left: 50%;
     margin-left: -150px;
-    border: 1px solid #000;
+    border-width: 2px;
+    border-style: solid;
     color: #000;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
 }
+#agile-error-message div {
+    vertical-align: middle;
+}
 #agile-error-message.agile-info-message {
     background-color: #fffe6a;
+    border-color: #d5c43f;
 }
 #agile-error-message.agile-success-message {
     background-color: #76eda6;
+    border-color: #37a062;
 }
 #agile-error-message.agile-error-message {
     background-color: #ff8e8f;
+    border-color: #c14142;
 }
