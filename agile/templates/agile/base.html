@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
+{% block error_message %}
+<div id="agile-error-message">
+    <div id="agile-message"></div>
+</div>
+{% endblock %}
+
 {% block menu %}
 <ul id="bar-menu" class="ui-widget-content">
     {% block menu_elements %}

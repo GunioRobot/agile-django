@@ -1,0 +1,24 @@
+#agile-error-message {
+    width: 300px;
+    height: auto;
+    min-height: 40px;
+    position: fixed;
+    z-index: 1000000;
+    top: 10px;
+    left:50%;
+    margin-left: -150px;
+    border: 1px solid #000;
+    color: #000;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+#agile-error-message.agile-info-message {
+    background-color: #fffe6a;
+}
+#agile-error-message.agile-success-message {
+    background-color: #76eda6;
+}
+#agile-error-message.agile-error-message {
+    background-color: #ff8e8f;
+}

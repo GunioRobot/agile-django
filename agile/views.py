@@ -163,16 +163,19 @@ def add_phase(request, project_id):
     project = request.user.projects.get(pk=project_id)
     phase_form = PhaseForm(request.POST)
     if phase_form.is_valid():
-        phase = phase_form.save()
+        phase = phase_form.save(commit=False)
+        phase.index = Phase.objects.filter(project=project_id).count()
         phase.project = project
         phase.save()
+        phase.move(phase.index)
         return {
             'success': True
         }
-    return {
-        'success': False,
-        'errors': phase_form.errors
-    }
+    else:
+        return {
+            'success': False,
+            'errors': phase_form.errors
+        }
 
 @login_required
 @render_to_json
@@ -237,7 +240,7 @@ def phase_ajax(request, project_id, phase_id, action=None):
             }
         return {
             'success': False,
-            'error': 'Unable to delete this phase.'+
+            'error': 'Unable to delete this phase.'
                 'This phase has Stories or is Backlog or Archive'
         }
 
