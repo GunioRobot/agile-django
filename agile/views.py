@@ -1,5 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST, require_GET
 from django.contrib.auth.forms import (AuthenticationForm, UserCreationForm, 
                                        PasswordChangeForm)
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
@@ -155,8 +156,9 @@ def phase(request, project_id):
 
 @login_required
 @render_to_json
+@require_POST
 def add_phase(request, project_id):
-    if not (request.method == 'POST' and request.is_ajax()):
+    if not request.is_ajax():
         raise Http404
     project = request.user.projects.get(pk=project_id)
     phase_form = PhaseForm(request.POST)
@@ -174,9 +176,10 @@ def add_phase(request, project_id):
 
 @login_required
 @render_to_json
+@require_POST
 def phase_ajax(request, project_id, phase_id, action=None):
     
-    if not (request.method == 'POST' and request.is_ajax()):
+    if not request.is_ajax():
         raise Http404
     
     project = request.user.projects.get(pk=project_id)
@@ -188,7 +191,6 @@ def phase_ajax(request, project_id, phase_id, action=None):
     # This retrieves the requested phase data and renders the filled form
     if action == 'get':
         phase_form = PhaseForm(instance=phase)
-        print 1
         return {
             'html': render_to_string('agile/phase/update.html', {
                 'project': project,
@@ -227,7 +229,6 @@ def phase_ajax(request, project_id, phase_id, action=None):
             'success': True
         }
     
-    # TODO(Gerardo, gerardo.orozco.mosqueda@gmail.com): Code the delete view
     if action == 'delete':
         if phase.is_deletable:
             phase.delete()
