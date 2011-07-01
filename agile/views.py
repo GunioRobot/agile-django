@@ -172,9 +172,12 @@ def add_phase(request, project_id):
             'success': True
         }
     else:
+        errors = {}
+        for field, error in phase_form.errors.iteritems():
+            errors[unicode(phase_form.fields[field].label)] = error
         return {
             'success': False,
-            'errors': phase_form.errors
+            'errors': errors
         }
 
 @login_required

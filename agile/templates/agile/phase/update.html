@@ -13,7 +13,7 @@ $(function() {
         {% trans 'Validation errors:' %}<br/>
         <div class="errors">
             {% for field in phase_form %}
-                {{ field.error_messages }}
+                {{ field.label }}: {{ field.error_messages }}
             {% endfor %}
         </div>
     </div>

@@ -133,7 +133,11 @@ $(function(){
             dataType: 'json',
             success: function(response) {
                 if(!response.success) {
-                    $("#add-phase-dialog").html(response.html);
+                    $('#add-phase-form-errors').show();
+                    $('#add-phase-form-errors .errors').html('<br/>')
+                    $.each(response.errors, function(index, value) {
+                        $('#add-phase-form-errors .errors').append(index + ": " + value + '<br/>')
+                    });
                 } else {
                     $("#add-phase-dialog").dialog('close');
                     window.location = PHASES_BASE_URL;
@@ -204,7 +208,7 @@ $(function(){
                                         dataType: 'json',
                                         success: function(response) {
                                             if(!response.success) {
-                                                showErrorMessage(response.message);
+                                                showErrorMessage(response.error);
                                             } else {
                                                 window.location = PHASES_BASE_URL;
                                             }
@@ -261,14 +265,14 @@ $(function(){
 <div id="add-phase-dialog">
     <form method="post" action="{% url agile_phase_add project.id %}">
         {% csrf_token %}
-        {% if phase_form.errors %}
-            <div id="add-phase-form-errors" class="ui-state-error ui-corner-all">
-                <span class="ui-icon ui-icon-alert"></span>
-                <strong>{% trans 'Error!' %}</strong>
-                {% trans 'Validation errors:' %}<br/>
-                <div class="errors"></div>
+        <div id="add-phase-form-errors" class="ui-state-error ui-corner-all" style="display: none;">
+            <span class="ui-icon ui-icon-alert"></span>
+            <strong>{% trans 'Error!' %}</strong>
+            {% trans 'Validation errors:' %}<br/>
+            <div class="errors">
+                {{ phase_form.errors }}
             </div>
-        {% endif %}
+        </div>
         {{ phase_form.as_p }}
         <input type="submit" value="{% trans 'Submit' %}">
     </form>

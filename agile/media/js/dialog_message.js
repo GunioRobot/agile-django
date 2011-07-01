@@ -16,7 +16,7 @@ $(function() {
       type = 'info';
     }
     $('#agile-error-message').removeClass('agile*')
-        .addClass('agile-'+type+'-message');
+        .addClass('agile-' + type + '-message');
     $('#agile-message').html(message);
     $('#agile-error-message').fadeIn(800);
     setTimeout(closeMessage, delay*1000);
