@@ -209,43 +209,40 @@ def phase_ajax(request, project_id, phase_id, action=None):
     if action == 'edit':
         phase_form = PhaseForm(request.POST)
         if phase_form.is_valid():
-            # We need to clean the posted data
-            if request.POST.has_key('name'):
-                phase.name = phase_form.fields['name'].clean(
-                    request.POST.get('name'))
-                
-            if request.POST.has_key('description'):
-                phase.description = phase_form.fields['description'].clean(
-                    request.POST.get('description'))
-                
-            if request.POST.has_key('stories_limit'):
-                phase.stories_limit = phase_form.fields['stories_limit'].clean(
-                    request.POST.get('stories_limit'))
+            phase.name = phase_form.cleaned_data['name']
+            phase.description = phase_form.cleaned_data['description']
+            phase.stories_limit = phase_form.cleaned_data['stories_limit']
             phase.save()
-        else:
-            return {
-                'html': render_to_string('agile/phase/update.html', {
-                    'project': project,
-                    'phase': phase,
-                    'phase_form': phase_form,
-                }, RequestContext(request)),
-                'success': False,
-            }
+            return
+        errors = {}
+        for field, error in phase_form.errors.iteritems():
+                errors[unicode(phase_form.fields[field].label)] = error
         return {
-            'success': True
+            'success': False,
+            'errors': errors
         }
     
     if action == 'delete':
-        if phase.is_deletable:
-            phase.delete()
+        if phase.is_backlog:
             return {
-                'success': True
+                'success': False,
+                'error': 'Cannot delete this phase. '
+                    'This phase is Backlog.'
             }
-        return {
-            'success': False,
-            'error': 'Unable to delete this phase.'
-                'This phase has Stories or is Backlog or Archive'
-        }
+        elif phase.is_archive:
+            return {
+                'success': False,
+                'error': 'Cannot  delete this phase. '
+                    'This phase is Archive.'
+            }
+        elif phase.has_stories:
+            return {
+                'success': False,
+                'error': 'Cannot delete this phase. '
+                    'This phase is Backlog.'
+            }
+        phase.delete()
+        return
 
 @login_required
 def story(request, project_id, story_number):

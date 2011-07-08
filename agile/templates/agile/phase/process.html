@@ -109,9 +109,9 @@ $(function(){
                     $('.stories:nth(' + response.phase_index + ')').append($story).sortable('refresh');
                 } else {
                     $('#add-phase-form-errors').show()
-                    $('#add-phase-form-errors .errors').html('<br/>')
+                    $('#add-phase-form-errors .errors').html('<br />')
                     $.each(response.error, function(index, value){
-                        $('#add-phase-form-errors .errors').append(index + ": " + value + '<br/>')
+                        $('#add-phase-form-errors .errors').append(index + ': ' + value + '<br />')
                     })
                     
                 }
@@ -156,11 +156,15 @@ $(function(){
             data: $this.serialize(),
             dataType: 'json',
             success: function(response) {
-                if(!response.success) {
-                    $("#edit-phase-dialog").html(response.html);
-                } else {
+                if(response.success) {
                     $("#edit-phase-dialog").dialog('close');
                     window.location = PHASES_BASE_URL;
+                } else {
+                    $('#edit-phase-form-errors').show();
+                    $('#edit-phase-form-errors .errors').html('<br/>')
+                    $.each(response.errors, function(index, value) {
+                        $('#edit-phase-form-errors .errors').append(index + ": " + value + '<br/>')
+                    });
                 }
                 return false;
             }

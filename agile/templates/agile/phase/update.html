@@ -6,18 +6,12 @@ $(function() {
 </script>
 <form method="post" action="{% url agile_phase_ajax project.id phase.id 'edit' %}">
     {% csrf_token %}
-    {% if phase_form.errors %}
-    <div id="add-phase-form-errors" class="ui-state-error ui-corner-all">
+    <div id="edit-phase-form-errors" class="ui-state-error ui-corner-all" style="display: none;">
         <span class="ui-icon ui-icon-alert"></span>
         <strong>{% trans 'Error!' %}</strong>
         {% trans 'Validation errors:' %}<br/>
-        <div class="errors">
-            {% for field in phase_form %}
-                {{ field.label }}: {{ field.error_messages }}
-            {% endfor %}
-        </div>
+        <div class="errors"></div>
     </div>
-    {% endif %}
     {{ phase_form.as_p }}
     <input type="submit" value="{% trans 'Submit' %}">
 </form>

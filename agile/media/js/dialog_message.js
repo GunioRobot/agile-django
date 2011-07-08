@@ -8,7 +8,7 @@
  */
 var openMessage = function(message, delay, type) {
   if(!delay) {
-    delay = 3;
+    delay = 5;
   }
   if(!type) {
     type = 'info';
@@ -17,7 +17,7 @@ var openMessage = function(message, delay, type) {
       .addClass('agile-' + type + '-message');
   $('#agile-message').html(message);
   $('#agile-error-message').fadeIn();
-  setTimeout(closeMessage, delay*1000);
+  setTimeout(closeMessage, delay * 1000);
 }
 
 
@@ -42,6 +42,16 @@ var showInformationMessage = function(message, delay) {
   openMessage(message, delay, 'info');
 }
 
+/**
+ * This function displays a message indicating something may happen happened.
+ * 
+ * @param {Number} message: The message to display.
+ * @param {Number} delay: The optional time the message will delay on screen.
+ */
+var showWarningMessage = function(message, delay) {
+  openMessage(message, delay, 'warning');
+}
+
 
 /**
  * This function displays a message indicating an action failed.
@@ -61,7 +71,3 @@ var closeMessage = function() {
   $('#agile-error-message').fadeOut();
   $('#agile-message').html('');
 }
-$(function() {
-  
-
-});
