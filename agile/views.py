@@ -164,7 +164,7 @@ def add_phase(request, project_id):
     phase_form = PhaseForm(request.POST)
     if phase_form.is_valid():
         phase = phase_form.save(commit=False)
-        phase.index = Phase.objects.filter(project=project_id).count()
+        phase.index = project.phases.count()
         phase.project = project
         phase.save()
         phase.move(phase.index)
@@ -207,12 +207,9 @@ def phase_ajax(request, project_id, phase_id, action=None):
     
     # This processes the posted data and updates the requested Phase object
     if action == 'edit':
-        phase_form = PhaseForm(request.POST)
+        phase_form = PhaseForm(request.POST, instance=phase)
         if phase_form.is_valid():
-            phase.name = phase_form.cleaned_data['name']
-            phase.description = phase_form.cleaned_data['description']
-            phase.stories_limit = phase_form.cleaned_data['stories_limit']
-            phase.save()
+            phase_form.save()
             return
         errors = {}
         for field, error in phase_form.errors.iteritems():
@@ -239,7 +236,7 @@ def phase_ajax(request, project_id, phase_id, action=None):
             return {
                 'success': False,
                 'error': 'Cannot delete this phase. '
-                    'This phase is Backlog.'
+                    'This phase has Stories.'
             }
         phase.delete()
         return

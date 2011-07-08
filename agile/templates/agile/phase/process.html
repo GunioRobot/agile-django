@@ -199,29 +199,30 @@ $(function(){
                 click: function(){
                     var phase_pk = $(this).parent().attr('data-phase-id');
                     var PHASE_DELETE_URL = PHASE_BASE_URL + phase_pk + '/delete/';
+                    delete_buttons = {}
+                    delete_buttons[gettext('Delete')] = function(){
+                        $.ajax({
+                            url: PHASE_DELETE_URL,
+                            type: 'post',
+                            dataType: 'json',
+                            success: function(response) {
+                                if(!response.success) {
+                                    showErrorMessage(response.error);
+                                } else {
+                                    window.location = PHASES_BASE_URL;
+                                }
+                            }
+                        });
+                    };
+                    delete_buttons[gettext('Cancel')] = function(){
+                        $(this).dialog('close');
+                    };
                     $('<div>' +
                         gettext('Are you sure to delete thie phase') + '</div>')
                         .dialog({
                             modal: true,
                             title: 'Please, confirm...',
-                            buttons: {
-                                'Delete': function(){
-                                    $.ajax({
-                                        url: PHASE_DELETE_URL,
-                                        type: 'post',
-                                        dataType: 'json',
-                                        success: function(response) {
-                                            if(!response.success) {
-                                                showErrorMessage(response.error);
-                                            } else {
-                                                window.location = PHASES_BASE_URL;
-                                            }
-                                        }
-                                    });
-                                },
-                                'Cancel': function(){ $(this)
-                                    .dialog('close') }
-                            }
+                            buttons: delete_buttons
                         });
                 }
             }
