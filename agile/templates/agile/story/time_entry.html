@@ -1,0 +1,7 @@
+{% load i18n gravatar markup %}
+<tr class="row" data-id= "{{ time_entry.id }}">
+    <td>{% gravatar time_entry.user 32 %} {{ time_entry.user.agile_get_name }}</td>
+    <td>{{ time_entry.start_at }}</td>
+    <td id="stop-{{ time_entry.id }}">{{ time_entry.stop_at }}</td>
+    <td id="duration-{{ time_entry.id }}">{{ time_entry.duration }}</td>
+</tr>
