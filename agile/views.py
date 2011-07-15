@@ -18,8 +18,6 @@ from agile.forms import *
 from agile.models import *
 from agile.decorators import *
 
-import datetime
-
 ################################################################################
 # Views
 ################################################################################
@@ -258,21 +256,7 @@ def story_ajax(request, project_id, story_number, action=None):
     elif action == 'delete':
         story.delete()
         
-    elif action == 'time_entry':
-        time_entry = TimeEntry.objects.filter(user=request.user)
-        time_entry = time_entry.filter(stop_at=None)
-        if not (len(time_entry)>0):
-            time_entry = TimeEntry()
-            time_entry.user = request.user
-            time_entry.story = story
-            time_entry.save()
-            return {
-                'html': render_to_string('agile/story/time_entry.html', {
-                    'time_entry': time_entry,
-                }, RequestContext(request)),
-            }
-        else:
-            return {'message':"You have alredy taken a story"}
+
 
 @login_required
 @render_to_json
@@ -318,28 +302,6 @@ def comment(request, project_id, story_number, comment_id, action=None):
     if action == 'delete':
         comment.delete()
         
-        
-@login_required
-@render_to_json
-def time_entry(request, project_id, story_number, action=None):
-    
-    if not (request.method == 'POST' and request.is_ajax()):
-        raise Http404
-    
-    time_entries = TimeEntry.objects.filter(user=request.user, stop_at=None)
-    if time_entries.exists():
-        time_entry = time_entries.get()
-        now = datetime.datetime.now()
-        time_entry.stop_at = now
-        time_entry.save()
-        td = time_entry.duration()
-        return {'now': now.strftime("%b %e, %Y, %I:%M %P"),
-                'id':time_entry.id,
-                'duration': time_entry.duration 
-                }
-    else:
-        return {'message':'You do not have taken story'}
-
 @login_required
 @render_to_json
 def tag(request, project_id, story_number, tag_id, action=None):
