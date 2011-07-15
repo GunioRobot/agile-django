@@ -121,8 +121,7 @@
 .task-delete {
     cursor: pointer;
 }
-.time_entry {
-}
+
 #comment-form, #task-form {
     margin: 10px;
     width: auto;
@@ -130,14 +129,14 @@
 
 #time-entries-container table {
     border-spacing: 0px;
-    border: 1px solid #ACDD4A;
+    border: 1px solid #acdd4a;
     text-align: center;
     margin-top: 30px;
 }
 
 #time-entries-container table th {
     font: bold 18px Lucida Grande, Verdana;
-    background: #6EAC2C url(images/ui-bg_gloss-wave_50_6eac2c_500x100.png) 50% 50% repeat-x;
+    background: #6eac2c url(images/ui-bg_gloss-wave_50_6eac2c_500x100.png) 50% 50% repeat-x;
     font-weight: normal;
     color: white;
 }
@@ -175,7 +174,7 @@ $(function(){
     }
     function update_time_entries_count(){
         var $time_entries_count = $('#time-entries-count');
-        $time_entries_count.text($('#time-entries-container tr').length-1);
+        $time_entries_count.text($('#time-entries-container tr').length - 1);
     }
     /* Toolbar setup */
     $('#toolbar').toolbar({
