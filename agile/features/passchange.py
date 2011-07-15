@@ -12,11 +12,8 @@ def see_the_password_form(step):
 
 @step(u'see the "(.+)" page')
 def see_the_requested_page(step, page):
-    
-    assert that(world.browser.title).equals('Profile - AgileDjango'), 'This is not the Profile page'
-    step.then('see the form field "first_name"')
-    step.then('see the form field "last_name"')
-    step.then('see the form field "email"')
+    assert that(world.browser.title).equals('%s - AgileDjango' % page), \
+        'This is not the %s page' % page
 
 @step(u'submit the "(.+)" form')
 def submit_the_password_form(step, parent_id):

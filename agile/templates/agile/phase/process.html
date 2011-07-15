@@ -197,6 +197,7 @@ $(function(){
                 name: gettext('Delete'),
                 uiIcon: 'ui-icon-circle-close',
                 click: function(){
+                    $('div.confirm').remove();
                     var phase_pk = $(this).parent().attr('data-phase-id');
                     var PHASE_DELETE_URL = PHASE_BASE_URL + phase_pk + '/delete/';
                     delete_buttons = {}
@@ -217,8 +218,8 @@ $(function(){
                     delete_buttons[gettext('Cancel')] = function(){
                         $(this).dialog('close');
                     };
-                    $('<div>' +
-                        gettext('Are you sure to delete thie phase') + '</div>')
+                    $('<div class="confirm">' +
+                        gettext('Are you sure to delete this phase') + '</div>')
                         .dialog({
                             modal: true,
                             title: 'Please, confirm...',

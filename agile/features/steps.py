@@ -69,8 +69,7 @@ def fill_the_form_with_the_next_info(step):
         value = data['value']
         is_input = world.browser.find_by_css_selector('input[name=%s]' % name)
         if is_input:
-            if value:
-                is_input.first.value = value
+            is_input.first.value = value
             continue
         
         is_select = world.browser.find_by_css_selector('select[name=%s]' % name)
