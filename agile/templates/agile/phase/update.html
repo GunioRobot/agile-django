@@ -1,0 +1,17 @@
+{% load i18n %}
+<script type="text/javascript">
+$(function() {
+    $("#edit-phase-dialog form").find('input[type=submit]').button();
+});
+</script>
+<form method="post" action="{% url agile_phase_ajax project.id phase.id 'edit' %}">
+    {% csrf_token %}
+    <div id="edit-phase-form-errors" class="ui-state-error ui-corner-all" style="display: none;">
+        <span class="ui-icon ui-icon-alert"></span>
+        <strong>{% trans 'Error!' %}</strong>
+        {% trans 'Validation errors:' %}<br/>
+        <div class="errors"></div>
+    </div>
+    {{ phase_form.as_p }}
+    <input type="submit" value="{% trans 'Submit' %}">
+</form>

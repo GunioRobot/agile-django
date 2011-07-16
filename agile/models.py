@@ -68,11 +68,15 @@ class Phase(models.Model):
     
     @property
     def is_deletable(self):
-        return not self.is_backlog_or_archive
+        return not (self.is_backlog_or_archive or self.has_stories)
     
     @property
     def is_backlog_or_archive(self):
         return self.is_backlog or self.is_archive
+    
+    @property
+    def has_stories(self):
+        return self.stories.exists()
     
     @transaction.commit_on_success()
     def move(self, new_index):

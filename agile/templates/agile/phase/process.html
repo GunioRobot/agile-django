@@ -24,6 +24,10 @@
     float: left;
     text-align: center;
     margin: 10px;
+    cursor: move;
+}
+.phase.not-draggable {
+    cursor: default;
 }
 .phase-name {
     text-align: center;
@@ -49,6 +53,9 @@
 <script type="text/javascript" src="{{ MEDIA_URL }}agile/js/jquery-ui.toolbar.js"></script>
 <script type="text/javascript">
 var PROJECT_URL = '{{ project.get_base_url }}';
+var PHASES_BASE_URL = PROJECT_URL + '/phases/';
+var PHASE_BASE_URL = PROJECT_URL + '/phase/'
+
 $(function(){
     $(window).resize(function(){
         var phases_number = $('.phase:visible').length;
@@ -65,7 +72,7 @@ $(function(){
     }).resize();
    
     $("#add-phase-dialog").dialog({
-        height: 650,
+        height: 450,
         width: 480,
         autoOpen: false,
         modal: true,
@@ -76,6 +83,17 @@ $(function(){
         }
     });
     
+    $("#edit-phase-dialog").dialog({
+        height: 650,
+        width: 480,
+        autoOpen: false,
+        modal: true,
+        title: gettext('Edit phase'),
+        close: function(){
+            $('#edit-phase-form-errors').hide();
+            $('#edit-phase-dialog form')[0].reset();
+        }
+    });
     
     $('#phase-story-dialog form').submit(function(){
         var $this = $(this);
@@ -91,9 +109,9 @@ $(function(){
                     $('.stories:nth(' + response.phase_index + ')').append($story).sortable('refresh');
                 } else {
                     $('#add-phase-form-errors').show()
-                    $('#add-phase-form-errors .errors').html('<br/>')
+                    $('#add-phase-form-errors .errors').html('<br />')
                     $.each(response.error, function(index, value){
-                        $('#add-phase-form-errors .errors').append(index + ": " + value + '<br/>')
+                        $('#add-phase-form-errors .errors').append(index + ': ' + value + '<br />')
                     })
                     
                 }
@@ -106,6 +124,53 @@ $(function(){
         $('#add-phase-dialog').dialog('open');
     });
     
+    $("#add-phase-dialog form").live('submit', function() {
+        var $this = $(this);
+        $.ajax({
+            url: $this.attr('action'),
+            type: $this.attr('method'),
+            data: $this.serialize(),
+            dataType: 'json',
+            success: function(response) {
+                if(!response.success) {
+                    $('#add-phase-form-errors').show();
+                    $('#add-phase-form-errors .errors').html('<br/>')
+                    $.each(response.errors, function(index, value) {
+                        $('#add-phase-form-errors .errors').append(index + ": " + value + '<br/>')
+                    });
+                } else {
+                    $("#add-phase-dialog").dialog('close');
+                    window.location = PHASES_BASE_URL;
+                }
+                return false;
+            }
+        });
+        return false;
+    });
+    
+    $("#edit-phase-dialog form").live('submit', function() {
+        var $this = $(this);
+        $.ajax({
+            url: $this.attr('action'),
+            type: $this.attr('method'),
+            data: $this.serialize(),
+            dataType: 'json',
+            success: function(response) {
+                if(response.success) {
+                    $("#edit-phase-dialog").dialog('close');
+                    window.location = PHASES_BASE_URL;
+                } else {
+                    $('#edit-phase-form-errors').show();
+                    $('#edit-phase-form-errors .errors').html('<br/>')
+                    $.each(response.errors, function(index, value) {
+                        $('#edit-phase-form-errors .errors').append(index + ": " + value + '<br/>')
+                    });
+                }
+                return false;
+            }
+        });
+        return false;
+    });
     
     /* Toolbar setup */
     $('.phase-controls').toolbar({
@@ -113,22 +178,53 @@ $(function(){
             {
                 name: gettext('Edit'),
                 uiIcon: 'ui-icon-pencil',
-                click: function(){}
+                click: function(){
+                    var phase_pk = $(this).parent().attr('data-phase-id');
+                    var PHASE_GET_URL = PHASE_BASE_URL + phase_pk + '/get/';
+                    $.ajax({
+                        url: PHASE_GET_URL,
+                        type: 'post',
+                        dataType: 'json',
+                        success: function(response) {
+                            if( response.success ){
+                                $('#edit-phase-dialog').html(response.html);
+                                $('#edit-phase-dialog').dialog('open');
+                            }
+                        }
+                    });
+                }
             },{
                 name: gettext('Delete'),
                 uiIcon: 'ui-icon-circle-close',
                 click: function(){
-                    $.ajax({
-                        url: STORY_DELETE_URL,
-                        dataType: 'json',
-                        type: 'post',
-                        success: function(response){
-                            if(response.success){
-                                window.location = PROJECT_URL;
+                    $('div.confirm').remove();
+                    var phase_pk = $(this).parent().attr('data-phase-id');
+                    var PHASE_DELETE_URL = PHASE_BASE_URL + phase_pk + '/delete/';
+                    delete_buttons = {}
+                    delete_buttons[gettext('Delete')] = function(){
+                        $.ajax({
+                            url: PHASE_DELETE_URL,
+                            type: 'post',
+                            dataType: 'json',
+                            success: function(response) {
+                                if(!response.success) {
+                                    showErrorMessage(response.error);
+                                } else {
+                                    window.location = PHASES_BASE_URL;
+                                }
                             }
-                        }
-                    });
-                    
+                        });
+                    };
+                    delete_buttons[gettext('Cancel')] = function(){
+                        $(this).dialog('close');
+                    };
+                    $('<div class="confirm">' +
+                        gettext('Are you sure to delete this phase') + '</div>')
+                        .dialog({
+                            modal: true,
+                            title: 'Please, confirm...',
+                            buttons: delete_buttons
+                        });
                 }
             }
         ]
@@ -167,21 +263,27 @@ $(function(){
     <div class="phase ui-widget-content ui-corner-all{% if phase.is_backlog_or_archive %} not-draggable{% endif %}" data-id="{{ phase.id }}">
         <div class="phase-name">{{ phase.name }}</div>
         <div class="phase-description">{{ phase.description }}</div>
-        <div class="phase-controls"></div>
+        <div class="phase-controls" data-phase-id="{{ phase.pk }}"></div>
     </div>
     {% endfor %}
 </div>
 
 <div id="add-phase-dialog">
-    <form method="post" action="{% url agile_story_add project.id %}">
-        <div id="add-phase-form-errors" class="ui-state-error ui-corner-all">
+    <form method="post" action="{% url agile_phase_add project.id %}">
+        {% csrf_token %}
+        <div id="add-phase-form-errors" class="ui-state-error ui-corner-all" style="display: none;">
             <span class="ui-icon ui-icon-alert"></span>
             <strong>{% trans 'Error!' %}</strong>
             {% trans 'Validation errors:' %}<br/>
-            <div class="errors"></div>
+            <div class="errors">
+                {{ phase_form.errors }}
+            </div>
         </div>
         {{ phase_form.as_p }}
         <input type="submit" value="{% trans 'Submit' %}">
     </form>
 </div>
+
+<div id="edit-phase-dialog"></div>
+
 {% endblock %}
