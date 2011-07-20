@@ -1,6 +1,5 @@
 import os
 
-DEBUG = True
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
 DATABASES = {
