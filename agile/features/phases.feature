@@ -65,24 +65,24 @@ Feature: Phases
     And I wait for the "phases" port
     Then I click on the link "Phases"
     And I see the "phases" port
-    Then I click on the "Edit" button of a phase
+    Then I click on the "Edit" button of phase number 2
     And I see the "edit" phase form
     Then I fill the "edit" form with the next info:
       | name          | value                 |
-      | name          | To check edited       |
-      | description   | Phases to be edited   |
-      | stories_limit | 21                    |
+      | name          | Now Working           |
+      | description   | Phases working on     |
+      | stories_limit | 32                    |
     And I submit the "edit-phase-dialog" form
     Then I see the "phases" port
     I see the page for 3 seconds
-    Then I click on the "Edit" button of a phase
+    Then I click on the "Edit" button of phase number 2
     I see the page for 3 seconds
     And I see the "edit" phase form
     And I check that the phase has the edited info:
       | name          | value                 |
-      | name          | To check edited       |
-      | description   | Phases to be edited   |
-      | stories_limit | 21                    |
+      | name          | Now Working           |
+      | description   | Phases working on     |
+      | stories_limit | 32                    |
   
   
   Scenario: Edit Phase Empty Name
@@ -93,7 +93,7 @@ Feature: Phases
     And I wait for the "phases" port
     Then I click on the link "Phases"
     And I see the "phases" port
-    Then I click on the "Edit" button of a phase
+    Then I click on the "Edit" button of phase number 3
     And I see the "edit" phase form
     Then I fill the "edit" form with the next info:
       | name          | value                 |
@@ -110,7 +110,7 @@ Feature: Phases
     And I wait for the "phases" port
     Then I click on the link "Phases"
     And I see the "phases" port
-    Then I click on the "Edit" button of a phase
+    Then I click on the "Edit" button of phase number 4
     And I see the "edit" phase form
     Then I fill the "edit" form with the next info:
       | name          | value                 |

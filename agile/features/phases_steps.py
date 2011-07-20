@@ -56,7 +56,7 @@ def click_on_a_button_of_a_phase(step, button_name, number):
         assert False, 'Invalid button for phase'
     world.browser.execute_script('$(".phase-controls").css'
                                  '("visibility","visible")')
-    button = world.browser.find_by_css('div.phase button')[nth * number - 1]
+    button = world.browser.find_by_css('div.phase button')[number * 2 - 3 + nth]
     assert button, 'There is no %s button for phase %s' % (button_name, number)
     button.click()
 

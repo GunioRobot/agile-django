@@ -17,8 +17,7 @@ def see_the_requested_page(step, page):
 
 @step(u'submit the "(.+)" form')
 def submit_the_password_form(step, parent_id):
-    form = world.browser.find_by_css_selector("#%s form input[type=submit]" % \
-                                              parent_id)
-    assert form, "no submit inputs for %s form does not exist in this page" % \
+    form = world.browser.find_by_css("#%s form input[type=submit]" % parent_id)
+    assert form, "no submit inputs for %s exist in this page" % \
         parent_id
     form[0].click()
