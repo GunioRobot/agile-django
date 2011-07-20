@@ -31,8 +31,8 @@ def see_the_phase_form(step, form):
 @step(u'see the "(.+)" validation error "(.+)"')
 def see_the_validation_error_for_field(step, form, value):
     form = form.lower()
-    error = world.browser.find_by_xpath(
-        '//div[@id="%s-phase-dialog"]//div[contains(., "%s")]' % (form, value))
+    selector = '//div[@id="%s-phase-dialog"]//div[contains(., "%s")]' % (form, value)
+    error = world.wait_for_element(selector, dont_fail=True)
     assert error, 'No validation errors as expected'
 
 @step(u'check existence of object with the next info')
@@ -43,7 +43,8 @@ def check_existence_of_object_with_the_next_info(step):
         name = data['name']
         value = data['value']
         kwargs[name] = value
-    assert Phase.objects.get(**kwargs), 'The object was not added'
+    condition = lambda: Phase.objects.filter(**kwargs).exists()
+    world.wait_for_condition(condition)
 
 @step(u'click on the "(.+)" button of phase number (.+)')
 def click_on_a_button_of_a_phase(step, button_name, number):
@@ -56,7 +57,7 @@ def click_on_a_button_of_a_phase(step, button_name, number):
         assert False, 'Invalid button for phase'
     world.browser.execute_script('$(".phase-controls").css'
                                  '("visibility","visible")')
-    button = world.browser.find_by_css('div.phase button')[nth * number - 1]
+    button = world.wait_for_many_elements('div.phase button')[number * 2 - 3 + nth]
     assert button, 'There is no %s button for phase %s' % (button_name, number)
     button.click()
 
@@ -122,10 +123,10 @@ def see_that_no_error_is_reported(step):
 
 @step(u'see an error message that says "(.+)"')
 def see_an_error_message(step, message):
-    error_message = world.browser.find_by_css('#agile-message')
-    if not error_message.first.visible:
+    error_message = world.wait_for_element('#agile-message', dont_fail=True)
+    if not error_message.visible:
         assert False, 'The message was not shown'
-    assert that(error_message.first.text).equals(message), \
+    assert that(error_message.text).equals(message), \
         'The message was not the expected'
     
 
