@@ -71,7 +71,6 @@
     float: left;
     margin-right: 7px;
 }
-
 .tag {
     padding: 4px 0 2px 4px;
     font-size: 95%;
@@ -121,11 +120,15 @@
 .task-delete {
     cursor: pointer;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 #comment-form, #task-form {
     margin: 10px;
     width: auto;
 }
+<<<<<<< HEAD
 
 #time-entries-container table {
     border-spacing: 0px;
@@ -155,6 +158,8 @@
 }
 
 
+=======
+>>>>>>> master
 </style>
 {% endblock %}
 
@@ -172,10 +177,13 @@ $(function(){
         var $comments_count = $('#comments-count');
         $comments_count.text($('.comment').length);
     }
+<<<<<<< HEAD
     function update_time_entries_count(){
         var $time_entries_count = $('#time-entries-count');
         $time_entries_count.text($('#time-entries-container tr').length - 1);
     }
+=======
+>>>>>>> master
     /* Toolbar setup */
     $('#toolbar').toolbar({
         buttons: [
@@ -261,41 +269,6 @@ $(function(){
                 }
             }
         });
-    });
-
-    $('#time-entries-start').click(function(){
-    $.ajax({
-        url: '{{ story.get_add_time_entry_url }}',
-        dataType: 'json',
-        type: "post",
-        success: function(response){
-            var $time_entry = $(response.html);
-            $('#table-container').append($time_entry);
-            $time_entry.slideDown();
-            update_time_entries_count();
-            if(response.message)
-                alert(response.message);
-        }
-    });
-    });
-
-    $('#time-entries-stop').click(function(){
-    var $this = $(this);
-    $.ajax({
-        url: STORY_BASE_URL + '/time_entry/add_time_stop',
-        dataType: 'json',
-        type: "post",
-        success: function(response){
-            if(response.message)
-                alert(response.message);
-            else {
-                var $stop_time_cell = $('#stop-'+response.id);
-                var $duration_cell = $('#duration-'+response.id)
-                $stop_time_cell.text(response.now);
-                $duration_cell.text(response.duration)
-            }
-        }
-    });
     });
     
     /* Edit story details */
@@ -467,9 +440,6 @@ $(function(){
             <li>
                 <a href="#attachments"><span class="ui-icon ui-icon-document"></span>{% trans 'Attachments' %} (<span id="attachments-count">{{ story.attachments.all.count }}</span>)</a>
             </li>
-			<li>
-                <a href="#time-entries"><span class="ui-icon ui-icon-clock"></span>{% trans 'Time Entry' %} (<span id="time-entries-count">{{ story.time_entries.all.count }}</span>)</a>
-            </li>
         </ul>
         
         <div id="details" data-description="{{ story.description }}">{{ story.description|markdown }}</div>
@@ -512,23 +482,6 @@ $(function(){
                 <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
             </div>
             {% endfor %}
-        </div>
-        <div id="time-entries">
-            <input id="time-entries-start" type="submit" value="{% trans 'Start' %}" onclick=""/>
-            <input id="time-entries-stop" type="submit" value="{% trans 'Stop' %}" onclick=""/>
-            <div id="time-entries-container">
-                <table id="table-container" width="100%">
-                    <th>User</th>
-                    <th>Start at</th>
-                    <th>Stop at</th>
-                    <th>Duration</th>
-                {% for time_entry in story.time_entries.all.select_related %}
-                    {% include 'agile/story/time_entry.html' %}
-                {% empty %}
-                    {% trans 'This story has no time entries yet.' %}
-                {% endfor %}
-                </table>
-            </div>
         </div>
     </div>
 </div>

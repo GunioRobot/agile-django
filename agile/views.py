@@ -259,6 +259,7 @@ def story_ajax(request, project_id, story_number, action=None):
     elif action == 'delete':
         story.delete()
         
+<<<<<<< HEAD
     elif action == 'time_entry':
         time_entries = TimeEntry.objects.filter(user=request.user, stop_at=None)
         if not time_entries.exists():
@@ -273,6 +274,9 @@ def story_ajax(request, project_id, story_number, action=None):
             }
         else:
             return {'message':"You have alredy taken a story"}
+=======
+
+>>>>>>> master
 
 @login_required
 @render_to_json
@@ -318,6 +322,7 @@ def comment(request, project_id, story_number, comment_id, action=None):
     if action == 'delete':
         comment.delete()
         
+<<<<<<< HEAD
         
 @login_required
 @render_to_json
@@ -341,6 +346,8 @@ def time_entry(request, project_id, story_number, action=None):
     else:
         return {'message':'You do not have taken story'}
 
+=======
+>>>>>>> master
 @login_required
 @render_to_json
 def tag(request, project_id, story_number, tag_id, action=None):

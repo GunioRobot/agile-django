@@ -10,17 +10,41 @@ $(function(){
     $('#id_username').focus();
 })
 </script>
+<style>
+	html, body {
+		height: 100%;
+	}
+	#wrapper{
+		height: 100%;
+	}
+	#header{
+		position:fixed;
+		width:100%;
+		padding:14px 0px 14px 0px;
+	}
+	#content{
+		display: table;
+		height: 100%;
+		padding:0px;
+		margin:0 auto;
+	}
+	#login{
+		display: table-cell;
+		vertical-align: middle;	
+	}
+</style>
 {% endblock %}
 
 {% block content %}
 <div id="login">
-<form method="post">
-{% if error %}
-<span class="error" style="display:none;">{% trans 'Incorrect username and/or password.' %}</span>
-{% endif %}
-{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="{% trans 'Login' %}"/>
-</form>
+	<form method="post" class = 'ui-widget-header ui-corner-all' >
+	{% if error %}
+	<span class="error" style="display:none;">{% trans 'Incorrect username and/or password.' %}</span>
+	{% endif %}
+	{% csrf_token %}
+	{{ form.as_p }}
+	<input type="submit" value="{% trans 'Login' %}"/>
+	</form>
 </div>
 {% endblock %}
+
