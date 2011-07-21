@@ -11,15 +11,22 @@
         <script type="text/javascript" src="{% if USE_CDN %}https://ajax.googleapis.com/ajax/libs/{% else %}{{ MEDIA_URL}}{% endif %}agile/jqueryui/1.8.12/jquery-ui.min.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL}}agile/jqueryui/selectmenu/jquery.ui.selectmenu.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL }}agile/js/agile.js"></script>
+        <script type="text/javascript" src="{{ MEDIA_URL }}agile/js/dialog_message.js"></script>
         {% endblock %}
         {% block css %}
         <link rel="stylesheet" href="{% if USE_CDN %}https://ajax.googleapis.com/ajax/libs/{% else %}{{ MEDIA_URL}}{% endif %}agile/jqueryui/1.8.12/themes/{{ user.agile_userprofile.jquery_ui_theme|default:'cupertino' }}/jquery-ui.css" />
         <link rel="stylesheet" href="{{ MEDIA_URL}}agile/jqueryui/selectmenu/jquery.ui.selectmenu.css"/>
         <link rel="stylesheet" href="{{ MEDIA_URL }}agile/css/agile.css" />
+        <link rel="stylesheet" href="{{ MEDIA_URL }}agile/css/dialog_message.css" />
         {% endblock %}
         {% endblock %}
     </head>
     <body>
+        {% block error_message %}
+            <div id="agile-error-message" style="font-size: 12px;">
+                <div id="agile-message"></div>
+            </div>
+        {% endblock %}
         <div id="header" class="ui-widget-header">
             <span id="name">AgileDjango</span>
             <ul id="topmenu">
