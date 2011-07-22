@@ -15,10 +15,11 @@ urlpatterns = patterns('agile.views',
     url(r'^project/(?P<project_id>\d+)/phase/add/?$', 'add_phase', name='agile_phase_add'),
     url(r'^project/(?P<project_id>\d+)/phase/(?P<phase_id>\d+)/(?P<action>(move|get|edit|delete))/?$', 'phase_ajax', name='agile_phase_ajax'),
     url(r'^project/(?P<project_id>\d+)/story/(?P<story_number>\d+)/?$', 'story', name='agile_story'),
-    url(r'^project/(?P<project_id>\d+)/story/(?P<story_number>\d+)/(?P<action>(move|edit|comment|delete))/?$', 'story_ajax', name='agile_story_ajax'),
+    url(r'^project/(?P<project_id>\d+)/story/(?P<story_number>\d+)/(?P<action>(move|edit|comment|delete|time_entry))/?$', 'story_ajax', name='agile_story_ajax'),
     url(r'^project/(?P<project_id>\d+)/story/add/?$', 'story_add', name='agile_story_add'),
     
     url(r'^project/(?P<project_id>\d+)/story/(?P<story_number>\d+)/comment/(?P<comment_id>\d+)/(?P<action>(delete|edit))/?$', 'comment', name='agile_comment'),
+    url(r'^project/(?P<project_id>\d+)/story/(?P<story_number>\d+)/time_entry/(?P<action>(add_time_stop))/?$', 'time_entry', name='agile_time_entry'),
     url(r'^project/(?P<project_id>\d+)/story/(?P<story_number>\d+)/tag/(?P<tag_id>\d+)/(?P<action>(delete|edit))/?$', 'tag', name='agile_tag'),
 
 )
@@ -31,4 +32,3 @@ js_info_dict = {
 urlpatterns += patterns('',
     url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict, name='agile_js_translations')
 )
-

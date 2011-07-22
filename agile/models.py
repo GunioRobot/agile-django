@@ -134,6 +134,9 @@ class Story(models.Model):
     def get_add_comment_url(self):
         return reverse('agile_story_ajax', args=[self.project_id, self.number, 'comment'])
     
+    def get_add_time_entry_url(self):
+        return reverse('agile_story_ajax', args=[self.project_id, self.number, 'time_entry'])
+    
     @transaction.commit_on_success()
     def move(self, new_phase_id, new_index=None):
         """
@@ -299,6 +302,24 @@ JQUERY_UI_THEMES = (
    ('ui-lightness', 'UI lightness'),
    ('vader', 'Vader'),
 )
+
+class TimeEntry(models.Model):
+    user = models.ForeignKey(User, verbose_name=_(u'user'), related_name='time_entries')
+    story = models.ForeignKey('Story', verbose_name=_(u'story'), related_name='time_entries')
+    start_at = models.DateTimeField(_(u'start at'), auto_now_add=True)
+    stop_at = models.DateTimeField(_(u'stop at'), blank=True, null=True)
+    
+    class Meta:
+        verbose_name = _(u'time_entry')
+        verbose_name_plural = _(u'time_entries')
+        ordering = ('start_at',)
+
+    def duration(self):
+        td = self.stop_at - self.start_at
+        days = td.days
+        if days > 0:
+            return '%(days)s days %(hours)02d:%(minutes)02d:%(seconds)02d'%{"days":days,"hours":td.seconds/3600,"minutes":td.seconds%3600/60,"seconds":td.seconds%3600%60}
+        return '%(hours)02d:%(minutes)02d:%(seconds)02d'%{"hours":td.seconds/3600,"minutes":td.seconds%3600/60,"seconds":td.seconds%3600%60}
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, verbose_name=_(u'user'), related_name='agile_userprofile')
