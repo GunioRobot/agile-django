@@ -19,6 +19,8 @@ from agile.forms import *
 from agile.models import *
 from agile.decorators import *
 
+import datetime
+
 ################################################################################
 # Views
 ################################################################################
@@ -390,3 +392,71 @@ def tag(request, project_id, story_number, tag_id, action=None):
     
     if action == 'delete':
         tag.delete()
+
+@login_required
+@require_POST
+@render_to_json        
+def task(request, project_id, story_number, task_id=None, action=None):
+	if not request.is_ajax(): 
+		raise Http404
+	
+	def action_task(action):
+		
+		def add_task():
+			project = request.user.projects.get(id = project_id)
+			story = project.stories.get(number = story_number)
+			
+			Task.objects.count()		
+			Task(	index = Task.objects.count(), 
+					description = 'algo',
+					story = story).save()
+					
+			return {'add':'add'}
+		
+		def edit():
+			return {'edit':'edit'}
+			
+		def check_task():
+			project = request.user.projects.get(id = project_id)
+			task = project.stories.get(number = story_number).tasks.get(id = task_id)
+			
+			if task.finished_at:
+				task.finished_at = None
+				task.finished_by = None
+			else:
+				task.finished_at = datetime.datetime.now()
+				task.finished_by = request.user
+				
+			task.save()
+			return {'user':task.finished_by and task.finished_by.username or 'undefined', 
+					'date':task.finished_at and task.finished_at.strftime('%B %d, %Y, %I:%M %p') or ""}
+		
+		def move():
+			return {'move':'move'}
+		
+		def delete_task():
+			project = request.user.projects.get(id = project_id)
+			task = project.stories.get(number = story_number).tasks.get(id = task_id)
+			task.delete()
+			return {'delete':'delete'}	
+	
+		def_to_action = {			
+			'add_task':add_task,
+			'edit':edit,
+			'check_task':check_task,
+			'move':move,
+			'delete_task':delete_task
+		}
+		
+		return def_to_action[action]()
+	
+	return_dictionary = {}
+	
+	if not (task_id and action):
+		action = 'add_task' 
+	
+	return_dictionary = action_task(action)     
+	
+	return return_dictionary
+	#return HttpResponse(return_dictionary)
+

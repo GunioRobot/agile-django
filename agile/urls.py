@@ -20,7 +20,7 @@ urlpatterns = patterns('agile.views',
     
     url(r'^project/(?P<project_id>\d+)/story/(?P<story_number>\d+)/comment/(?P<comment_id>\d+)/(?P<action>(delete|edit))/?$', 'comment', name='agile_comment'),
     url(r'^project/(?P<project_id>\d+)/story/(?P<story_number>\d+)/tag/(?P<tag_id>\d+)/(?P<action>(delete|edit))/?$', 'tag', name='agile_tag'),
-
+	url(r'^project/(?P<project_id>\d+)/story/(?P<story_number>\d+)/task/?(?P<task_id>\d+)?/?(?P<action>(move|edit|comment|delete_task|check_task))?/?$', 'task', name='task_action'),
 )
 
 
