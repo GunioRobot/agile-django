@@ -275,35 +275,6 @@ $(function(){
          });
     });
    
-	/* Task js code begins */
-   
-	/* Check task */
-	$('.task input[type="checkbox"]').click(function(){
-		var $input =$(this); 
-		var story_id = $('#story').attr('data-number');
-		var task_id = $(this).parent().attr('data-id');
-		$.ajax({
-			url: story_id + "/task/" + task_id + "/check_task",
-			type: 'POST',
-			success: function(data){
-				if(data.success && data.date)
-					$input
-						.next()
-						.addClass('task-finished ui-state-disabled')
-						.after("<span class = 'ui-state-disabled' > (" 
-								+ data.user + " @ " + data.date +")</span>");
-				else
-					$input
-						.next()
-						.removeClass('task-finished ui-state-disabled')
-						.next().remove();		
-				
-			}
-		});
-		
-			
-	});
-   
     /* Sortable Tasks*/
     $('#tasks').sortable({
         distance: 15,
