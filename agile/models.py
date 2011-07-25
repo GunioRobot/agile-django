@@ -318,8 +318,17 @@ class TimeEntry(models.Model):
         td = self.stop_at - self.start_at
         days = td.days
         if days > 0:
-            return '%(days)s days %(hours)02d:%(minutes)02d:%(seconds)02d'%{"days":days,"hours":td.seconds/3600,"minutes":td.seconds%3600/60,"seconds":td.seconds%3600%60}
-        return '%(hours)02d:%(minutes)02d:%(seconds)02d'%{"hours":td.seconds/3600,"minutes":td.seconds%3600/60,"seconds":td.seconds%3600%60}
+            return _(u'%(days)s days %(hours)02d:%(minutes)02d:%(seconds)02d') % {
+                "days": days,
+                "hours": td.seconds / 3600,
+                "minutes": td.seconds % 3600 / 60,
+                "seconds": td.seconds % 3600 % 60
+            }
+        return _(u'%(hours)02d:%(minutes)02d:%(seconds)02d') % {
+            "hours": td.seconds / 3600,
+            "minutes": td.seconds % 3600 / 60,
+            "seconds": td.seconds % 3600 % 60
+        }
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, verbose_name=_(u'user'), related_name='agile_userprofile')

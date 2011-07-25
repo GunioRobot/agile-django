@@ -161,12 +161,14 @@
 {% block javascript %}
 {{ block.super }}
 <script type="text/javascript" src="{{ MEDIA_URL }}agile/js/jquery-ui.toolbar.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}agile/js/jquery.tmpl.min.js"></script>
 <script type="text/javascript">
 var STORY_NUMBER = {{ story.number }};
 var PROJECT_URL = '{{ project.get_base_url }}';
 var STORY_BASE_URL = PROJECT_URL + '/story/' + STORY_NUMBER;
 var STORY_EDIT_URL = STORY_BASE_URL + '/edit';
 var STORY_DELETE_URL = STORY_BASE_URL + '/delete';
+var ADD_TIME_ENTRY_URL = '{{ story.get_add_time_entry_url }}'
 $(function(){
     function update_comments_count(){
         var $comments_count = $('#comments-count');
@@ -265,26 +267,26 @@ $(function(){
 
     $('#time-entries-start').click(function(){
     $.ajax({
-        url: '{{ story.get_add_time_entry_url }}',
+        url: ADD_TIME_ENTRY_URL,
         dataType: 'json',
         type: "post",
         success: function(response){
             var $time_entry = $(response.html);
+            var story_data = [
+                {story_number: response.story_number,
+                 story_url: response.story_url}
+            ];
             $('#table-container').append($time_entry);
             $time_entry.slideDown();
             update_time_entries_count();
             if(response.story_number){
-               $('<div class="story-taken-message">' +
-                  gettext('You have already taken the ') + response.story_number + gettext(' story ') + 
-                  '<br><h3><center>Go to <a href="' + response.story_url +'">' + 
-                  response.story_number + '</a></h3></center>' +
-                 '</div>')
-                .dialog({
-                    height: 150,
-                    width: 280,
-                    modal: true,
-                    title: 'Incorrect'
-                });
+                var message_markup = '<div class="story-taken-message"> \
+                                 You have already taken the \
+                                 ${story_number} story <br><h3><center>Go to \
+                                 <a href="${story_url}">${story_number}</a> \
+                                 </center></h3></div>';
+                $.template("message_template", message_markup)
+                showErrorMessage($.tmpl("message_template", story_data));
              }
         }
     });
@@ -293,17 +295,18 @@ $(function(){
     $('#time-entries-stop').click(function(){
     var $this = $(this);
     $.ajax({
-        url: STORY_BASE_URL + '/time_entry/add_time_stop',
+        url: STORY_BASE_URL + '/time_entry/stop',
         dataType: 'json',
-        type: "post",
-        success: function(response){
-            if(response.message)
-                alert(response.message);
+        type: 'post',
+        success: function(response) {
+            if(response.message) {
+                showErrorMessage(response.message);
+            }
             else {
-                var $stop_time_cell = $('#stop-'+response.id);
-                var $duration_cell = $('#duration-'+response.id)
+                var $stop_time_cell = $('#stop-' + response.id);
+                var $duration_cell = $('#duration-' + response.id)
                 $stop_time_cell.text(response.now);
-                $duration_cell.text(response.duration)
+                $duration_cell.text(response.duration);
             }
         }
     });
@@ -524,8 +527,8 @@ $(function(){
             {% endfor %}
         </div>
         <div id="time-entries">
-            <input id="time-entries-start" type="submit" value="{% trans 'Start' %}" onclick=""/>
-            <input id="time-entries-stop" type="submit" value="{% trans 'Stop' %}" onclick=""/>
+            <input id="time-entries-start" type="submit" value="{% trans 'Start' %}"/>
+            <input id="time-entries-stop" type="submit" value="{% trans 'Stop' %}"/>
             <div id="time-entries-container">
                 <table id="table-container" width="100%">
                     <th>User</th>

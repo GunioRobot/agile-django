@@ -11,7 +11,6 @@ Feature: Details
     Then I click on the time entry
     And I click the start button
     Then I see a new row at the table
-    And I see the current time as the time entry
     Then I see the page for 3 seconds
     And I click the stop button
     Then I see the page for 3 seconds

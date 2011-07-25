@@ -14,7 +14,6 @@ from django.utils.translation import activate
 from django.template import RequestContext
 from django.db import transaction
 from django.views.decorators.cache import never_cache
-from django.views.decorators.http import require_http_methods
 
 from gravatar.templatetags.gravatar import gravatar
 
@@ -344,8 +343,8 @@ def story_ajax(request, project_id, story_number, action=None):
             time_entry.save()
             return {
                 'html' : render_to_string('agile/story/time_entry.html', {
-                'time_entry' : time_entry,
-                   }, RequestContext(request)),
+                    'time_entry' : time_entry,
+                }, RequestContext(request)),
             }
         else:
             story = time_entries[0].story
@@ -402,29 +401,25 @@ def comment(request, project_id, story_number, comment_id, action=None):
         
 @login_required
 @render_to_json
-@require_http_methods("POST")
+@require_POST
 def time_entry(request, project_id, story_number, action=None):
     
     if not request.is_ajax():
         raise Http404
-    
-    time_entries = TimeEntry.objects.filter(user=request.user, stop_at=None)
-    if time_entries.exists():
-        time_entry = time_entries.get()
-        now = datetime.datetime.now()
-        time_entry.stop_at = now
-        time_entry.save()
-        td = time_entry.duration()
-        if now.strftime("%P") == "am": 
-            format = "%B %e, %Y, %l:%M a.m."
+    if action == 'stop':
+        time_entries = request.user.time_entries.filter(stop_at=None)
+        if time_entries.exists():
+            time_entry = time_entries.get()
+            time_entry.stop_at = datetime.datetime.now()
+            time_entry.save()
+            td = time_entry.duration()
+            format = "%B %e, %Y, %l:%M %P"
+            return {"now": time_entry.stop_at.strftime(format),
+                    "id": time_entry.id,
+                    "duration": time_entry.duration() 
+            }
         else:
-            format = "%B %e, %Y, %l:%M p.m."
-        return {'now' : now.strftime(format),
-                'id' : time_entry.id,
-                'duration' : time_entry.duration() 
-                }
-    else:
-        return {'message':'You do not have taken story'}
+            return {"message": "You don't have any time entries to this story"}
 
 @login_required
 @render_to_json

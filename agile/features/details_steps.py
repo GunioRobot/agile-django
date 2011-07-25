@@ -56,19 +56,9 @@ def see_a_new_row_at_the_table(step):
     equal = world.len_table < world.len_table2
     assert equal, 'The current lenght of the table is not greater'
 
-@step(u'see the current time as the time entry')
-def see_the_current_time_as_the_time_entry(step):
-    world.rows = world.len_table2/4
-    start_cell = world.browser.find_by_css('#start-%s'%world.rows)
-    if datetime.datetime.now().strftime("%P") == "am": 
-        world.format = "%B %e, %Y,%l:%M a.m."
-    else:
-        world.format = "%B %e, %Y,%l:%M p.m."
-    assert that(start_cell.first.text).equals(datetime.datetime.now().strftime(world.format)), \
-        'The start time is not current'
-
 @step(u'click the stop button')
 def click_the_stop_button(step):
+    world.rows = world.len_table2 / 4
     stop = world.browser.find_by_css("#time-entries-stop")
     assert stop, 'There is not the stop button'
     stop[0].click()
@@ -76,7 +66,7 @@ def click_the_stop_button(step):
 @step(u'see the right stop and duration time')
 def see_the_right_stop_and_duration_time(step):
     stop_cell = world.browser.find_by_css('#stop-%s'%world.rows)
-    assert that(stop_cell.first.text).equals(datetime.datetime.now().strftime(world.format)), \
+    assert that(stop_cell.first.text).equals(datetime.datetime.now().strftime("%B %e, %Y,%l:%M %P")), \
         'The stop time is not current'
     duration_cell = world.browser.find_by_css('#duration-%s'%world.rows)
     assert that(duration_cell.first.text).equals("00:00:03"), \
