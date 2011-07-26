@@ -32,7 +32,8 @@ def click_on_a_story(step):
     
 @step(u'see the story page')
 def see_the_story_page(step):
-    assert that(world.browser.title).equals('Story #%s - %s - AgileDjango' %(world.story, world.project)), \
+    assert that(world.browser.title).equals('Story #%s - %s - AgileDjango' % 
+           (world.story, world.project)), \
         'This is not the story %s page' % world.story
         
 @step(u'click on the time entry')
@@ -65,10 +66,10 @@ def click_the_stop_button(step):
     
 @step(u'see the right stop and duration time')
 def see_the_right_stop_and_duration_time(step):
-    stop_cell = world.browser.find_by_css('#stop-%s'%world.rows)
+    stop_cell = world.browser.find_by_css('#stop-%s' % world.rows)
     assert that(stop_cell.first.text).equals(datetime.datetime.now().strftime("%B %e, %Y,%l:%M %P")), \
         'The stop time is not current'
-    duration_cell = world.browser.find_by_css('#duration-%s'%world.rows)
+    duration_cell = world.browser.find_by_css('#duration-%s' % world.rows)
     assert that(duration_cell.first.text).equals("00:00:03"), \
         'The duration is incorrect'
         

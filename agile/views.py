@@ -342,17 +342,18 @@ def story_ajax(request, project_id, story_number, action=None):
             time_entry.story = story
             time_entry.save()
             return {
-                'html' : render_to_string('agile/story/time_entry.html', {
-                    'time_entry' : time_entry,
+                'html': render_to_string('agile/story/time_entry.html', {
+                    'time_entry': time_entry,
                 }, RequestContext(request)),
             }
         else:
             story = time_entries[0].story
             story_url = story.get_url()
-            return {'story_number': story.number,
-                    'story_url': story_url, 
-                    'story_name': story.name,
-                    }
+            return {
+                'story_number': story.number,
+                'story_url': story_url, 
+                'story_name': story.name,
+            }
 
 @login_required
 @render_to_json
@@ -414,9 +415,10 @@ def time_entry(request, project_id, story_number, action=None):
             time_entry.save()
             td = time_entry.duration()
             format = "%B %e, %Y, %l:%M %P"
-            return {"now": time_entry.stop_at.strftime(format),
-                    "id": time_entry.id,
-                    "duration": time_entry.duration() 
+            return {
+                "now": time_entry.stop_at.strftime(format),
+                "id": time_entry.id,
+                "duration": time_entry.duration() 
             }
         else:
             return {"message": "You don't have any time entries to this story"}

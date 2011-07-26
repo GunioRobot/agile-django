@@ -169,6 +169,11 @@ var STORY_BASE_URL = PROJECT_URL + '/story/' + STORY_NUMBER;
 var STORY_EDIT_URL = STORY_BASE_URL + '/edit';
 var STORY_DELETE_URL = STORY_BASE_URL + '/delete';
 var ADD_TIME_ENTRY_URL = '{{ story.get_add_time_entry_url }}'
+var message_markup = '<div class="story-taken-message"> \
+                      You have already taken the \
+                      ${story_number} story <br><h3><center>Go to \
+                      <a href="${story_url}">${story_number}</a> \
+                      </center></h3></div>';
 $(function(){
     function update_comments_count(){
         var $comments_count = $('#comments-count');
@@ -266,30 +271,25 @@ $(function(){
     });
 
     $('#time-entries-start').click(function(){
-    $.ajax({
-        url: ADD_TIME_ENTRY_URL,
-        dataType: 'json',
-        type: "post",
-        success: function(response){
-            var $time_entry = $(response.html);
-            var story_data = [
-                {story_number: response.story_number,
-                 story_url: response.story_url}
-            ];
-            $('#table-container').append($time_entry);
-            $time_entry.slideDown();
-            update_time_entries_count();
-            if(response.story_number){
-                var message_markup = '<div class="story-taken-message"> \
-                                 You have already taken the \
-                                 ${story_number} story <br><h3><center>Go to \
-                                 <a href="${story_url}">${story_number}</a> \
-                                 </center></h3></div>';
-                $.template("message_template", message_markup)
-                showErrorMessage($.tmpl("message_template", story_data));
-             }
-        }
-    });
+        $.ajax({
+            url: ADD_TIME_ENTRY_URL,
+            dataType: 'json',
+            type: "post",
+            success: function(response){
+                var $time_entry = $(response.html);
+                var story_data = [
+                    {story_number: response.story_number,
+                    story_url: response.story_url}
+                ];
+                $('#table-container').append($time_entry);
+                $time_entry.slideDown();
+                update_time_entries_count();
+                if(response.story_number){
+                    $.template("message_template", message_markup);
+                    showErrorMessage($.tmpl("message_template", story_data));
+                }
+            }
+        });
     });
 
     $('#time-entries-stop').click(function(){

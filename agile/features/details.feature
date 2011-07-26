@@ -7,7 +7,7 @@ Feature: Details
     And I see the board of stories
     Then I display the hidden phases
     Then I click on a story
-    And I see the story page 
+    And I see the story page
     Then I click on the time entry
     And I click the start button
     Then I see a new row at the table
@@ -24,7 +24,7 @@ Feature: Details
     And I see the board of stories
     Then I display the hidden phases
     Then I click on a story
-    And I see the story page 
+    And I see the story page
     Then I click on the time entry
     And I click the start button
     Then I see the page for 3 seconds
