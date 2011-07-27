@@ -23,6 +23,7 @@ $(function(){
         var $comments_count = $('#comments-count');
         $comments_count.text($('.comment').length);
     }
+
     /* Toolbar setup */
     $('#toolbar').toolbar({
         buttons: [
@@ -53,6 +54,7 @@ $(function(){
             }
         ]
     });
+
     /* Phases setup */
     $('.ui-widget-content.phase').hover(function(){
        $(this).addClass('ui-state-hover');
@@ -67,6 +69,7 @@ $(function(){
             $this.prevAll().addClass('ui-state-default');
         });
     });
+
     $('#comments form').submit(function(){
         var $this = $(this);
         $.ajax({
@@ -87,7 +90,7 @@ $(function(){
         });
         return false;
     });
-    
+
     /* Comment delete */
     $('.comment-delete').live('click', function(){
         var $this = $(this);
@@ -107,7 +110,7 @@ $(function(){
             }
         });
     });
-    
+
     /* Edit story details */
     $('#details').dblclick(function(){
         var $this = $(this);
@@ -135,7 +138,7 @@ $(function(){
         $this.html($textarea);
         $textarea.focus();
     });
-       
+
     /* Select Creator, Owner */
     $('#id_creator, #id_owner').change(function(){
         var user = this.id.slice(3);
@@ -154,7 +157,7 @@ $(function(){
              }
          });
     });
-   
+
     /* Sortable Tasks*/
     $('#tasks').sortable({
         distance: 15,
@@ -170,7 +173,7 @@ $(function(){
             $('.task-placeholder').height(height + 20 - 4); 
         }
     }).disableSelection();
-    
+
     /* Edit Story name */
     $('#story-name').live('dblclick', function(){
         var $this = $(this);
@@ -194,14 +197,14 @@ $(function(){
         $this.html($textarea);
         $textarea.focus();
     });
-    
+
     /* Remove task */
     $('.task-delete').live('click', function(){
         var $this = $(this);
         var id = $this.parent().attr('data-id');
         alert(id)
     });
-    
+
     /* Remove tag */
     $('.tag-delete').live('click', function(){
         var $this = $(this);
@@ -217,7 +220,7 @@ $(function(){
             }
         });
     });
-    
+
     $('.ui-selectmenu').attr('style', '');
 });
 </script>
@@ -284,7 +287,7 @@ $(function(){
                         <a href="#attachments"><span class="ui-icon ui-icon-document"></span>{% trans 'Attachments' %} (<span id="attachments-count">{{ story.attachments.all.count }}</span>)</a>
                     </li>
                 </ul>
-                
+
                 <div id="details" data-description="{{ story.description }}">{{ story.description|markdown }}</div>
                 <div id="tasks">
                     <form id="task-form" method="post" action="">
