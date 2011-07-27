@@ -60,10 +60,10 @@ def click_on_a_story(step):
 
 @step(u'see the story page')
 def see_the_story_page(step):
-    assert that(world.browser.title).equals('Story #%s - %s - AgileDjango' % 
+    assert that(world.browser.title).equals('Story #%s - %s - AgileDjango' %
            (world.story, world.project)), \
         'This is not the story %s page' % world.story
-        
+
 @step(u'click on the time entry')
 def click_on_the_time_entry(step):
     time_entry = world.browser.find_link_by_href('#time-entries')

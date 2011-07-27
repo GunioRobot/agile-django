@@ -311,7 +311,7 @@ $(function(){
         }
     });
     });
-    
+
     /* Edit story details */
     $('#details').dblclick(function(){
         var $this = $(this);
@@ -480,11 +480,11 @@ $(function(){
             <li>
                 <a href="#attachments"><span class="ui-icon ui-icon-document"></span>{% trans 'Attachments' %} (<span id="attachments-count">{{ story.attachments.all.count }}</span>)</a>
             </li>
-			<li>
+            <li>
                 <a href="#time-entries"><span class="ui-icon ui-icon-clock"></span>{% trans 'Time Entry' %} (<span id="time-entries-count">{{ story.time_entries.all.count }}</span>)</a>
             </li>
         </ul>
-        
+
         <div id="details" data-description="{{ story.description }}">{{ story.description|markdown }}</div>
         <div id="tasks">
             <form id="task-form" method="post" action="">
