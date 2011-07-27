@@ -1,5 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST, require_GET
 from django.contrib.auth.forms import (AuthenticationForm, UserCreationForm, 
                                        PasswordChangeForm)
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
@@ -152,19 +153,94 @@ def phase(request, project_id):
         'project': project,
         'phase_form': phase_form,
     }))
-    
+
 @login_required
 @render_to_json
+@require_POST
+def add_phase(request, project_id):
+    if not request.is_ajax():
+        raise Http404
+    project = request.user.projects.get(pk=project_id)
+    phase_form = PhaseForm(request.POST)
+    if phase_form.is_valid():
+        phase = phase_form.save(commit=False)
+        phase.index = project.phases.count()
+        phase.project = project
+        phase.save()
+        phase.move(phase.index)
+        return {
+            'success': True
+        }
+    else:
+        errors = {}
+        for field, error in phase_form.errors.iteritems():
+            errors[unicode(phase_form.fields[field].label)] = error
+        return {
+            'success': False,
+            'errors': errors
+        }
+
+@login_required
+@render_to_json
+@require_POST
 def phase_ajax(request, project_id, phase_id, action=None):
     
-    if not (request.method == 'POST' and request.is_ajax()):
+    if not request.is_ajax():
         raise Http404
     
+    project = request.user.projects.get(pk=project_id)
+    phase = project.phases.get(id=phase_id)
+    
     if action == 'move':
-        project = request.user.projects.get(pk=project_id)
-        phase = project.phases.get(id=phase_id)
         phase.move(request.POST.get('index'))
     
+    # This retrieves the requested phase data and renders the filled form
+    if action == 'get':
+        phase_form = PhaseForm(instance=phase)
+        return {
+            'html': render_to_string('agile/phase/update.html', {
+                'project': project,
+                'phase': phase,
+                'phase_form': phase_form,
+            }, RequestContext(request)),
+        }
+    
+    # This processes the posted data and updates the requested Phase object
+    if action == 'edit':
+        phase_form = PhaseForm(request.POST, instance=phase)
+        if phase_form.is_valid():
+            phase_form.save()
+            return
+        errors = {}
+        for field, error in phase_form.errors.iteritems():
+                errors[unicode(phase_form.fields[field].label)] = error
+        return {
+            'success': False,
+            'errors': errors
+        }
+    
+    if action == 'delete':
+        if phase.is_backlog:
+            return {
+                'success': False,
+                'error': 'Cannot delete this phase. '
+                    'This phase is Backlog.'
+            }
+        elif phase.is_archive:
+            return {
+                'success': False,
+                'error': 'Cannot  delete this phase. '
+                    'This phase is Archive.'
+            }
+        elif phase.has_stories:
+            return {
+                'success': False,
+                'error': 'Cannot delete this phase. '
+                    'This phase has Stories.'
+            }
+        phase.delete()
+        return
+
 @login_required
 def story(request, project_id, story_number):
     

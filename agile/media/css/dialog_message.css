@@ -1,0 +1,51 @@
+#agile-error-message {
+    font-weight: bold;
+    text-shadow: 0px 1px 0px #fff;
+    display: none;
+    padding: 8px;
+    text-align: center;
+    width: 400px;
+    height: auto;
+    min-height: 20px;
+    position: fixed;
+    z-index: 1000000;
+    top: 10px;
+    left: 50%;
+    margin-left: -150px;
+    border-width: 2px;
+    border-style: solid;
+    color: #000;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: 2px 2px 3px #444;
+    -moz-box-shadow: 2px 2px 3px #444;
+    -webkit-box-shadow: 2px 2px 3px #444;
+}
+#agile-error-message div {
+    vertical-align: middle;
+}
+#agile-error-message.agile-info-message {
+    background-image: -moz-linear-gradient(top,#8ca7cc,#a0badd);
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#8ca7cc),color-stop(1,#a0badd));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#8ca7cc', EndColorStr='#a0badd')";
+    border-color: #d5c43f;
+}
+#agile-error-message.agile-warning-message {
+    background-image: -moz-linear-gradient(top,#ffff7e,#ffffb0);
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#ffff7e),color-stop(1,#ffffb0));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffff7e', EndColorStr='#ffffb0')";
+    border-color: #d5c43f;
+}
+#agile-error-message.agile-success-message {
+    background-image: -moz-linear-gradient(top,#67de97,#8defb5);
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#67de97),color-stop(1,#8defb5));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#67de97', EndColorStr='#8defb5')";
+    border-color: #37a062;
+}
+#agile-error-message.agile-error-message {
+    background-image: -moz-linear-gradient(top,#e26163,#ff8e8f);
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#e26163),color-stop(1,#ff8e8f));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#e26163', EndColorStr='#ff8e8f')";
+    border-color: #c14142;
+}
