@@ -1,0 +1,158 @@
+#toolbar {
+ margin: 15px 0;
+ width: 400px;
+ height: auto;
+}
+#toolbar button {
+ padding:
+}
+#story-head {
+ width: 90%;
+ margin: 0 auto;
+ min-height: 100px;
+ position: relative;
+}
+#phases {
+ margin 0 auto;
+ width: 15%;
+ position: relative;
+ float: left;
+}
+#story-main {
+ float: left;
+ width: 85%;
+}
+#story-main-head {
+ width: auto;
+ padding: 15px 40px;
+ font-size: 20px;
+ font-weight: bold;
+}
+#story-name {
+ margin: -29px 0 0 110px;
+}
+#story-number {
+ width: 80px;
+ text-align: center;
+}
+#tags {
+ padding: 12px 12px;
+ width: 300px
+ font-size: 12px;
+ float: right;
+ margin: -52px 0 0 0;
+}
+#user-box {
+ width: 65%;
+ height: 50px;
+ margin: 10px 0 0 0;
+}
+.phase {
+ padding: 5px 20px;
+ cursor: pointer;
+ width: 80%;
+}
+.phase.current {
+ background: #213;
+}
+.comment-user {
+ font-size: 85%;
+}
+.comment {
+ padding: 15px;
+ margin: 10px;
+}
+.comment img {
+ float: left;
+ margin-right: 15px;
+ border: 1px solid #000;
+ padding: 1px;
+ background: white;
+}
+.comment-delete {
+ display: none;
+ float: right;
+}
+.comment:hover .comment-delete {
+ display: inline-block;
+}
+#details {
+ padding: 20px;
+}
+#details textarea {
+ width: 600px;
+ height: 300px;
+}
+#details ul, #details ol {
+ padding-left: 40px;
+}
+#story-content {
+ float: right;
+ width: 85%;
+}
+#tabs {
+ min-height: 400px;
+}
+#tabs ul li a span.ui-icon {
+ float: left;
+ margin-right: 7px;
+}
+.tag {
+ padding: 4px 0 2px 4px;
+ font-size: 70%;
+ display: inline-block;
+}
+.tag span.ui-icon {
+ float: right;
+ margin-top: -1px;
+}
+.tag-delete {
+ cursor: pointer;
+}
+.user {
+ padding: 10px;
+ display: table-cell;
+ vertical-align: middle;
+ float: left;
+ width: 45%;
+}
+.user select {
+ width: 200px;
+}
+.ui-selectmenu {
+ width: 40%;
+ margin-left: 10px;
+}
+.user .gravatar {
+ float: right;
+ width: 30px;
+ height: 30px;
+ padding: 1px;
+ margin: 0 0 0 12px;
+}
+.task {
+ padding: 15px;
+ margin: 10px;
+} 
+.task .ui-icon-arrow-4 {
+ float: left;
+ margin: 0 15px 0 0;
+ cursor: move;
+}
+.task .ui-icon-circle-close {
+ float: right;
+ cursor: pointer;
+}
+.task-description.task-finished {
+ text-decoration: line-through;
+}
+.task-placeholder {
+ margin: 10px;
+}
+.task-delete {
+ cursor: pointer;
+}
+#comment-form, #task-form {
+ margin: 10px;
+ width: auto;
+}
