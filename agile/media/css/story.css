@@ -41,6 +41,7 @@
  font-size: 12px;
  float: right;
  margin: -52px 0 0 0;
+ max-width: 280px;
 }
 #user-box {
  width: 65%;
@@ -92,6 +93,7 @@
 }
 #tabs {
  min-height: 400px;
+ margin-bottom: 30px;
 }
 #tabs ul li a span.ui-icon {
  float: left;
@@ -101,13 +103,27 @@
  padding: 4px 0 2px 4px;
  font-size: 70%;
  display: inline-block;
+ margin-bottom: 5px;
+ vertical-align: top;
 }
 .tag span.ui-icon {
  float: right;
  margin-top: -1px;
 }
+.tag-name {
+ float: left;
+}
 .tag-delete {
  cursor: pointer;
+}
+#new-tag, .new-tag-name {
+ -moz-border-radius: 5px;
+ -webkit-border-radius: 5px;
+ border-radius: 5px;
+ padding: 1px 0 4px 2px;
+ width: 55px;
+ color: #4c4c4c;
+ font-size: 11px;
 }
 .user {
  padding: 10px;

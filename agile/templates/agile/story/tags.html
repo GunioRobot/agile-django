@@ -1,0 +1,71 @@
+{% load i18n %}
+{% for tag in tags.all.select_related %}
+<div class="tag ui-widget-content ui-corner-all" data-id="{{ tag.id }}">
+    <span class="tag-name">{{ tag.name }}</span>
+    <span class="tag-delete ui-icon ui-icon-close"></span>
+</div>
+{% endfor %}
+<br />
+<label for="new-tag" style="font-size: 11px;">Add new tag&nbsp;</label>
+<input type="text" id="new-tag" maxlength="100" name="name" value="{% trans 'Tag name' %}" />
+
+<script type="text/javascript">
+$(function() {
+    /* Add a tag */
+    $('#new-tag').die().focusin(function() {
+            $(this).val('');
+        })
+        .focusout(function() {
+            if($(this).val() == ''){
+                $(this).val(gettext('Tag name'));
+                return;
+            }
+            addNewTag();
+        }).keypress(function(e) {
+            var code = (e.keyCode ? e.keyCode : e.which);
+            if(code == 13 && $(this).val()){
+                addNewTag();
+            }
+        });
+
+    /* Edit Tags */
+    $('.tag-name').dblclick(function() {
+        $tag = $(this);
+        var currentName = $tag.text();
+        $tag.hide();
+        $newName = $('<input type="text" class="new-tag-name" />');
+        $newName.appendTo($tag.parent())
+            .focus()
+            .val(currentName)
+            .focusout(function() {
+                // Undo editing
+                $newName.remove();
+                $tag.show();
+            }).keypress(function(e) {
+                // Submit changes
+                var code = (e.keyCode ? e.keyCode : e.which);
+                if(code == 13 && $(this).val()){
+                    var tagId = $tag.parent().attr('data-id');
+                    var tagName = $(this).val()
+                    updateTag(tagId, tagName);
+                }
+            });
+    });
+
+    /* Remove tag */
+    $('.tag-delete').live('click', function(){
+        var $tag = $(this);
+        var tagId = $tag.parent().attr('data-id');
+        $.ajax({
+            url: TAG_DELETE_URL + tagId,
+            dataType: 'json',
+            type: 'post',
+            success: function(response){
+                if(response.success){
+                    $tag.parent().remove();
+                }
+            }
+        });
+    });
+});
+</script>

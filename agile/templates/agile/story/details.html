@@ -18,6 +18,73 @@ var PROJECT_URL = '{{ project.get_base_url }}';
 var STORY_BASE_URL = PROJECT_URL + '/story/' + STORY_NUMBER;
 var STORY_EDIT_URL = STORY_BASE_URL + '/edit';
 var STORY_DELETE_URL = STORY_BASE_URL + '/delete';
+
+var TAG_BASE_URL = STORY_BASE_URL + '/tag/';
+var TAG_ADD_URL = TAG_BASE_URL + 'add/';
+var TAG_EDIT_URL = TAG_BASE_URL + 'edit/';
+var TAG_DELETE_URL = TAG_BASE_URL + 'delete/';
+var TAG_LOAD_URL = TAG_BASE_URL + 'load/';
+
+var reloadTags = function() {
+    $('#tags').html(gettext('Loading tags...'));
+    $.ajax({
+        url: TAG_LOAD_URL,
+        type: 'post',
+        dataType: 'json',
+        success: function(response) {
+            if(!response.success) {
+                showWarningMessage(gettext('An error occurred loading the tags for this story'));
+                return;
+            }
+            $('#tags').html(response.content);
+        }
+    });
+}
+
+var addNewTag = function() {
+    $.ajax({
+        url: TAG_ADD_URL,
+        type: 'post',
+        dataType: 'json',
+        data: {
+            name: $('#new-tag').val()
+        },
+        success: function(response) {
+            if(!response.success){
+                var errors = '';
+                $(response.errors).each(function(index, error) {
+                    errors += error + '<br />';
+                });
+                showErrorMessage(errors);
+                return;
+            }
+            reloadTags();
+        }
+    });
+};
+
+var updateTag = function(tagId, tagName) {
+    $.ajax({
+        url: TAG_EDIT_URL + tagId,
+        type: 'post',
+        dataType: 'json',
+        data: {
+            name: tagName
+        },
+        success: function(response) {
+            if(!response.success){
+                var errors = '';
+                $(response.errors).each(function(index, error) {
+                    errors += error + '<br />';
+                });
+                showErrorMessage(errors);
+                return;
+            }
+            reloadTags();
+        }
+    });
+}
+
 $(function(){
     function update_comments_count(){
         var $comments_count = $('#comments-count');
@@ -205,23 +272,8 @@ $(function(){
         alert(id)
     });
 
-    /* Remove tag */
-    $('.tag-delete').live('click', function(){
-        var $this = $(this);
-        var id = $this.parent().attr('data-id');
-        $.ajax({
-            url: STORY_BASE_URL + '/tag/' + id + '/delete',
-            dataType: 'json',
-            type: 'post',
-            success: function(response){
-                if(response.success){
-                    $this.parent().remove();
-                }
-            }
-        });
-    });
-
     $('.ui-selectmenu').attr('style', '');
+    reloadTags();
 });
 </script>
 {% endblock %}
@@ -261,11 +313,7 @@ $(function(){
                     {{ story_form.owner }}
                 </div>
             </div>
-            <div id="tags" class="ui-widget-content">
-                {% for tag in story.tags.all.select_related %}
-                    <div class="tag ui-widget-content ui-corner-all" data-id="{{ tag.id }}">{{ tag.name }}<span class="tag-delete ui-icon ui-icon-close"></span></div>
-                {% endfor %}
-            </div>
+            <div id="tags" class="ui-widget-content"></div>
         </div>
 
         <div id="story-content">
