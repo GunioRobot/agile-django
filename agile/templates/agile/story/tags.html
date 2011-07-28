@@ -10,20 +10,23 @@
 <input type="text" id="new-tag" maxlength="100" name="name" value="{% trans 'Tag name' %}" />
 
 <script type="text/javascript">
+var $this = null;
+
 $(function() {
     /* Add a tag */
     $('#new-tag').die().focusin(function() {
-            $(this).val('');
+            $this = $(this)
+            $this.val('');
         })
         .focusout(function() {
-            if($(this).val() == ''){
-                $(this).val(gettext('Tag name'));
+            if($this.val() == ''){
+                $this.val(gettext('Tag name'));
                 return;
             }
             addNewTag();
         }).keypress(function(e) {
             var code = (e.keyCode ? e.keyCode : e.which);
-            if(code == 13 && $(this).val()){
+            if(code == 13 && $this.val()){
                 addNewTag();
             }
         });

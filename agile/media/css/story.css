@@ -3,9 +3,6 @@
  width: 400px;
  height: auto;
 }
-#toolbar button {
- padding:
-}
 #story-head {
  width: 90%;
  margin: 0 auto;
@@ -149,7 +146,7 @@
 .task {
  padding: 15px;
  margin: 10px;
-} 
+}
 .task .ui-icon-arrow-4 {
  float: left;
  margin: 0 15px 0 0;

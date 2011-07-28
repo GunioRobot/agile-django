@@ -25,6 +25,8 @@ var TAG_EDIT_URL = TAG_BASE_URL + 'edit/';
 var TAG_DELETE_URL = TAG_BASE_URL + 'delete/';
 var TAG_LOAD_URL = TAG_BASE_URL + 'load/';
 
+var $this = null;
+
 var reloadTags = function() {
     $('#tags').html(gettext('Loading tags...'));
     $.ajax({
@@ -96,7 +98,7 @@ $(function(){
         buttons: [
             {
                 name: gettext('Block'),
-                uiIcon: 'ui-icon-circle-close',
+                uiIcon: 'ui-icon-cancel',
                 click: function(){}
             },{
                 name: gettext('Mark as Ready'),
@@ -104,7 +106,7 @@ $(function(){
                 click: function(){}
             },{
                 name: gettext('Delete'),
-                uiIcon: 'ui-icon-cancel',
+                uiIcon: 'ui-icon-trash',
                 click: function(){
                     $.ajax({
                         url: STORY_DELETE_URL,
@@ -116,7 +118,6 @@ $(function(){
                             }
                         }
                     });
-                    
                 }
             }
         ]
@@ -124,11 +125,11 @@ $(function(){
 
     /* Phases setup */
     $('.ui-widget-content.phase').hover(function(){
-       $(this).addClass('ui-state-hover');
+       $this = $(this)
+       $this.addClass('ui-state-hover');
     }, function(){
-       $(this).removeClass('ui-state-hover');
+       $this.removeClass('ui-state-hover');
     }).click(function(){
-        var $this = $(this);
         var phase = $this.attr('data-id');
         move_story(STORY_NUMBER, phase, function(){
             $('#phases .phase').removeClass('ui-state-default ui-state-active');
@@ -138,7 +139,7 @@ $(function(){
     });
 
     $('#comments form').submit(function(){
-        var $this = $(this);
+        $this = $(this);
         $.ajax({
             url: $this.attr('action'),
             type: $this.attr('method'),
@@ -160,7 +161,7 @@ $(function(){
 
     /* Comment delete */
     $('.comment-delete').live('click', function(){
-        var $this = $(this);
+        $this = $(this);
         var $comment = $this.parents('.comment');
         var id = $comment.attr('data-id');
         $.ajax({
@@ -180,7 +181,7 @@ $(function(){
 
     /* Edit story details */
     $('#details').dblclick(function(){
-        var $this = $(this);
+        $this = $(this);
         var html = $this.html();
         var markdown = $this.attr('data-description');
         var $textarea = $('<textarea/>').val(markdown).blur(function(){
@@ -200,7 +201,6 @@ $(function(){
                     }
                 }
             });
-            
         });
         $this.html($textarea);
         $textarea.focus();
@@ -209,7 +209,7 @@ $(function(){
     /* Select Creator, Owner */
     $('#id_creator, #id_owner').change(function(){
         var user = this.id.slice(3);
-        var $this = $(this);
+        $this = $(this);
         var data = {};
         data[user] = $this.val();
         $.ajax({
@@ -237,16 +237,16 @@ $(function(){
             var height = $(ui.item).height();
             // because margin top and bottom = 10px
             // and the borders take 4 pixels
-            $('.task-placeholder').height(height + 20 - 4); 
+            $('.task-placeholder').height(height + 20 - 4);
         }
     }).disableSelection();
 
     /* Edit Story name */
     $('#story-name').live('dblclick', function(){
-        var $this = $(this);
+        $this = $(this);
         var text = $.trim($this.text());
         var $textarea = $('<textarea/>').val(text).blur(function(){
-            var $this = $(this);
+            $this = $(this);
             var text = $.trim($this.val());
             $this.parent().text(text);
             $.ajax({
@@ -267,9 +267,8 @@ $(function(){
 
     /* Remove task */
     $('.task-delete').live('click', function(){
-        var $this = $(this);
+        $this = $(this);
         var id = $this.parent().attr('data-id');
-        alert(id)
     });
 
     $('.ui-selectmenu').attr('style', '');
