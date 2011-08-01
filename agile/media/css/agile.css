@@ -28,18 +28,21 @@ ul#topmenu {
 }
 
 ul#topmenu li {
- padding: 0 3px;
  margin: 0 2px;
  float: left;
  font-size: 12px;
 }
 
+ul#topmenu li.topmenu-item {
+ padding: 6px 10px;
+ border-radius: 5px;
+ -moz-border-radius: 5px;
+ -webkit-border-radius: 5px;
+}
+
 ul#topmenu li a:link, ul#topmenu li a:visited {
  text-decoration:none;
  font-weight: bold;
-}
-ul#topmenu li a:hover {
- text-decoration:underline;
 }
 
 ul#topmenu img {
