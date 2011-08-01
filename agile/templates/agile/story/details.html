@@ -124,9 +124,36 @@
     margin: 10px;
     width: auto;
 }
+
+/*new look*/
+
+#task-form{
+	margin: 10px 29px;
+}
+.right-div{
+	border: 1px black dotted;
+	margin-left:322px;
+}
+.left-div{
+	width: 319px;
+	border: 1px black dotted;
+	position:absolute;
+}
+#story-name, #story-number{
+	width:auto;
+	font-size:16px;
+}
+#toolbar{
+	text-align:center;
+	margin:10px 0px;
+}
+#phases table{
+	margin: 0 auto;
+	margin-bottom: 10px;
+}
+	
 </style>
 {% endblock %}
-
 {% block javascript %}
 {{ block.super }}
 <script type="text/javascript" src="{{ MEDIA_URL }}agile/js/jquery-ui.toolbar.js"></script>
@@ -277,6 +304,33 @@ $(function(){
    
 	/* Task js code begins */
    
+	/* Add Task */
+	
+	$('#task-form input[type="submit"]').click(function(){
+		var story_id = $('#story').attr('data-number');
+		var task_id = $(this).parent().attr('data-id');
+		if($('#id_description').val())
+			$.ajax({
+				url: story_id + '/task/',
+				type: 'POST',
+				data: 'description='+$('#id_description').val(),
+				success: function(data){
+					if(data.success){
+						$('#tasks').append("<div class = 'task ui-widget-content ui-corner-all' data-id = '" 
+							+ data.index+ "' >" 
+							+ '<span class="ui-icon ui-icon-arrow-4"></span><input type="checkbox">' 
+							+ '<span class = "task-description"> ' + data.description + "</span>" 
+							+ '<span class="task-delete ui-icon ui-icon-circle-close"></span></div>');
+						$('#id_description').attr('value','');
+						alert("Task added");
+					}		
+				} 
+			});
+		else
+			alert("You need a task description");	
+		return false;
+	});
+	
 	/* Check task */
 	$('.task input[type="checkbox"]').click(function(){
 		var $input =$(this); 
@@ -297,11 +351,8 @@ $(function(){
 						.next()
 						.removeClass('task-finished ui-state-disabled')
 						.next().remove();		
-				
 			}
 		});
-		
-			
 	});
    
     /* Sortable Tasks*/
@@ -370,105 +421,110 @@ $(function(){
 });
 </script>
 {% endblock %}
-
 {% block content %}
-<div id="story" data-number="{{ story.number }}">
-    <div id="story-number" class="ui-widget-content"># {{ story.number }}</div>
-    <div id="story-name" class="ui-widget-content">{{ story.name }}</div>
+<div class = 'left-div' >
+	<div id="story-number" class="ui-widget-content">Story Number: {{ story.number }}</div>
+    <div id="story-name" class="ui-widget-content">Story Name: {{ story.name }}</div>
+	<div id="creator" class="user ui-widget-content">
+        <div class="gravatar ui-widget-content">
+			{% if story.creator %}
+				{% gravatar story.creator 30 %}
+			{% endif %}
+        </div>
+        {{ story_form.creator.label }}
+        {{ story_form.creator }}
+    </div>
+    <br />
+    <div id="owner" class="user ui-widget-content">
+        <div class="gravatar ui-widget-content">
+			{% if story.owner %}
+				{% gravatar story.owner 30 %}
+			{% endif %}
+        </div>
+        {{ story_form.owner.label }}
+        {{ story_form.owner }}
+    </div>
+    <br />
+    Tags:
     <div id="tags" class="ui-widget-content">
         {% for tag in story.tags.all.select_related %}
             <div class="tag ui-widget-content ui-corner-all" data-id="{{ tag.id }}">{{ tag.name }}<span class="tag-delete ui-icon ui-icon-close"></span></div>
         {% endfor %}
     </div>
-    <div id="creator" class="user ui-widget-content">
-        <div class="gravatar ui-widget-content">
-        {% if story.creator %}
-            {% gravatar story.creator 30 %}
-        {% endif %}
-        </div>
-        {{ story_form.creator.label }}
-        {{ story_form.creator }}
-    </div>
-    <div id="owner" class="user ui-widget-content">
-        <div class="gravatar ui-widget-content">
-        {% if story.owner %}
-            {% gravatar story.owner 30 %}
-        {% endif %}
-        </div>
-        {{ story_form.owner.label }}
-        {{ story_form.owner }}
-    </div>
-    <div id="toolbar"></div>
-    <div id="phases">
-        <table>
-            <tbody>
-                <tr>
-                {% for phase in project.phases.all %}
-                    <td class="ui-widget-content phase{% if phase.index < story.phase.index %} ui-state-default{% endif %}{% if phase == story.phase %} ui-state-active{% endif %}" data-id="{{ phase.id }}">{{ phase.name }}</td>
-                {% endfor %}
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div id="tabs">
-        <ul>
-            <li>
-                <a href="#details"><span class="ui-icon ui-icon-note"></span>{% trans 'Description' %}</a>
-            </li>
-            <li>
-                <a href="#tasks"><span class="ui-icon ui-icon-clipboard"></span>{% trans 'Tasks' %}
+</div>
+<div class = 'right-div' >
+	<div id="story" data-number="{{ story.number }}">
+		<div id="toolbar"></div>
+		<div id="phases">
+			<table>
+				<tbody>
+					<tr>
+						{% for phase in project.phases.all %}
+							<td class="ui-widget-content phase{% if phase.index < story.phase.index %} ui-state-default{% endif %}{% if phase == story.phase %} ui-state-active{% endif %}" data-id="{{ phase.id }}">{{ phase.name }}</td>
+						{% endfor %}
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div id="tabs">
+			<ul>
+				<li>
+					<a href="#details"><span class="ui-icon ui-icon-note"></span>{% trans 'Description' %}</a>
+				</li>
+				<li>
+					<a href="#tasks"><span class="ui-icon ui-icon-clipboard"></span>{% trans 'Tasks' %}
                     (<span id="tasks-count">{{ story.tasks.get_formatted_count }}</span>) - {{ story.tasks.get_percentage_finished }}
-                </a>
-            </li>
-            <li>
-                <a href="#comments"><span class="ui-icon ui-icon-comment"></span>{% trans 'Comments' %} (<span id="comments-count">{{ story.comments.all.count }}</span>)</a>
-            </li>
-            <li>
-                <a href="#attachments"><span class="ui-icon ui-icon-document"></span>{% trans 'Attachments' %} (<span id="attachments-count">{{ story.attachments.all.count }}</span>)</a>
-            </li>
-        </ul>
-        
-        <div id="details" data-description="{{ story.description }}">{{ story.description|markdown }}</div>
-        <div id="tasks">
-            <form id="task-form" method="post" action="">
-            {{ task_form.description }}
-            <input type="submit" value="{% trans 'Add Task' %}"/>
-            </form>
-            {% for task in story.tasks.all.select_related %}
-            <div class="task ui-widget-content ui-corner-all" data-id="{{ task.id }}">
-                <span class="ui-icon ui-icon-arrow-4"></span>
-                {% if task.finished_at %}
-                    <input type="checkbox" checked="checked" />
-                    <span class="task-description task-finished ui-state-disabled">{{ task.description }}</span>
-                    <span class="ui-state-disabled">({{ task.finished_by.agile_get_name }} @ {{ task.finished_at }})</span>
-                {% else %}
-                    <input type="checkbox" />
-                    <span class="task-description">{{ task.description }}</span>
-                {% endif %}
-                <span class="task-delete ui-icon ui-icon-circle-close"></span>
+					</a>
+				</li>
+				<li>
+					<a href="#comments"><span class="ui-icon ui-icon-comment"></span>{% trans 'Comments' %} (<span id="comments-count">{{ story.comments.all.count }}</span>)</a>
+				</li>
+				<li>
+					<a href="#attachments"><span class="ui-icon ui-icon-document"></span>{% trans 'Attachments' %} (<span id="attachments-count">{{ story.attachments.all.count }}</span>)</a>
+				</li>
+			</ul>
+			<div id="details" data-description="{{ story.description }}">{{ story.description|markdown }}</div>
+				<form id="task-form" method="post" action="">
+					{{ task_form.description }}
+					<input type="submit" value="{% trans 'Add Task' %}"/>
+				</form>
+			<div id="tasks">
+				{% for task in story.tasks.all.select_related %}
+					<div class="task ui-widget-content ui-corner-all" data-id="{{ task.id }}">
+						<span class="ui-icon ui-icon-arrow-4"></span>
+							{% if task.finished_at %}
+								<input type="checkbox" checked="checked" />
+								<span class="task-description task-finished ui-state-disabled">{{ task.description }}</span>
+								<span class="ui-state-disabled">({{ task.finished_by.agile_get_name }} @ {{ task.finished_at }})</span>
+							{% else %}
+								<input type="checkbox" />
+								<span class="task-description">{{ task.description }}</span>
+							{% endif %}
+						<span class="task-delete ui-icon ui-icon-circle-close"></span>
+					</div>
+				{% endfor %}
+			</div>
+			<div id="comments">
+				<div id="comments-container">
+					{% for comment in story.comments.all.select_related %}
+						{% include 'agile/story/comment.html' %}
+					{% empty %}
+						{% trans 'This story has no comments yet.' %}
+					{% endfor %}
             </div>
-            {% endfor %}
-        </div>
-        <div id="comments">
-            <div id="comments-container">
-            {% for comment in story.comments.all.select_related %}
-                {% include 'agile/story/comment.html' %}
-            {% empty %}
-                {% trans 'This story has no comments yet.' %}
-            {% endfor %}
-            </div>
-            <form id="comment-form" method="post" action="{{ story.get_add_comment_url }}">
-            {{ comment_form.text }}
-            <input type="submit" value="{% trans 'Leave comment' %}"/>
-            </form>
-        </div>
-        <div id="attachments">
-            {% for attachment in story.attachments.all.select_related %}
-            <div class="attach">
-                <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
+				<form id="comment-form" method="post" action="{{ story.get_add_comment_url }}">
+					{{ comment_form.text }}
+					<input type="submit" value="{% trans 'Leave comment' %}"/>
+				</form>
+			</div>
+			<div id="attachments">
+				{% for attachment in story.attachments.all.select_related %}
+					<div class="attach">
+						<a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+					</div>
+					{% endfor %}
+			</div>
+		</div>
+	</div>
 </div>
 {% endblock %}

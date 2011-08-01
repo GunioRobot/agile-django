@@ -406,12 +406,19 @@ def task(request, project_id, story_number, task_id=None, action=None):
 			project = request.user.projects.get(id = project_id)
 			story = project.stories.get(number = story_number)
 			
+			description = 'not assigned' 
+			
+			print request.POST
+			
+			if 	request.POST.has_key('description') and request.POST.get('description'):
+				description = request.POST.get('description')
+			
 			Task.objects.count()		
 			Task(	index = Task.objects.count(), 
-					description = 'algo',
+					description = description,
 					story = story).save()
 					
-			return {'add':'add'}
+			return {'description':description, 'index':Task.objects.count()}
 		
 		def edit():
 			return {'edit':'edit'}
@@ -458,5 +465,3 @@ def task(request, project_id, story_number, task_id=None, action=None):
 	return_dictionary = action_task(action)     
 	
 	return return_dictionary
-	#return HttpResponse(return_dictionary)
-
