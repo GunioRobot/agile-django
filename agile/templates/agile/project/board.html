@@ -3,12 +3,12 @@
 
 {% block title %}{{ project.name }} - {% trans 'Board' %} - {{ block.super }}{% endblock %}
 
-{% block menu_stories %}<li class="current"><a href="{{ project.get_url }}">{% trans 'Stories' %}</a></li>{% endblock %}
+{% block menu_stories %}<li class="barmenu-item ui-state-default current"><a href="{{ project.get_url }}">{% trans 'Stories' %}</a></li>{% endblock %}
 
 {% block menu_elements %}
 {{ block.super }}
 <li>|</li>
-<li><a id="add-story" href="javascript:;">{% trans 'Add story' %}</a></li>
+<li class="barmenu-item ui-state-default"><a id="add-story" href="javascript:;">{% trans 'Add story' %}</a></li>
 {% endblock %}
 
 {% block css %}
@@ -254,7 +254,6 @@ $(function(){
     });
     $('.left-hide').click();
     $('.right-hide').click();
-    $('.ui-selectmenu').css('width','100%');
 });
 </script>
 {% endblock %}

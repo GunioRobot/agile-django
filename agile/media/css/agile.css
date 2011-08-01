@@ -27,13 +27,15 @@ ul#topmenu {
  float: right;
 }
 
-ul#topmenu li {
+ul#topmenu li,
+ul#bar-menu li {
  margin: 0 2px;
  float: left;
  font-size: 12px;
 }
 
-ul#topmenu li.topmenu-item {
+ul#topmenu li.topmenu-item,
+ul#bar-menu li.barmenu-item {
  padding: 6px 10px;
  border-radius: 5px;
  -moz-border-radius: 5px;
@@ -130,12 +132,12 @@ span.error {
 ul#bar-menu {
  list-style: none;
  height: 20px;
- padding: 0 15px;
+ padding: 5px 15px 15px;
 }
-ul#bar-menu li {
+/*ul#bar-menu li {
  float: left;
  padding: 0 4px;
-}
+}*/
 ul#bar-menu li a {
  font-size: 12px;
  text-decoration: none;

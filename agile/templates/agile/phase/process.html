@@ -3,12 +3,12 @@
 
 {% block title %}{{ project.name }} - {% trans 'Board' %} - {{ block.super }}{% endblock %}
 
-{% block menu_phases %}<li class="current"><a href="{{ project.get_phases_url }}">{% trans 'Phases' %}</a></li>{% endblock %}
+{% block menu_phases %}<li class="barmenu-item ui-state-default current"><a href="{{ project.get_phases_url }}">{% trans 'Phases' %}</a></li>{% endblock %}
 
 {% block menu_elements %}
 {{ block.super }}
 <li>|</li>
-<li><a id="add-phase" href="javascript:;">{% trans 'Add phase' %}</a></li>
+<li class="barmenu-item ui-state-default"><a id="add-phase" href="javascript:;">{% trans 'Add phase' %}</a></li>
 {% endblock %}
 
 {% block css %}
