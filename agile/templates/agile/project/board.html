@@ -7,105 +7,98 @@
 
 {% block menu_elements %}
 {{ block.super }}
-<li>|</li>
-<li class="barmenu-item ui-state-default"><a id="add-story" href="javascript:;">{% trans 'Add story' %}</a></li>
+<li class="barmenu-add barmenu-item ui-state-default"><a id="add-story" href="javascript:;">{% trans 'Add story' %}</a></li>
 {% endblock %}
 
 {% block css %}
 {{ block.super }}
 <style type="text/css">
 #phases {
-    border: 1px solid #CCC;
-    overflow: auto;
+ border: 1px solid #CCC;
+ overflow: auto;
+ padding: 9px;
+ border-radius: 5px;
+ -moz-border-radius: 5px;
+ -webkit-border-radius: 5px;
 }
 .phase {
-    border: 0px solid black;
-    float:left;
+ border: 0px solid black;
+ float:left;
 }
 .phase-name {
-    text-align: center;
-    padding: 10px 0 7px 0;
-    font-size: 120%;
+ text-align: center;
+ padding: 10px 0 7px 0;
+ font-size: 120%;
 }
 .stories {
-    min-height: 30px;
+ min-height: 30px;
+ padding: 0 5px;
 }
 .story {
-    min-height: 75px;
-    margin: 10px 5px;
+ min-height: 75px;
+ margin: 10px 5px;
+ border-radius: 5px;
+ -moz-border-radius: 5px;
+ -webkit-border-radius: 5px;
 }
 .story.disabled {
-    opacity: 0.4;
+ opacity: 0.4;
 }
 .story-header {
-    padding: 1px 7px
+ cursor: move;
+ padding: 2px 7px;
+ margin: 2px;
+ border-radius: 4px;
+ -moz-border-radius: 4px;
+ -webkit-border-radius: 4px;
 }
 .story-name {
-    margin: 5px 7px;
-    overflow: hidden;
-    font-size: 75%
+ margin: 5px 7px;
+ overflow: hidden;
+ font-size: 75%
 }
 .story-owner {
-    float: right;
-    font-size: 60%;
+ float: right;
+ font-size: 60%;
 }
 .ui-state-highlight.story-placeholder {
-    margin: 10px 5px;
+ margin: 10px 5px;
 }
 .story-header a .ui-icon {
-    float: left;
-    padding-right: 2px;
-    display: none;
+ float: left;
+ padding-right: 2px;
+ display: none;
 }
 .story:hover .story-header a .ui-icon {
-    display: inline;
+ display: inline;
 }
 .story-owner img {
-    margin-left: 5px;
+ margin-left: 5px;
 }
 .story-owner-name {
-    padding: 4px 0;
-    float: left;
+ padding: 4px 0;
+ float: left;
 }
 span.ui-icon {
-    float: left;
-    margin-right: 7px;
+ float: left;
+ margin-right: 7px;
 }
-
-.left-hide {
-    font-size: 10px;
-    font-weight: bold;
-    float: left;
-    padding: 0 0 0 10px;
+.phase-toggle {
+ font-size: 10px;
+ font-weight: bold;
+ padding: 6px 10px;
+ margin-top: -3px;
+ cursor: pointer;
 }
-.right-hide {
-    font-size: 10px;
-    font-weight: bold;
-    float: right;
-    padding: 0 10px 0 0;
-}
-
-.left-hide:hover, .right-hide:hover {
-    font-weight: bold;
-    color: red;
-    cursor: pointer;
-}
+.left-hide,
 .left-shows {
-    font-size: 10px;
-    font-weight: bold;
-    float: left;
-    padding: 0 0 0 10px;
+ float: left;
+ margin-left: 5px;
 }
+.right-hide,
 .right-shows {
-    font-size: 10px;
-    font-weight: bold;
-    float: right;
-    padding: 0 0 0 10px;
-}
-.left-shows:hover, .right-shows:hover{
-    font-weight: bold;
-    color: red;
-    cursor: pointer;
+ float: right;
+ margin-right: 5px;
 }
 </style>
 {% endblock %}
@@ -181,6 +174,7 @@ $(function(){
         width: 370,
         autoOpen: false,
         modal: true,
+        resizable: false,
         title: gettext('Add story'),
         close: function(){
             $('#add-story-form-errors').hide();
@@ -225,7 +219,7 @@ $(function(){
         var $next_phase = $current_phase.next();
         var current_phase_name = $current_phase.find('label').text();
         $current_phase.hide();
-        $next_phase.find('div.phase-name').prepend('<div class="left-shows">' + current_phase_name + '<p>&gt;&gt;</p><div>')
+        $next_phase.find('div.phase-name').prepend('<div class="phase-toggle left-shows ui-state-hover">' + current_phase_name + '&nbsp;&gt;&gt;<div>')
         $(window).resize();
     });
 
@@ -241,7 +235,7 @@ $(function(){
         var $prev_phase = $current_phase.prev();
         var current_phase_name = $current_phase.find('label').text();
         $current_phase.hide();
-        $prev_phase.find('div.phase-name').prepend('<div class="right-shows"><label>' + current_phase_name + '</label><p>&lt;&lt;</p><div>')
+        $prev_phase.find('div.phase-name').prepend('<div class="phase-toggle right-shows ui-state-hover"><label>&lt;&lt;&nbsp;' + current_phase_name + '</label><div>')
         $(window).resize();
     });
 
@@ -264,13 +258,13 @@ $(function(){
 <div id="phases">
     {% for phase in project.phases.all %}
     <div class="phase" data-id="{{ phase.id }}">
-        <div class="phase-name">
+        <div class="phase-name ui-state-default">
             {% if phase.is_backlog %}
-                <div class="left-hide">&lt;&lt;</div>
+                <div class="phase-toggle left-hide ui-state-hover">&lt;&lt;</div>
             {% endif %}
             <label>{{ phase.name }}</label>
             {% if phase.is_archive %}
-                <div class="right-hide">&gt;&gt;</div>
+                <div class="phase-toggle right-hide ui-state-hover">&gt;&gt;</div>
             {% endif %}
         </div>
         <div class="stories">

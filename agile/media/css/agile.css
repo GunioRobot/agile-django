@@ -11,15 +11,15 @@ body {
 }
 
 #header {
- padding: 14px 21px;
- height: 24px;
+ padding: 20px 21px;
+ height: 25px;
 }
 
 #name {
- color: blue;
- text-shadow: #fff 0px 1px 0, #000 0 -1px 0;
+ text-shadow: #3d3d3d 0 -1px 0, #e7e7e7 0 1px 0;
  font-size: 22px;
  float: left;
+ text-decoration: none;
 }
 
 ul#topmenu {
@@ -29,9 +29,9 @@ ul#topmenu {
 
 ul#topmenu li,
 ul#bar-menu li {
- margin: 0 2px;
  float: left;
  font-size: 12px;
+ margin-right: 5px;
 }
 
 ul#topmenu li.topmenu-item,
@@ -40,6 +40,10 @@ ul#bar-menu li.barmenu-item {
  border-radius: 5px;
  -moz-border-radius: 5px;
  -webkit-border-radius: 5px;
+}
+
+li.barmenu-add {
+ margin-left: 20px;
 }
 
 ul#topmenu li a:link, ul#topmenu li a:visited {
@@ -74,17 +78,17 @@ form label {
  font-size: 12px;
  text-align:left;
 }
-form input[type="text"], form input[type="password"] {
- width: 95%;
- border: 1px solid #f0f0f0;
- font-size: 15px;
+form input[type="text"],
+form input[type="password"],
+form textarea {
+ color: #444;
+ width: 100%;
+ border: 1px solid #dedede;
  padding: 5px;
  border-radius: 5px;
  -moz-border-radius: 5px;
  -webkit-border-radius: 5px;
- background-image: -moz-linear-gradient(top, #d0d0d0, #fff);
- background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #d0d0d0), color-stop(0.4, #fff));
- -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#d0d0d0', EndColorStr='#fff')";
+ background-color: #fbfbfb;
 }
 form input[type="submit"] {
  margin-top: 10px;
@@ -92,12 +96,6 @@ form input[type="submit"] {
 }
 form select {
  width: 100%;
-}
-form textarea {
- width: 100%;
- border: 2px solid #F0F0F0;
- font-size: 15px;
- padding: 3px;
 }
 span.error {
  font-size: 12px;

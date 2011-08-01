@@ -14,7 +14,7 @@
         <script type="text/javascript" src="{{ MEDIA_URL }}agile/js/dialog_message.js"></script>
         <script type="text/javascript">
         $(function() {
-            $('ul#topmenu li.topmenu-item').mouseover(function() {
+            $('ul#topmenu li.topmenu-item, ul#barmenu li.barmenu-item').mouseover(function() {
                 $(this).removeClass('ui-state-default').addClass('ui-state-hover');
             })
             .mouseout(function() {
@@ -39,11 +39,11 @@
             </div>
         {% endblock %}
         <div id="header" class="ui-widget-header">
-            <span id="name">AgileDjango</span>
+            <a id="name" href="/">AgileDjango</a>
             <ul id="topmenu">
                 {% if user.is_authenticated %}
                     <li style="padding-top: 6px;">
-                    {% trans 'Welcome' %} {{ user.agile_get_name }}
+                    {% trans 'Welcome' %} {{ user.agile_get_name|upper }}
                     </li>
                 {% endif %}
                 <li class="topmenu-item ui-state-default"><a href='{% url agile_index %}'>{% trans 'Home' %}</a></li>
