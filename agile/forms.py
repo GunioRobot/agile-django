@@ -26,7 +26,7 @@ class StoryForm(forms.ModelForm):
             self.fields['creator'].queryset = users
             self.fields['owner'].queryset = users
             self.fields['phase'].queryset = project.phases
-        
+
         label_from_instance = lambda obj: obj.agile_get_name()
         self.fields['creator'].label_from_instance = label_from_instance
         self.fields['owner'].label_from_instance = label_from_instance

@@ -69,7 +69,7 @@ $(function(){
                 min_height = height;
         }).css('min-height', min_height);
     }).resize();
-   
+
     $("#add-phase-dialog").dialog({
         width: 370,
         autoOpen: false,
@@ -81,7 +81,7 @@ $(function(){
             $('#add-phase-dialog form')[0].reset();
         }
     });
-    
+
     $("#edit-phase-dialog").dialog({
         width: 370,
         autoOpen: false,
@@ -93,7 +93,7 @@ $(function(){
             $('#edit-phase-dialog form')[0].reset();
         }
     });
-    
+
     $('#phase-story-dialog form').submit(function(){
         var $this = $(this);
         $.ajax({
@@ -112,17 +112,17 @@ $(function(){
                     $.each(response.error, function(index, value){
                         $('#add-phase-form-errors .errors').append(index + ': ' + value + '<br />')
                     })
-                    
+
                 }
             }
         });
         return false;
     });
-    
+
     $('#add-phase').click(function(){
         $('#add-phase-dialog').dialog('open');
     });
-    
+
     $("#add-phase-dialog form").live('submit', function() {
         var $this = $(this);
         $.ajax({
@@ -146,7 +146,7 @@ $(function(){
         });
         return false;
     });
-    
+
     $("#edit-phase-dialog form").live('submit', function() {
         var $this = $(this);
         $.ajax({
@@ -170,7 +170,7 @@ $(function(){
         });
         return false;
     });
-    
+
     /* Toolbar setup */
     $('.phase-controls').toolbar({
         buttons: [
@@ -228,7 +228,7 @@ $(function(){
             }
         ]
     });
-    
+
     $('#phases').sortable({
         distance: 50,
         revert: true,
