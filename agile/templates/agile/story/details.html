@@ -25,7 +25,6 @@ var TAG_EDIT_URL = TAG_BASE_URL + 'edit/';
 var TAG_DELETE_URL = TAG_BASE_URL + 'delete/';
 var TAG_LOAD_URL = TAG_BASE_URL + 'load/';
 
-var $this = null;
 
 var reloadTags = function() {
     $('#tags').html(gettext('Loading tags...'));
@@ -125,7 +124,7 @@ $(function(){
 
     /* Phases setup */
     $('.ui-widget-content.phase').hover(function(){
-       $this = $(this)
+       var $this = $(this)
        $this.addClass('ui-state-hover');
     }, function(){
        $this.removeClass('ui-state-hover');
@@ -139,7 +138,7 @@ $(function(){
     });
 
     $('#comments form').submit(function(){
-        $this = $(this);
+        var $this = $(this);
         $.ajax({
             url: $this.attr('action'),
             type: $this.attr('method'),
@@ -161,7 +160,7 @@ $(function(){
 
     /* Comment delete */
     $('.comment-delete').live('click', function(){
-        $this = $(this);
+        var $this = $(this);
         var $comment = $this.parents('.comment');
         var id = $comment.attr('data-id');
         $.ajax({
@@ -181,7 +180,7 @@ $(function(){
 
     /* Edit story details */
     $('#details').dblclick(function(){
-        $this = $(this);
+        var $this = $(this);
         var html = $this.html();
         var markdown = $this.attr('data-description');
         var $textarea = $('<textarea/>').val(markdown).blur(function(){
@@ -209,7 +208,7 @@ $(function(){
     /* Select Creator, Owner */
     $('#id_creator, #id_owner').change(function(){
         var user = this.id.slice(3);
-        $this = $(this);
+        var $this = $(this);
         var data = {};
         data[user] = $this.val();
         $.ajax({
@@ -243,10 +242,10 @@ $(function(){
 
     /* Edit Story name */
     $('#story-name').live('dblclick', function(){
-        $this = $(this);
+        var $this = $(this);
         var text = $.trim($this.text());
         var $textarea = $('<textarea/>').val(text).blur(function(){
-            $this = $(this);
+            var $this = $(this);
             var text = $.trim($this.val());
             $this.parent().text(text);
             $.ajax({
@@ -267,7 +266,7 @@ $(function(){
 
     /* Remove task */
     $('.task-delete').live('click', function(){
-        $this = $(this);
+        var $this = $(this);
         var id = $this.parent().attr('data-id');
     });
 
