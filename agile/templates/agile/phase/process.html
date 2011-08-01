@@ -72,10 +72,10 @@ $(function(){
     }).resize();
    
     $("#add-phase-dialog").dialog({
-        height: 450,
-        width: 480,
+        width: 370,
         autoOpen: false,
         modal: true,
+        resizable: false,
         title: gettext('Add phase'),
         close: function(){
             $('#add-phase-form-errors').hide();
@@ -84,10 +84,10 @@ $(function(){
     });
     
     $("#edit-phase-dialog").dialog({
-        height: 650,
-        width: 480,
+        width: 370,
         autoOpen: false,
         modal: true,
+        resizable: false,
         title: gettext('Edit phase'),
         close: function(){
             $('#edit-phase-form-errors').hide();

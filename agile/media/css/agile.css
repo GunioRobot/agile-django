@@ -1,143 +1,142 @@
 body {
-    background: #f0f0f0;
+ background: #f0f0f0;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    outline: none;
-    font-family: "Lucida Grande", Verdana, Helvetica, Arial, Tahoma, sans-serif;
+ margin: 0;
+ padding: 0;
+ outline: none;
+ font-family: "Lucida Grande", Verdana, Helvetica, Arial, Tahoma, sans-serif;
+ letter-spacing: 1px;
 }
 
 #header {
-    padding: 14px 21px;
-    height: 24px;
+ padding: 14px 21px;
+ height: 24px;
 }
 
 #name {
-    color: blue;
-    text-shadow: #fff 0px 1px 0, #000 0 -1px 0;
-    font-size: 22px;
-    float: left;
+ color: blue;
+ text-shadow: #fff 0px 1px 0, #000 0 -1px 0;
+ font-size: 22px;
+ float: left;
 }
 
 ul#topmenu {
-    list-style: none;
-    float: right;
+ list-style: none;
+ float: right;
 }
 
 ul#topmenu li {
-    padding: 0 3px;
-    margin: 0 2px;
-    float: left;
-    font-size: 12px;
+ padding: 0 3px;
+ margin: 0 2px;
+ float: left;
+ font-size: 12px;
 }
 
 ul#topmenu li a:link, ul#topmenu li a:visited {
-    text-decoration:none;
-    font-weight: bold;
+ text-decoration:none;
+ font-weight: bold;
 }
 ul#topmenu li a:hover {
-    text-decoration:underline;
+ text-decoration:underline;
 }
 
 ul#topmenu img {
-    border: 1px solid #000;
-    margin-top: -12px;
-    margin-left: 10px;
-    padding: 1px;
-    background: white;
+ border: 1px solid #000;
+ margin-top: -12px;
+ margin-left: 10px;
+ padding: 1px;
+ background: white;
 }
 
 #content {
-    padding: 12px;
+ padding: 12px;
 }
 #login {
-    margin-top: -13px;
-    text-align: center;
+ margin-top: -13px;
+ text-align: center;
 }
 form {
-    margin: 0 auto;
-    width: 300px;
-    padding: 40px 30px 80px 30px;
-    border: 1px solid #CCC;
-    background-color: #F5F5EF;
-    -moz-border-radius-bottomright: 30px;
-    border-bottom-right-radius: 30px;
-    -moz-border-radius-bottomleft: 30px;
-    border-bottom-left-radius: 30px;
+ margin: 0 auto;
+ width: 300px;
+ padding: 10px 10px 55px;
 }
 form label {
-    margin-top: 10px;
-    padding-bottom: 2px;
-    color: #000;
-    display: block;
-    font-size: 12px;
-    text-align:left;
+ margin-top: 10px;
+ padding-bottom: 7px;
+ display: block;
+ font-size: 12px;
+ text-align:left;
 }
 form input[type="text"], form input[type="password"] {
-    width: 100%;
-    border: 2px solid #F0F0F0;
-    font-size: 15px;
-    height: 35px;
-    padding: 3px;
+ width: 95%;
+ border: 1px solid #f0f0f0;
+ font-size: 15px;
+ padding: 5px;
+ border-radius: 5px;
+ -moz-border-radius: 5px;
+ -webkit-border-radius: 5px;
+ background-image: -moz-linear-gradient(top, #d0d0d0, #fff);
+ background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #d0d0d0), color-stop(0.4, #fff));
+ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#d0d0d0', EndColorStr='#fff')";
 }
 form input[type="submit"] {
-    margin-top: 30px;
-    float:right;
+ margin-top: 10px;
+ float:right;
 }
 form select {
-    width: 100%;
+ width: 100%;
 }
 form textarea {
-    width: 100%;
-    border: 2px solid #F0F0F0;
-    font-size: 15px;
-    padding: 3px;
+ width: 100%;
+ border: 2px solid #F0F0F0;
+ font-size: 15px;
+ padding: 3px;
 }
 span.error {
-    font-size: 12px;
-    color: red;
+ font-size: 12px;
+ color: red;
 }
 
 
 /**/
 
 #gravatar {
-    float:right;
+ float:right;
 }
 
 .ui-state-highlight, .ui-state-error {
-    padding: .7em;
-    font-size: 12px;
+ padding: .7em;
+ font-size: 12px;
 }
 
 .ui-state-highlight span.ui-icon.ui-icon-info,
 .ui-state-error span.ui-icon.ui-icon-alert {
-    float: left;
-    margin-right: .3em;
+ float: left;
+ margin-right: .3em;
 }
 .ui-widget {
-    font-size: 85%;
+ font-size: 85%;
 }
 
 #add-story-form-errors {
-    display: none;    
+ display: none; 
 }
 
 ul#bar-menu {
-    list-style: none;
-    height: 20px;
-    padding: 0 15px;
+ list-style: none;
+ height: 20px;
+ padding: 0 15px;
 }
 ul#bar-menu li {
-    float: left;
-    padding: 0 4px;
+ float: left;
+ padding: 0 4px;
 }
 ul#bar-menu li a {
-    font-size: 12px;
-    text-decoration: none;
+ font-size: 12px;
+ text-decoration: none;
 }
 ul#bar-menu li.current a {
-    font-weight: bold;
+ font-weight: bold;
 }
