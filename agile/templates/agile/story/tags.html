@@ -24,11 +24,6 @@ $(function() {
                 return;
             }
             addNewTag();
-        }).keypress(function(e) {
-            var code = (e.keyCode ? e.keyCode : e.which);
-            if(code == 13 && $this.val()){
-                addNewTag();
-            }
         });
 
     /* Edit Tags */
@@ -41,17 +36,10 @@ $(function() {
             .focus()
             .val(currentName)
             .focusout(function() {
-                // Undo editing
-                $newName.remove();
-                $tag.show();
-            }).keypress(function(e) {
                 // Submit changes
-                var code = (e.keyCode ? e.keyCode : e.which);
-                if(code == 13 && $(this).val()){
-                    var tagId = $tag.parent().attr('data-id');
-                    var tagName = $(this).val()
-                    updateTag(tagId, tagName);
-                }
+                var tagId = $tag.parent().attr('data-id');
+                var tagName = $(this).val()
+                updateTag(tagId, tagName);
             });
     });
 

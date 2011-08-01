@@ -373,7 +373,7 @@ def comment(request, project_id, story_number, comment_id, action=None):
     
     if not (request.method == 'POST' and request.is_ajax()):
         raise Http404
-    
+
     comment = request.user.comments.get(pk=comment_id)
     if action == 'delete':
         comment.delete()

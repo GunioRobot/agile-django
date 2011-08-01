@@ -207,12 +207,14 @@ class Story(models.Model):
         stories.filter(index__gt=self.index).update(index=F('index') - 1)
 
 class Tag(models.Model):
-    story = models.ForeignKey('Story', verbose_name=_(u'story'), related_name='tags')
+    story = models.ForeignKey('Story', verbose_name=_(u'story'),
+                              related_name='tags')
     name = models.CharField(_(u'name'), max_length=100)
 
     class Meta:
         verbose_name = _(u'tag')
         verbose_name_plural = _(u'tags')
+        ordering = ('name',)
 
 class TaskManager(models.Manager):
 
