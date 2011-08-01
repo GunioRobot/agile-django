@@ -11,7 +11,7 @@
             {% endif %}
         </div>
     </div>
-    <div class="story-name">{{ story.name }}</div>
+    <strong><div class="story-name story-markdown">{{ story.name }}</div></strong>
     {% if story.tasks.exists %}
         <div class="story-name"><span class="ui-icon ui-icon-clipboard"></span>{% trans 'Tasks' %}: {{ story.tasks.get_formatted_count }}</div>
     {% endif %}

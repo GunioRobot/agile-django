@@ -153,7 +153,7 @@ $(function(){
         }
     }).disableSelection()
     
-    $('.story-name').live('dblclick', function(){
+    $('.story-name.story-markdown').live('dblclick', function(){
         var $this = $(this);
         var text = $.trim($this.text());
         var $textarea = $('<textarea/>').val(text).blur(function(){
