@@ -15,7 +15,7 @@ var $this = null;
 $(function() {
     /* Add a tag */
     $('#new-tag').die().focusin(function() {
-            $this = $(this)
+            var $this = $(this)
             $this.val('');
         })
         .focusout(function() {
@@ -28,7 +28,7 @@ $(function() {
 
     /* Edit Tags */
     $('.tag-name').dblclick(function() {
-        $tag = $(this);
+        var $tag = $(this);
         var currentName = $tag.text();
         $tag.hide();
         $newName = $('<input type="text" class="new-tag-name" />');
