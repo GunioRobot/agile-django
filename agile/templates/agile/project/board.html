@@ -14,12 +14,7 @@
 {{ block.super }}
 <style type="text/css">
 #phases {
- border: 1px solid #CCC;
  overflow: auto;
- padding: 9px;
- border-radius: 5px;
- -moz-border-radius: 5px;
- -webkit-border-radius: 5px;
 }
 .phase {
  border: 0px solid black;
@@ -109,9 +104,9 @@ var PROJECT_URL = '{{ project.get_base_url }}';
 var USER_ID = {{ user.id }};
 $(function(){
     $(window).resize(function(){
-        var phases_number = $('.phase:visible').length; 
-        var phase_width = Math.floor($('#phases').width() / phases_number - 5);
-        $('#phases').height($(window).height() - 105); 
+        var phases_number = $('.phase:visible').length;
+        var phase_width = Math.floor(($("#phases").width() - 20) / phases_number);
+        $('#phases').height($(window).height() - 130);
         $('.phase').width(phase_width);
         
         var min_height = 0;
@@ -120,7 +115,7 @@ $(function(){
             if(height > min_height)
                 min_height = height;
         }).css('min-height', min_height);
-    }).resize();
+    });
 
     /* Sortable Stories */
     $('.stories').sortable({
@@ -220,15 +215,15 @@ $(function(){
         var current_phase_name = $current_phase.find('label').text();
         $current_phase.hide();
         $next_phase.find('div.phase-name').prepend('<div class="phase-toggle left-shows ui-state-hover">' + current_phase_name + '&nbsp;&gt;&gt;<div>')
-        $(window).resize();
+        setTimeout('$(window).resize()', 300);
     });
 
     $('.left-shows').live('click', function(){
         var $current_phase = $(this).parent().parent();
         var $prev_phase = $current_phase.prev();
         $prev_phase.show();
-        $(window).resize();
         $(this).remove();
+        setTimeout('$(window).resize()', 300);
     });
     $('.right-hide').click(function(){
         var $current_phase = $(this).parent().parent();
@@ -236,18 +231,21 @@ $(function(){
         var current_phase_name = $current_phase.find('label').text();
         $current_phase.hide();
         $prev_phase.find('div.phase-name').prepend('<div class="phase-toggle right-shows ui-state-hover"><label>&lt;&lt;&nbsp;' + current_phase_name + '</label><div>')
-        $(window).resize();
+        setTimeout('$(window).resize()', 300);
     });
 
     $('.right-shows').live('click', function(){
         var $current_phase = $(this).parent().parent();
         var $next_phase = $current_phase.next();
         $next_phase.show();
-        $(window).resize();
         $(this).remove();
+        setTimeout('$(window).resize()', 300);
     });
+
     $('.left-hide').click();
     $('.right-hide').click();
+
+    setTimeout('$(window).resize()', 500);
 });
 </script>
 {% endblock %}
