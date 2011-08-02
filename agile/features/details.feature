@@ -32,7 +32,7 @@ Feature: Details
     And I click the stop button
     Then I see the page for 3 seconds
     I see the right stop and duration time
-    
+
   Scenario: #2 - Intend take a time entry with another time entry already taken
     Given I am logged in
     Then I click on the link "Projects"

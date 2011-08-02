@@ -214,7 +214,7 @@ class Story(models.Model):
 class Tag(models.Model):
     story = models.ForeignKey('Story', verbose_name=_(u'story'), related_name='tags')
     name = models.CharField(_(u'name'), max_length=100)
-    
+
     class Meta:
         verbose_name = _(u'tag')
         verbose_name_plural = _(u'tags')

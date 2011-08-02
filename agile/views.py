@@ -335,7 +335,7 @@ def story_ajax(request, project_id, story_number, action=None):
         story.delete()
 
     elif action == 'time_entry':
-        time_entries = TimeEntry.objects.filter(user=request.user, stop_at=None)
+        time_entries = request.user.time_entries.filter(stop_at=None)
         if not time_entries.exists():
             time_entry = TimeEntry(user=request.user, story=story)
             time_entry.save()
