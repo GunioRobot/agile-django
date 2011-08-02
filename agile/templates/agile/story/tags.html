@@ -19,6 +19,7 @@ $(function() {
             $this.val('');
         })
         .focusout(function() {
+            var $this = $(this);
             if($this.val() == ''){
                 $this.val(gettext('Tag name'));
                 return;

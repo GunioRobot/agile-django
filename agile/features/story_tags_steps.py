@@ -18,11 +18,11 @@ def opened_a_story(step):
 
 @step(u'add a new tag with the name "(.+)"')
 def add_a_new_tag(step, tag_name):
-    input = world.wait_for_element("#new-tag", 5, 0.5)
+    selector = '#new-tag'
+    input = world.wait_for_element(selector, 5, 0.5)
     assert input, 'The input for a new tag is not present.'
     input.value = tag_name
-    elsewhere = world.wait_for_element("#story-number", 5, 0.5)
-    elsewhere.click()
+    world.browser.execute_script('$("%s").focusout();' % selector)
 
 @step(u'see the tag named "(.+)"')
 def see_a_tag_with_name(step, tag_name):
