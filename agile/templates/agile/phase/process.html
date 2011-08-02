@@ -58,14 +58,15 @@
 var PROJECT_URL = '{{ project.get_base_url }}';
 var PHASES_BASE_URL = PROJECT_URL + '/phases/';
 var PHASE_BASE_URL = PROJECT_URL + '/phase/';
+var $window = $(window);
 
 $(function(){
-    $(window).resize(function(){
+    $window.resize(function(){
         var phases_number = $('.phase:visible').length;
         var phase_width = Math.floor(($("#phases").width() - 20) / phases_number);
-        $('#phases').height($(window).height() - 150);
+        $('#phases').height($window.height() - 150);
         $('.phase').width(phase_width);
-        
+
         var min_height = 0;
         $('.phase').each(function(){
             var height = $(this).height();
@@ -255,7 +256,7 @@ $(function(){
         }
     }).disableSelection();
 
-    setTimeout('$(window).resize()', 500);
+    setTimeout('$window.resize()', 500);
 });
 </script>
 {% endblock %}
