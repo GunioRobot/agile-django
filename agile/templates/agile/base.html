@@ -9,6 +9,7 @@
         {% if user.is_superuser %}
             {% block menu_phases %}<li class="barmenu-item ui-state-default"><a href="{{ project.get_phases_url }}">{% trans 'Phases' %}</a></li>{% endblock %}
         {% endif %}
+        {% block project_name %}<li class="project-name">{{ project.name }}</li>{% endblock %}
     {% endblock %}
 </ul>
 {% endblock %}

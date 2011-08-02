@@ -42,6 +42,13 @@ ul#bar-menu li.barmenu-item {
  -webkit-border-radius: 5px;
 }
 
+ul#bar-menu li.project-name {
+ float: right;
+ font-size: 18px;
+ font-weight: bold;
+ padding-top: 3px;
+}
+
 li.barmenu-add {
  margin-left: 20px;
 }
