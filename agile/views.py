@@ -397,7 +397,6 @@ def comment(request, project_id, story_number, comment_id, action=None):
     if action == 'delete':
         comment.delete()
 
-
 @login_required
 @render_to_json
 @require_POST
@@ -422,13 +421,48 @@ def time_entry(request, project_id, story_number, action=None):
 
 @login_required
 @render_to_json
-def tag(request, project_id, story_number, tag_id, action=None):
+@require_POST
+def tag(request, project_id, story_number, action=None, tag_id=None):
 
-    if not (request.method == 'POST' and request.is_ajax()):
+    if not request.is_ajax():
         raise Http404
 
     project = request.user.projects.get(pk=project_id)
-    tag = project.stories.get(number=story_number).tags.get(pk=tag_id)
+    story = project.stories.get(number=story_number)
 
-    if action == 'delete':
+    if tag_id is not None:
+        tag = story.tags.get(pk=tag_id)
+
+    if action == 'add':
+        tag_form = TagForm(request.POST)
+        if tag_form.is_valid():
+            tag = tag_form.save(commit=False)
+            tag.story = story
+            tag.save()
+            return
+
+    elif action == 'edit':
+        tag_form = TagForm(request.POST, instance=tag)
+        if tag_form.is_valid():
+            tag_form.save()
+            return
+        errors = {}
+        for field, error in tag_form.errors.iteritems():
+                errors[unicode(tag_form.fields[field].label)] = error
+        return {
+            'success': False,
+            'errors': errors
+        }
+
+    elif action == 'delete':
         tag.delete()
+        return
+
+    elif action == 'load':
+        response = render_to_string('agile/story/tags.html', {
+                                    'tags': story.tags
+                                 }, RequestContext(request))
+        return {
+            'succes': True,
+            'content': response
+        }

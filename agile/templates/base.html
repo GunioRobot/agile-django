@@ -12,6 +12,17 @@
         <script type="text/javascript" src="{{ MEDIA_URL}}agile/jqueryui/selectmenu/jquery.ui.selectmenu.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL }}agile/js/agile.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL }}agile/js/dialog_message.js"></script>
+        <script type="text/javascript">
+        $(function() {
+            $('ul#topmenu li.topmenu-item, ul#barmenu li.barmenu-item').mouseover(function() {
+                $(this).removeClass('ui-state-default').addClass('ui-state-hover');
+            })
+            .mouseout(function() {
+                $(this).removeClass('ui-state-hover').addClass('ui-state-default');
+            });
+            $('.ui-selectmenu').css('width', '100%');
+        });
+        </script>
         {% endblock %}
         {% block css %}
         <link rel="stylesheet" href="{% if USE_CDN %}https://ajax.googleapis.com/ajax/libs/{% else %}{{ MEDIA_URL}}{% endif %}agile/jqueryui/1.8.12/themes/{{ user.agile_userprofile.jquery_ui_theme|default:'cupertino' }}/jquery-ui.css" />
@@ -24,26 +35,27 @@
     <body>
         {% block error_message %}
             <div id="agile-error-message" style="font-size: 12px;">
+                <span id="agile-icon"></span>
                 <div id="agile-message"></div>
+                <a id="agile-close-message" href="#"></a>
             </div>
         {% endblock %}
         <div id="header" class="ui-widget-header">
-            <span id="name">AgileDjango</span>
+            <a id="name" href="/">AgileDjango</a>
             <ul id="topmenu">
                 {% if user.is_authenticated %}
-                    <li>
-                    {{ user.agile_get_name }}
+                    <li style="padding-top: 6px;">
+                    {% trans 'Welcome' %} {{ user.agile_get_name|upper }}
                     </li>
-                <li>|</li>
                 {% endif %}
-                <li><a href='{% url agile_index %}'>{% trans 'Home' %}</a></li>
+                <li class="topmenu-item ui-state-default"><a href='{% url agile_index %}'>{% trans 'Home' %}</a></li>
                 {% if not user.is_authenticated %}
-                <li><a href='{% url agile_login %}'>{% trans 'Login' %}</a></li>
-                <li><a href='{% url agile_signup %}'>{% trans 'Signup' %}</a></li>
+                <li class="topmenu-item ui-state-default"><a href='{% url agile_login %}'>{% trans 'Login' %}</a></li>
+                <li class="topmenu-item ui-state-default"><a href='{% url agile_signup %}'>{% trans 'Signup' %}</a></li>
                 {% else %}
-                <li><a href='{% url agile_projects %}'>{% trans 'Projects' %}</a></li>
-                <li><a href='{% url agile_profile %}'>{% trans 'Profile' %}</a></li>
-                <li><a href='{% url agile_logout %}'>{% trans 'Logout' %}</a></li>
+                <li class="topmenu-item ui-state-default"><a href='{% url agile_projects %}'>{% trans 'Projects' %}</a></li>
+                <li class="topmenu-item ui-state-default"><a href='{% url agile_profile %}'>{% trans 'Profile' %}</a></li>
+                <li class="topmenu-item ui-state-default"><a href='{% url agile_logout %}'>{% trans 'Logout' %}</a></li>
                 <li>{% gravatar user 45 %}</li>
                 {% endif %}
             </ul>

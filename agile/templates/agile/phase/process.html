@@ -3,12 +3,11 @@
 
 {% block title %}{{ project.name }} - {% trans 'Board' %} - {{ block.super }}{% endblock %}
 
-{% block menu_phases %}<li class="current"><a href="{{ project.get_phases_url }}">{% trans 'Phases' %}</a></li>{% endblock %}
+{% block menu_phases %}<li class="barmenu-item ui-state-default current"><a href="{{ project.get_phases_url }}">{% trans 'Phases' %}</a></li>{% endblock %}
 
 {% block menu_elements %}
 {{ block.super }}
-<li>|</li>
-<li><a id="add-phase" href="javascript:;">{% trans 'Add phase' %}</a></li>
+<li class="barmenu-add barmenu-item ui-state-default"><a id="add-phase" href="javascript:;">{% trans 'Add phase' %}</a></li>
 {% endblock %}
 
 {% block css %}
@@ -16,35 +15,39 @@
 <link rel="stylesheet" href="{{ MEDIA_URL }}agile/css/jquery-ui.toolbar.css" />
 <style type="text/css">
 #phases {
-    border: 1px solid #CCC;
-    overflow: auto;
+ overflow: auto;
+ padding-top: 10px;
 }
 .phase {
-    padding: 20px 10px;
-    float: left;
-    text-align: center;
-    margin: 10px;
-    cursor: move;
+ float: left;
 }
 .phase.not-draggable {
-    cursor: default;
+ cursor: default;
+}
+.phase-content {
+ text-align: center;
+ padding: 10% 5%;
+ margin: 0 auto;
+ cursor: move;
+ width: 80%;
+ height: auto;
 }
 .phase-name {
-    text-align: center;
-    padding: 10px 0 7px 0;
-    font-size: 120%;
+ text-align: center;
+ padding: 10px 0 7px 0;
+ font-size: 120%;
 }
 .phase-description {
-    font-size: 80%;
+ font-size: 80%;
 }
 .ui-state-highlight.phase-placeholder {
-    margin: 10px;
+ margin: 10px;
 }
 .phase-controls {
-    visibility: hidden;
+ visibility: hidden;
 }
 .phase:hover .phase-controls {
-    visibility: visible;
+ visibility: visible;
 }
 </style>
 {% endblock %}
@@ -54,47 +57,48 @@
 <script type="text/javascript">
 var PROJECT_URL = '{{ project.get_base_url }}';
 var PHASES_BASE_URL = PROJECT_URL + '/phases/';
-var PHASE_BASE_URL = PROJECT_URL + '/phase/'
+var PHASE_BASE_URL = PROJECT_URL + '/phase/';
+var $window = $(window);
 
 $(function(){
-    $(window).resize(function(){
+    $window.resize(function(){
         var phases_number = $('.phase:visible').length;
-        var phase_width = Math.floor($('#phases').width() / phases_number - 5 - (phases_number * 10));
-        $('#phases').height($(window).height() - 105);
+        var phase_width = Math.floor(($("#phases").width() - 20) / phases_number);
+        $('#phases').height($window.height() - 150);
         $('.phase').width(phase_width);
-        
+
         var min_height = 0;
         $('.phase').each(function(){
             var height = $(this).height();
             if(height > min_height)
                 min_height = height;
         }).css('min-height', min_height);
-    }).resize();
-   
+    });
+
     $("#add-phase-dialog").dialog({
-        height: 450,
-        width: 480,
+        width: 370,
         autoOpen: false,
         modal: true,
+        resizable: false,
         title: gettext('Add phase'),
         close: function(){
             $('#add-phase-form-errors').hide();
             $('#add-phase-dialog form')[0].reset();
         }
     });
-    
+
     $("#edit-phase-dialog").dialog({
-        height: 650,
-        width: 480,
+        width: 370,
         autoOpen: false,
         modal: true,
+        resizable: false,
         title: gettext('Edit phase'),
         close: function(){
             $('#edit-phase-form-errors').hide();
             $('#edit-phase-dialog form')[0].reset();
         }
     });
-    
+
     $('#phase-story-dialog form').submit(function(){
         var $this = $(this);
         $.ajax({
@@ -113,17 +117,17 @@ $(function(){
                     $.each(response.error, function(index, value){
                         $('#add-phase-form-errors .errors').append(index + ': ' + value + '<br />')
                     })
-                    
+
                 }
             }
         });
         return false;
     });
-    
+
     $('#add-phase').click(function(){
         $('#add-phase-dialog').dialog('open');
     });
-    
+
     $("#add-phase-dialog form").live('submit', function() {
         var $this = $(this);
         $.ajax({
@@ -147,7 +151,7 @@ $(function(){
         });
         return false;
     });
-    
+
     $("#edit-phase-dialog form").live('submit', function() {
         var $this = $(this);
         $.ajax({
@@ -171,7 +175,7 @@ $(function(){
         });
         return false;
     });
-    
+
     /* Toolbar setup */
     $('.phase-controls').toolbar({
         buttons: [
@@ -229,7 +233,7 @@ $(function(){
             }
         ]
     });
-    
+
     $('#phases').sortable({
         distance: 50,
         revert: true,
@@ -251,6 +255,8 @@ $(function(){
             });
         }
     }).disableSelection();
+
+    setTimeout('$window.resize()', 500);
 });
 </script>
 {% endblock %}
@@ -260,10 +266,12 @@ $(function(){
 
 <div id="phases">
     {% for phase in project.phases.all %}
-    <div class="phase ui-widget-content ui-corner-all{% if phase.is_backlog_or_archive %} not-draggable{% endif %}" data-id="{{ phase.id }}">
-        <div class="phase-name">{{ phase.name }}</div>
-        <div class="phase-description">{{ phase.description }}</div>
-        <div class="phase-controls" data-phase-id="{{ phase.pk }}"></div>
+    <div class="phase{% if phase.is_backlog_or_archive %} not-draggable{% endif %}" data-id="{{ phase.id }}">
+        <div class="phase-content ui-widget-content ui-corner-all">
+            <div class="phase-name">{{ phase.name }}</div>
+            <div class="phase-description">{{ phase.description }}</div>
+            <div class="phase-controls" data-phase-id="{{ phase.pk }}"></div>
+        </div>
     </div>
     {% endfor %}
 </div>

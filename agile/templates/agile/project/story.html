@@ -1,7 +1,12 @@
 {% load i18n gravatar %}
 <div class="story ui-widget-content" data-number="{{ story.number }}">
     <div class="story-header ui-state-default">
-        <a href="{{ story.get_url }}"><span class="ui-icon ui-icon-search"></span>{{ story.number }}</a>
+        <a href="{{ story.get_url }}">
+            <span class="ui-icon ui-icon-search"></span>
+            <strong><div class="story-name story-markdown">
+                {{ story.number }}: {{ story.name }}
+            </div></strong>
+        </a>
         <div class="story-owner">
             {% if story.owner %}
                 <span class="story-owner-name">{{ story.owner.agile_get_name }}</span>
@@ -11,7 +16,6 @@
             {% endif %}
         </div>
     </div>
-    <div class="story-name">{{ story.name }}</div>
     {% if story.tasks.exists %}
         <div class="story-name"><span class="ui-icon ui-icon-clipboard"></span>{% trans 'Tasks' %}: {{ story.tasks.get_formatted_count }}</div>
     {% endif %}

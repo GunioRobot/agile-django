@@ -3,109 +3,101 @@
 
 {% block title %}{{ project.name }} - {% trans 'Board' %} - {{ block.super }}{% endblock %}
 
-{% block menu_stories %}<li class="current"><a href="{{ project.get_url }}">{% trans 'Stories' %}</a></li>{% endblock %}
+{% block menu_stories %}<li class="barmenu-item ui-state-default current"><a href="{{ project.get_url }}">{% trans 'Stories' %}</a></li>{% endblock %}
 
 {% block menu_elements %}
 {{ block.super }}
-<li>|</li>
-<li><a id="add-story" href="javascript:;">{% trans 'Add story' %}</a></li>
+<li class="barmenu-add barmenu-item ui-state-default"><a id="add-story" href="javascript:;">{% trans 'Add story' %}</a></li>
 {% endblock %}
 
 {% block css %}
 {{ block.super }}
 <style type="text/css">
 #phases {
-    border: 1px solid #CCC;
-    overflow: auto;
+ overflow: auto;
 }
 .phase {
-    border: 0px solid black;
-    float:left;
+ border: 0px solid black;
+ float:left;
 }
 .phase-name {
-    text-align: center;
-    padding: 10px 0 7px 0;
-    font-size: 120%;
+ text-align: center;
+ padding: 10px 0 7px 0;
+ font-size: 120%;
 }
 .stories {
-    min-height: 30px;
+ min-height: 30px;
+ padding: 0 5px;
 }
 .story {
-    min-height: 75px;
-    margin: 10px 5px;
+ min-height: 75px;
+ margin: 10px 5px;
+ border-radius: 5px;
+ -moz-border-radius: 5px;
+ -webkit-border-radius: 5px;
 }
 .story.disabled {
-    opacity: 0.4;
+ opacity: 0.4;
+}
+.story-markdown {
+ display: inline;
+ margin: 5px 2px;
 }
 .story-header {
-    padding: 1px 7px
+ cursor: move;
+ padding: 4px 7px;
+ margin: 2px;
+ border-radius: 4px;
+ -moz-border-radius: 4px;
+ -webkit-border-radius: 4px;
 }
 .story-name {
-    margin: 5px 7px;
-    overflow: hidden;
-    font-size: 75%
+ margin: 5px 7px;
+ overflow: hidden;
+ font-size: 75%;
 }
 .story-owner {
-    float: right;
-    font-size: 60%;
+ float: right;
+ font-size: 60%;
 }
 .ui-state-highlight.story-placeholder {
-    margin: 10px 5px;
+ margin: 10px 5px;
 }
 .story-header a .ui-icon {
-    float: left;
-    padding-right: 2px;
-    display: none;
+ float: left;
+ padding-right: 2px;
+ display: none;
 }
 .story:hover .story-header a .ui-icon {
-    display: inline;
+ display: inline;
 }
 .story-owner img {
-    margin-left: 5px;
+ margin-left: 5px;
 }
 .story-owner-name {
-    padding: 4px 0;
-    float: left;
+ padding: 4px 0;
+ float: left;
 }
 span.ui-icon {
-    float: left;
-    margin-right: 7px;
+ float: left;
+ margin-right: 2px;
 }
-
-.left-hide {
-    font-size: 10px;
-    font-weight: bold;
-    float: left;
-    padding: 0 0 0 10px;
+.phase-toggle {
+ font-size: 10px;
+ font-weight: bold;
+ padding: 6px 10px;
+ margin-top: -3px;
+ cursor: pointer;
 }
-.right-hide {
-    font-size: 10px;
-    font-weight: bold;
-    float: right;
-    padding: 0 10px 0 0;
-}
-
-.left-hide:hover, .right-hide:hover {
-    font-weight: bold;
-    color: red;
-    cursor: pointer;
-}
+.left-hide,
 .left-shows {
-    font-size: 10px;
-    font-weight: bold;
-    float: left;
-    padding: 0 0 0 10px;
+ float: left;
+ margin-left: 5px;
 }
+.right-hide,
 .right-shows {
-    font-size: 10px;
-    font-weight: bold;
-    float: right;
-    padding: 0 0 0 10px;
-}
-.left-shows:hover, .right-shows:hover{
-    font-weight: bold;
-    color: red;
-    cursor: pointer;
+ float: right;
+ margin-right: 5px;
 }
 </style>
 {% endblock %}
@@ -114,11 +106,13 @@ span.ui-icon {
 <script type="text/javascript">
 var PROJECT_URL = '{{ project.get_base_url }}';
 var USER_ID = {{ user.id }};
+var $window = $(window);
+
 $(function(){
-    $(window).resize(function(){
-        var phases_number = $('.phase:visible').length; 
-        var phase_width = Math.floor($('#phases').width() / phases_number - 5);
-        $('#phases').height($(window).height() - 105); 
+    $window.resize(function(){
+        var phases_number = $('.phase:visible').length;
+        var phase_width = Math.floor(($("#phases").width() - 20) / phases_number);
+        $('#phases').height($window.height() - 130);
         $('.phase').width(phase_width);
         
         var min_height = 0;
@@ -127,7 +121,7 @@ $(function(){
             if(height > min_height)
                 min_height = height;
         }).css('min-height', min_height);
-    }).resize();
+    });
 
     /* Sortable Stories */
     $('.stories').sortable({
@@ -149,14 +143,15 @@ $(function(){
             var height = $(ui.item).height();
             // because margin top and bottom = 10px
             // and the borders take 4 pixels
-            $('.story-placeholder').height(height - 20 + 4); 
+            $('.story-placeholder').height(height - 20 + 4);
         }
     }).disableSelection()
-    
-    $('.story-name').live('dblclick', function(){
+
+    $('.story-name.story-markdown').live('dblclick', function(){
         var $this = $(this);
         var text = $.trim($this.text());
-        var $textarea = $('<textarea/>').val(text).blur(function(){
+        var $textarea = $('<textarea/>').val(text)
+        .blur(function(){
             var $this = $(this);
             var number = $this.parents('.story').attr('data-number')
             var text = $.trim($this.val());
@@ -176,12 +171,12 @@ $(function(){
         $this.html($textarea);
         $textarea.focus();
     });
-    
+
     $("#add-story-dialog").dialog({
-        height: 650,
-        width: 480,
+        width: 370,
         autoOpen: false,
         modal: true,
+        resizable: false,
         title: gettext('Add story'),
         close: function(){
             $('#add-story-form-errors').hide();
@@ -226,35 +221,41 @@ $(function(){
         var $next_phase = $current_phase.next();
         var current_phase_name = $current_phase.find('label').text();
         $current_phase.hide();
-        $next_phase.find('div.phase-name').prepend('<div class="left-shows">' + current_phase_name + '<p>&gt;&gt;</p><div>')
-        $(window).resize();
+        $next_phase.find('div.phase-name').prepend('<div class="phase-toggle left-shows ui-state-hover">' + current_phase_name + '&nbsp;&gt;&gt;<div>')
+        setTimeout('$window.resize()', 300);
     });
 
     $('.left-shows').live('click', function(){
-        var $current_phase = $(this).parent().parent();
+        var $this = $(this);
+        var $current_phase = $this.parent().parent();
         var $prev_phase = $current_phase.prev();
         $prev_phase.show();
-        $(window).resize();
-        $(this).remove();
+        $this.remove();
+        setTimeout('$window.resize()', 300);
     });
     $('.right-hide').click(function(){
-        var $current_phase = $(this).parent().parent();
+        var $this = $(this);
+        var $current_phase = $this.parent().parent();
         var $prev_phase = $current_phase.prev();
         var current_phase_name = $current_phase.find('label').text();
         $current_phase.hide();
-        $prev_phase.find('div.phase-name').prepend('<div class="right-shows"><label>' + current_phase_name + '</label><p>&lt;&lt;</p><div>')
-        $(window).resize();
+        $prev_phase.find('div.phase-name').prepend('<div class="phase-toggle right-shows ui-state-hover"><label>&lt;&lt;&nbsp;' + current_phase_name + '</label><div>')
+        setTimeout('$window.resize()', 300);
     });
 
     $('.right-shows').live('click', function(){
-        var $current_phase = $(this).parent().parent();
+        var $this = $(this);
+        var $current_phase = $this.parent().parent();
         var $next_phase = $current_phase.next();
         $next_phase.show();
-        $(window).resize();
-        $(this).remove();
+        $this.remove();
+        setTimeout('$window.resize()', 300);
     });
+
     $('.left-hide').click();
     $('.right-hide').click();
+
+    setTimeout('$window.resize()', 500);
 });
 </script>
 {% endblock %}
@@ -265,13 +266,13 @@ $(function(){
 <div id="phases">
     {% for phase in project.phases.all %}
     <div class="phase" data-id="{{ phase.id }}">
-        <div class="phase-name">
+        <div class="phase-name ui-state-default">
             {% if phase.is_backlog %}
-                <div class="left-hide">&lt;&lt;</div>
+                <div class="phase-toggle left-hide ui-state-hover">&lt;&lt;</div>
             {% endif %}
             <label>{{ phase.name }}</label>
             {% if phase.is_archive %}
-                <div class="right-hide">&gt;&gt;</div>
+                <div class="phase-toggle right-hide ui-state-hover">&gt;&gt;</div>
             {% endif %}
         </div>
         <div class="stories">

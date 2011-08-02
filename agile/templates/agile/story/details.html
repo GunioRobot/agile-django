@@ -6,156 +6,7 @@
 {% block css %}
 {{ block.super }}
 <link rel="stylesheet" href="{{ MEDIA_URL }}agile/css/jquery-ui.toolbar.css" />
-<style type="text/css">
-#story-number {
-    width: 100px;
-    padding: 15px 7px;
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-}
-
-#story-name {
-    width: 400px;
-    padding: 15px 40px;
-    font-size: 20px;
-    font-weight: bold;
-}
-#tags {
-    padding: 15px 7px;
-    width: 100px;
-    font-size: 12px;
-}
-.phase {
-    padding: 5px 20px;
-    cursor: pointer;
-}
-.phase.current {
-    background: #213;
-}
-.comment-user {
-    font-size: 85%;
-}
-.comment {
-    padding: 15px;
-    margin: 10px;
-}
-.comment img {
-    float: left;
-    margin-right: 15px;
-    border: 1px solid #000;
-    padding: 1px;
-    background: white;
-}
-.comment-delete {
-    display: none;
-    float: right;
-}
-.comment:hover .comment-delete {
-    display: inline-block;
-}
-#details {
-    padding: 20px;
-}
-#details textarea {
-    width: 600px;
-    height: 300px;
-}
-#details ul, #details ol {
-    padding-left: 40px;
-}
-#tabs {
-    min-height: 400px;
-}
-#tabs ul li a span.ui-icon {
-    float: left;
-    margin-right: 7px;
-}
-
-.tag {
-    padding: 4px 0 2px 4px;
-    font-size: 95%;
-    display: inline-block;
-}
-.tag span.ui-icon {
-    float: right;
-    margin-top: -1px;
-}
-.tag-delete {
-    cursor: pointer;
-}
-.user {
-    padding: 12px;
-    display: table-cell;
-    vertical-align: middle;
-}
-.user select {
-    width: 200px;
-}
-.user .gravatar {
-    float: right;
-    width: 30px;
-    height: 30px;
-    padding: 1px;
-    margin: 0 0 0 12px;
-}
-.task {
-    padding: 15px;
-    margin: 10px;
-} 
-.task .ui-icon-arrow-4 {
-    float: left;
-    margin: 0 15px 0 0;
-    cursor: move;
-}
-.task .ui-icon-circle-close {
-    float: right;
-    cursor: pointer;
-}
-.task-description.task-finished {
-    text-decoration: line-through;
-}
-.task-placeholder {
-    margin: 10px;
-}
-.task-delete {
-    cursor: pointer;
-}
-
-#comment-form, #task-form {
-    margin: 10px;
-    width: auto;
-}
-
-#time-entries-container table {
-    border-spacing: 0px;
-    border: 1px solid #acdd4a;
-    text-align: center;
-    margin-top: 30px;
-}
-
-#time-entries-container table th {
-    font: bold 18px Lucida Grande, Verdana;
-    background: #6eac2c url(images/ui-bg_gloss-wave_50_6eac2c_500x100.png) 50% 50% repeat-x;
-    font-weight: normal;
-    color: white;
-}
-
-#time-entries-container table td {
-    padding-top: 3px;
-    color: black:
-}
-
-#time-entries-container tr:nth-child(odd) {
-    background: #fff;
-}
-
-#time-entries-container tr:nth-child(even) {
-    background: #d5fcb3;
-}
-
-
-</style>
+<link rel="stylesheet" href="{{ MEDIA_URL }}agile/css/story.css" />
 {% endblock %}
 
 {% block javascript %}
@@ -168,27 +19,98 @@ var PROJECT_URL = '{{ project.get_base_url }}';
 var STORY_BASE_URL = PROJECT_URL + '/story/' + STORY_NUMBER;
 var STORY_EDIT_URL = STORY_BASE_URL + '/edit';
 var STORY_DELETE_URL = STORY_BASE_URL + '/delete';
+
 var ADD_TIME_ENTRY_URL = '{{ story.get_add_time_entry_url }}'
 var message_markup = '<div class="story-taken-message"> \
                       You have already taken the \
                       ${story_number} story <br><h3><center>Go to \
                       <a href="${story_url}">${story_number}</a> \
                       </center></h3></div>';
+
+var TAG_BASE_URL = STORY_BASE_URL + '/tag/';
+var TAG_ADD_URL = TAG_BASE_URL + 'add/';
+var TAG_EDIT_URL = TAG_BASE_URL + 'edit/';
+var TAG_DELETE_URL = TAG_BASE_URL + 'delete/';
+var TAG_LOAD_URL = TAG_BASE_URL + 'load/';
+
+
+var reloadTags = function() {
+    $('#tags').html(gettext('Loading tags...'));
+    $.ajax({
+        url: TAG_LOAD_URL,
+        type: 'post',
+        dataType: 'json',
+        success: function(response) {
+            if(!response.success) {
+                showWarningMessage(gettext('An error occurred loading the tags for this story'));
+                return;
+            }
+            $('#tags').html(response.content);
+        }
+    });
+}
+
+var addNewTag = function() {
+    $.ajax({
+        url: TAG_ADD_URL,
+        type: 'post',
+        dataType: 'json',
+        data: {
+            name: $('#new-tag').val()
+        },
+        success: function(response) {
+            if(!response.success){
+                var errors = '';
+                $(response.errors).each(function(index, error) {
+                    errors += error + '<br />';
+                });
+                showErrorMessage(errors);
+                return;
+            }
+            reloadTags();
+        }
+    });
+};
+
+var updateTag = function(tagId, tagName) {
+    $.ajax({
+        url: TAG_EDIT_URL + tagId,
+        type: 'post',
+        dataType: 'json',
+        data: {
+            name: tagName
+        },
+        success: function(response) {
+            if(!response.success){
+                var errors = '';
+                $(response.errors).each(function(index, error) {
+                    errors += error + '<br />';
+                });
+                showErrorMessage(errors);
+                return;
+            }
+            reloadTags();
+        }
+    });
+}
+
 $(function(){
     function update_comments_count(){
         var $comments_count = $('#comments-count');
         $comments_count.text($('.comment').length);
     }
+
     function update_time_entries_count(){
         var $time_entries_count = $('#time-entries-count');
         $time_entries_count.text($('#time-entries-container tr').length - 1);
     }
+
     /* Toolbar setup */
     $('#toolbar').toolbar({
         buttons: [
             {
                 name: gettext('Block'),
-                uiIcon: 'ui-icon-circle-close',
+                uiIcon: 'ui-icon-cancel',
                 click: function(){}
             },{
                 name: gettext('Mark as Ready'),
@@ -196,7 +118,7 @@ $(function(){
                 click: function(){}
             },{
                 name: gettext('Delete'),
-                uiIcon: 'ui-icon-cancel',
+                uiIcon: 'ui-icon-trash',
                 click: function(){
                     $.ajax({
                         url: STORY_DELETE_URL,
@@ -208,27 +130,26 @@ $(function(){
                             }
                         }
                     });
-                    
                 }
             }
         ]
     });
-    
+
     /* Phases setup */
     $('.ui-widget-content.phase').hover(function(){
-       $(this).addClass('ui-state-hover'); 
+       var $this = $(this)
+       $this.addClass('ui-state-hover');
     }, function(){
-       $(this).removeClass('ui-state-hover'); 
+       $this.removeClass('ui-state-hover');
     }).click(function(){
-        var $this = $(this);
-        var phase = $this.attr('data-id')
+        var phase = $this.attr('data-id');
         move_story(STORY_NUMBER, phase, function(){
-            var $phases = $this.parent().find('.phase');
-            $phases.removeClass('ui-state-default ui-state-active');
+            $('#phases .phase').removeClass('ui-state-default ui-state-active');
             $this.addClass('ui-state-active');
-            $this.prevAll().addClass('ui-state-default')
+            $this.prevAll().addClass('ui-state-default');
         });
     });
+
     $('#comments form').submit(function(){
         var $this = $(this);
         $.ajax({
@@ -249,7 +170,7 @@ $(function(){
         });
         return false;
     });
-    
+
     /* Comment delete */
     $('.comment-delete').live('click', function(){
         var $this = $(this);
@@ -334,12 +255,11 @@ $(function(){
                     }
                 }
             });
-            
         });
         $this.html($textarea);
         $textarea.focus();
     });
-       
+
     /* Select Creator, Owner */
     $('#id_creator, #id_owner').change(function(){
         var user = this.id.slice(3);
@@ -347,7 +267,7 @@ $(function(){
         var data = {};
         data[user] = $this.val();
         $.ajax({
-             url: STORY_EDIT_URL, 
+             url: STORY_EDIT_URL,
              type: 'post',
              dataType: 'json',
              data: data,
@@ -358,7 +278,7 @@ $(function(){
              }
          });
     });
-   
+
     /* Sortable Tasks*/
     $('#tasks').sortable({
         distance: 15,
@@ -371,10 +291,10 @@ $(function(){
             var height = $(ui.item).height();
             // because margin top and bottom = 10px
             // and the borders take 4 pixels
-            $('.task-placeholder').height(height + 20 - 4); 
+            $('.task-placeholder').height(height + 20 - 4);
         }
     }).disableSelection();
-    
+
     /* Edit Story name */
     $('#story-name').live('dblclick', function(){
         var $this = $(this);
@@ -398,48 +318,30 @@ $(function(){
         $this.html($textarea);
         $textarea.focus();
     });
-    
+
     /* Remove task */
     $('.task-delete').live('click', function(){
         var $this = $(this);
         var id = $this.parent().attr('data-id');
-        alert(id)
     });
-    
-    /* Remove tag */
-    $('.tag-delete').live('click', function(){
-        var $this = $(this);
-        var id = $this.parent().attr('data-id');
-        $.ajax({
-            url: STORY_BASE_URL + '/tag/' + id + '/delete',
-            dataType: 'json',
-            type: 'post',
-            success: function(response){
-                if(response.success){
-                    $this.parent().remove();
-                }
-            }
-        });
-    });
+
+    $('.ui-selectmenu').attr('style', '');
+    reloadTags();
 });
 </script>
 {% endblock %}
 
 {% block content %}
 <div id="story" data-number="{{ story.number }}">
-    <div id="story-number" class="ui-widget-content"># {{ story.number }}</div>
-    <div id="story-name" class="ui-widget-content">{{ story.name }}</div>
-    <div id="tags" class="ui-widget-content">
-        {% for tag in story.tags.all.select_related %}
-            <div class="tag ui-widget-content ui-corner-all" data-id="{{ tag.id }}">{{ tag.name }}<span class="tag-delete ui-icon ui-icon-close"></span></div>
+    <div id="story-head">
+        <div id="phases">
+        {% for phase in project.phases.all %}
+            <button class="ui-widget-content phase{% if phase.index < story.phase.index %} ui-state-default{% endif %}{% if phase == story.phase %} ui-state-active{% endif %}" data-id="{{ phase.id }}">
+                {{ phase.name }}
+            </button>
         {% endfor %}
-    </div>
-    <div id="creator" class="user ui-widget-content">
-        <div class="gravatar ui-widget-content">
-        {% if story.creator %}
-            {% gravatar story.creator 30 %}
-        {% endif %}
         </div>
+<<<<<<< HEAD
         {{ story_form.creator.label }}
         {{ story_form.creator }}
     </div>
@@ -503,28 +405,98 @@ $(function(){
                     <span class="task-description">{{ task.description }}</span>
                 {% endif %}
                 <span class="task-delete ui-icon ui-icon-circle-close"></span>
+=======
+        <div id="story-main">
+            <div id="story-main-head" class="ui-widget-content">
+                <div id="story-number" class="ui-state-default ui-priority-primary"> #{{ story.number }}</div>
+                <div id="story-name" class=""> {{ story.name }} </div>
+>>>>>>> master
             </div>
-            {% endfor %}
+            <div id="user-box" class="ui-widget-content">
+                <div id="creator" class="user">
+                    <div class="gravatar ui-widget-content">
+                        {% if story.creator %}
+                            {% gravatar story.creator 30 %}
+                        {% endif %}
+                    </div>
+                    {{ story_form.creator.label }}
+                    {{ story_form.creator }}
+                </div>
+                <div id="owner" class="user">
+                    <div class="gravatar ui-widget-content">
+                        {% if story.owner %}
+                            {% gravatar story.owner 30 %}
+                        {% endif %}
+                    </div>
+                    {{ story_form.owner.label }}
+                    {{ story_form.owner }}
+                </div>
+            </div>
+            <div id="tags" class="ui-widget-content"></div>
         </div>
-        <div id="comments">
-            <div id="comments-container">
-            {% for comment in story.comments.all.select_related %}
-                {% include 'agile/story/comment.html' %}
-            {% empty %}
-                {% trans 'This story has no comments yet.' %}
-            {% endfor %}
+
+        <div id="story-content">
+            <div id="toolbar"></div>
+            <div id="tabs">
+                <ul>
+                    <li>
+                        <a href="#details"><span class="ui-icon ui-icon-note"></span>{% trans 'Description' %}</a>
+                    </li>
+                    <li>
+                        <a href="#tasks"><span class="ui-icon ui-icon-clipboard"></span>{% trans 'Tasks' %}
+                            (<span id="tasks-count">{{ story.tasks.get_formatted_count }}</span>) - {{ story.tasks.get_percentage_finished }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#comments"><span class="ui-icon ui-icon-comment"></span>{% trans 'Comments' %} (<span id="comments-count">{{ story.comments.all.count }}</span>)</a>
+                    </li>
+                    <li>
+                        <a href="#attachments"><span class="ui-icon ui-icon-document"></span>{% trans 'Attachments' %} (<span id="attachments-count">{{ story.attachments.all.count }}</span>)</a>
+                    </li>
+                </ul>
+
+                <div id="details" data-description="{{ story.description }}">{{ story.description|markdown }}</div>
+                <div id="tasks">
+                    <form id="task-form" method="post" action="">
+                    {{ task_form.description }}
+                    <input type="submit" value="{% trans 'Add Task' %}"/>
+                    </form>
+                    {% for task in story.tasks.all.select_related %}
+                    <div class="task ui-widget-content ui-corner-all" data-id="{{ task.id }}">
+                        <span class="ui-icon ui-icon-arrow-4"></span>
+                        {% if task.finished_at %}
+                            <input type="checkbox" checked="checked" />
+                            <span class="task-description task-finished ui-state-disabled">{{ task.description }}</span>
+                            <span class="ui-state-disabled">({{ task.finished_by.agile_get_name }} @ {{ task.finished_at }})</span>
+                        {% else %}
+                            <input type="checkbox" />
+                            <span class="task-description">{{ task.description }}</span>
+                        {% endif %}
+                        <span class="task-delete ui-icon ui-icon-circle-close"></span>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div id="comments">
+                    <div id="comments-container">
+                    {% for comment in story.comments.all.select_related %}
+                        {% include 'agile/story/comment.html' %}
+                    {% empty %}
+                        {% trans 'This story has no comments yet.' %}
+                    {% endfor %}
+                    </div>
+                    <form id="comment-form" method="post" action="{{ story.get_add_comment_url }}">
+                    {{ comment_form.text }}
+                    <input type="submit" value="{% trans 'Leave comment' %}"/>
+                    </form>
+                </div>
+                <div id="attachments">
+                    {% for attachment in story.attachments.all.select_related %}
+                    <div class="attach">
+                        <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
-            <form id="comment-form" method="post" action="{{ story.get_add_comment_url }}">
-            {{ comment_form.text }}
-            <input type="submit" value="{% trans 'Leave comment' %}"/>
-            </form>
-        </div>
-        <div id="attachments">
-            {% for attachment in story.attachments.all.select_related %}
-            <div class="attach">
-                <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
-            </div>
-            {% endfor %}
         </div>
         <div id="time-entries">
             <input id="time-entries-start" type="submit" value="{% trans 'Start' %}"/>

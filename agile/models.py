@@ -95,7 +95,6 @@ class Phase(models.Model):
         else:
             # Same index, we don't to save anything.
             return
-
         self.index = new_index
         self.save()
 
@@ -178,13 +177,13 @@ class Story(models.Model):
         else:
             stories.filter(index__gt=self.index).update(index=F('index') - 1)
             self.phase_id = new_phase_id
-            
+
             # Let's calculate the max + 1 index
             if new_index is None:
                 max = Story.objects.filter(
                     phase=new_phase_id).aggregate(max=Max('index'))['max']
                 new_index = 0 if max is None else max + 1
-            
+
             # Move the stories index + 1 for give space to the new story
             else:
                 Story.objects.filter(
@@ -212,12 +211,14 @@ class Story(models.Model):
         stories.filter(index__gt=self.index).update(index=F('index') - 1)
 
 class Tag(models.Model):
-    story = models.ForeignKey('Story', verbose_name=_(u'story'), related_name='tags')
+    story = models.ForeignKey('Story', verbose_name=_(u'story'),
+                              related_name='tags')
     name = models.CharField(_(u'name'), max_length=100)
 
     class Meta:
         verbose_name = _(u'tag')
         verbose_name_plural = _(u'tags')
+        ordering = ('name',)
 
 class TaskManager(models.Manager):
 
