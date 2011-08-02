@@ -7,6 +7,7 @@
 {{ block.super }}
 <link rel="stylesheet" href="{{ MEDIA_URL }}agile/css/jquery-ui.toolbar.css" />
 <style type="text/css">
+
 #story-number {
     width: 100px;
     padding: 15px 7px;
@@ -151,7 +152,16 @@
 	margin: 0 auto;
 	margin-bottom: 10px;
 }
-	
+@font-face {
+	font-family: "header";
+	src: url("{{ MEDIA_URL }}agile/css/guevara_.ttf");
+}
+#name{
+	font-family:header;
+	font-size:30px;
+	font-weight:normal;
+	color:white;
+}	
 </style>
 {% endblock %}
 {% block javascript %}
@@ -332,7 +342,7 @@ $(function(){
 	});
 	
 	/* Check task */
-	$('.task input[type="checkbox"]').click(function(){
+	$("body").delegate('.task input[type="checkbox"]', "click", function(){
 		var $input =$(this); 
 		var story_id = $('#story').attr('data-number');
 		var task_id = $(this).parent().attr('data-id');
