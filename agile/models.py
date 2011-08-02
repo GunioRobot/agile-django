@@ -47,7 +47,7 @@ class Project(models.Model):
 
     @property
     def users(self):
-        return (self.members.all() | User.objects.filter(id=self.owner.id)).distinct() 
+        return (self.members.all() | User.objects.filter(id=self.owner.id)).distinct()
 
 class Phase(models.Model):
     project = models.ForeignKey('Project', verbose_name=_(u'project'), related_name='phases')

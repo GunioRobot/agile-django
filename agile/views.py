@@ -328,7 +328,7 @@ def story_ajax(request, project_id, story_number, action=None):
 
             return {
                 'success': False,
-                'error': errors, 
+                'error': errors,
             }
 
     elif action == 'delete':
@@ -379,7 +379,7 @@ def story_add(request, project_id):
 
         return {
             'success': False,
-            'error': errors, 
+            'error': errors,
         }
 
     return {
