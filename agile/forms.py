@@ -66,3 +66,8 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         exclude = ('user',)
+
+class TagForm(forms.ModelForm):
+    class Meta:
+        model = Tag
+        exclude = ('story',)
