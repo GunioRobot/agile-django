@@ -314,8 +314,22 @@ $(function(){
    
 	/* Task js code begins */
    
+	/* Delete Task */
+	$("body").delegate('.task-delete', "click", function(){
+		$cross_sign = $(this).parent();
+		var task_id = $(this).parent().attr('data-id');
+		var story_id = $('#story').attr('data-number');
+		$.ajax({
+			type: 'POST',
+			url: story_id + '/task/' + task_id + '/delete_task',
+			success: function(data){
+				if(data.success)
+					$cross_sign.fadeOut(1000);
+			}
+		});
+	});
+
 	/* Add Task */
-	
 	$('#task-form input[type="submit"]').click(function(){
 		var story_id = $('#story').attr('data-number');
 		var task_id = $(this).parent().attr('data-id');
@@ -403,13 +417,6 @@ $(function(){
         });
         $this.html($textarea);
         $textarea.focus();
-    });
-    
-    /* Remove task */
-    $('.task-delete').live('click', function(){
-        var $this = $(this);
-        var id = $this.parent().attr('data-id');
-        alert(id)
     });
     
     /* Remove tag */

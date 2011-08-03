@@ -444,6 +444,12 @@ def task(request, project_id, story_number, task_id=None, action=None):
 		def delete_task():
 			project = request.user.projects.get(id = project_id)
 			task = project.stories.get(number = story_number).tasks.get(id = task_id)
+			tasks = project.stories.get(number = story_number).tasks.filter(index__gt=task.index)
+			task_index = task.index
+			for taskin in tasks:
+				taskin.index = task_index
+				taskin.save()
+				task_index = task_index + 1
 			task.delete()
 			return {'delete':'delete'}	
 	
