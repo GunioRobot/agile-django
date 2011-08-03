@@ -3,6 +3,7 @@
 from lettuce import step, world
 from sure import that
 from agile.models import Phase
+import time
 
 @step(u'click on a project')
 def click_on_a_project(step):
@@ -55,11 +56,19 @@ def click_on_a_button_of_a_phase(step, button_name, number):
         nth = 2
     else:
         assert False, 'Invalid button for phase'
-    world.browser.execute_script('$(".phase-controls").css'
-                                 '("visibility","visible")')
-    button = world.wait_for_many_elements('div.phase button')[number * 2 - 3 + nth]
-    assert button, 'There is no %s button for phase %s' % (button_name, number)
-    button.click()
+    def ensure_dialog_loads():
+        world.browser.execute_script('$(".phase-controls").css'
+                                     '("visibility","visible")')
+        button = world.wait_for_many_elements('div.phase button')[number * 2 - 3 + nth]
+        assert button, 'There is no %s button for phase %s' % (button_name, number)
+        button.click()
+        form = world.wait_for_element('#%s-phase-dialog' % button_name.lower())
+        try:
+            assert form.visible
+        except AssertionError:
+            pass
+        return form.visible
+    world.wait_for_condition(ensure_dialog_loads)
 
 @step(u'fill the "(.+)" form with the next info:')
 def fill_a_form_with_the_next_info(step, form):
@@ -130,5 +139,3 @@ def see_an_error_message(step, message):
         assert False, 'The message was not shown'
     assert that(error_message.text).equals(message), \
         'The message was not the expected'
-    
-

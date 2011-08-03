@@ -222,7 +222,7 @@ $(function(){
                     delete_buttons[gettext('Cancel')] = function(){
                         $(this).dialog('close');
                     };
-                    $('<div class="confirm">' +
+                    $('<div id="delete-phase-dialog" class="confirm">' +
                         gettext('Are you sure to delete this phase') + '</div>')
                         .dialog({
                             modal: true,

@@ -4,9 +4,10 @@
         <a href="{{ story.get_url }}">
             <span class="ui-icon ui-icon-search"></span>
             <strong><div class="story-name story-markdown">
-                {{ story.number }}: {{ story.name }}
+                {{ story.number }}
             </div></strong>
         </a>
+        :&nbsp;{{ story.name }}
         <div class="story-owner">
             {% if story.owner %}
                 <span class="story-owner-name">{{ story.owner.agile_get_name }}</span>

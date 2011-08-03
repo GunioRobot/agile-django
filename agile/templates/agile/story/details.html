@@ -137,11 +137,13 @@ $(function(){
 
     /* Phases setup */
     $('.ui-widget-content.phase').hover(function(){
-       var $this = $(this)
+       var $this = $(this);
        $this.addClass('ui-state-hover');
     }, function(){
-       $this.removeClass('ui-state-hover');
+        var $this = $(this);
+        $this.removeClass('ui-state-hover');
     }).click(function(){
+        var $this = $(this);
         var phase = $this.attr('data-id');
         move_story(STORY_NUMBER, phase, function(){
             $('#phases .phase').removeClass('ui-state-default ui-state-active');
@@ -341,76 +343,10 @@ $(function(){
             </button>
         {% endfor %}
         </div>
-<<<<<<< HEAD
-        {{ story_form.creator.label }}
-        {{ story_form.creator }}
-    </div>
-    <div id="owner" class="user ui-widget-content">
-        <div class="gravatar ui-widget-content">
-        {% if story.owner %}
-            {% gravatar story.owner 30 %}
-        {% endif %}
-        </div>
-        {{ story_form.owner.label }}
-        {{ story_form.owner }}
-    </div>
-    <div id="toolbar"></div>
-    <div id="phases">
-        <table>
-            <tbody>
-                <tr>
-                {% for phase in project.phases.all %}
-                    <td class="ui-widget-content phase{% if phase.index < story.phase.index %} ui-state-default{% endif %}{% if phase == story.phase %} ui-state-active{% endif %}" data-id="{{ phase.id }}">{{ phase.name }}</td>
-                {% endfor %}
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div id="tabs">
-        <ul>
-            <li>
-                <a href="#details"><span class="ui-icon ui-icon-note"></span>{% trans 'Description' %}</a>
-            </li>
-            <li>
-                <a href="#tasks"><span class="ui-icon ui-icon-clipboard"></span>{% trans 'Tasks' %}
-                    (<span id="tasks-count">{{ story.tasks.get_formatted_count }}</span>) - {{ story.tasks.get_percentage_finished }}
-                </a>
-            </li>
-            <li>
-                <a href="#comments"><span class="ui-icon ui-icon-comment"></span>{% trans 'Comments' %} (<span id="comments-count">{{ story.comments.all.count }}</span>)</a>
-            </li>
-            <li>
-                <a href="#attachments"><span class="ui-icon ui-icon-document"></span>{% trans 'Attachments' %} (<span id="attachments-count">{{ story.attachments.all.count }}</span>)</a>
-            </li>
-            <li>
-                <a href="#time-entries"><span class="ui-icon ui-icon-clock"></span>{% trans 'Time Entry' %} (<span id="time-entries-count">{{ story.time_entries.all.count }}</span>)</a>
-            </li>
-        </ul>
-
-        <div id="details" data-description="{{ story.description }}">{{ story.description|markdown }}</div>
-        <div id="tasks">
-            <form id="task-form" method="post" action="">
-            {{ task_form.description }}
-            <input type="submit" value="{% trans 'Add Task' %}"/>
-            </form>
-            {% for task in story.tasks.all.select_related %}
-            <div class="task ui-widget-content ui-corner-all" data-id="{{ task.id }}">
-                <span class="ui-icon ui-icon-arrow-4"></span>
-                {% if task.finished_at %}
-                    <input type="checkbox" checked="checked" />
-                    <span class="task-description task-finished ui-state-disabled">{{ task.description }}</span>
-                    <span class="ui-state-disabled">({{ task.finished_by.agile_get_name }} @ {{ task.finished_at }})</span>
-                {% else %}
-                    <input type="checkbox" />
-                    <span class="task-description">{{ task.description }}</span>
-                {% endif %}
-                <span class="task-delete ui-icon ui-icon-circle-close"></span>
-=======
         <div id="story-main">
             <div id="story-main-head" class="ui-widget-content">
                 <div id="story-number" class="ui-state-default ui-priority-primary"> #{{ story.number }}</div>
                 <div id="story-name" class=""> {{ story.name }} </div>
->>>>>>> master
             </div>
             <div id="user-box" class="ui-widget-content">
                 <div id="creator" class="user">
@@ -452,6 +388,9 @@ $(function(){
                     </li>
                     <li>
                         <a href="#attachments"><span class="ui-icon ui-icon-document"></span>{% trans 'Attachments' %} (<span id="attachments-count">{{ story.attachments.all.count }}</span>)</a>
+                    </li>
+                    <li>
+                        <a href="#time-entries"><span class="ui-icon ui-icon-clock"></span>{% trans 'Time Entry' %} (<span id="time-entries-count">{{ story.time_entries.all.count }}</span>)</a>
                     </li>
                 </ul>
 
@@ -496,23 +435,23 @@ $(function(){
                     </div>
                     {% endfor %}
                 </div>
-            </div>
-        </div>
-        <div id="time-entries">
-            <input id="time-entries-start" type="submit" value="{% trans 'Start' %}"/>
-            <input id="time-entries-stop" type="submit" value="{% trans 'Stop' %}"/>
-            <div id="time-entries-container">
-                <table id="table-container" width="100%">
-                    <th>User</th>
-                    <th>Start at</th>
-                    <th>Stop at</th>
-                    <th>Duration</th>
-                {% for time_entry in story.time_entries.all.select_related %}
-                    {% include 'agile/story/time_entry.html' %}
-                {% empty %}
-                    {% trans 'This story has no time entries yet.' %}
-                {% endfor %}
-                </table>
+                <div id="time-entries">
+                    <input id="time-entries-start" type="submit" value="{% trans 'Start' %}"/>
+                    <input id="time-entries-stop" type="submit" value="{% trans 'Stop' %}"/>
+                    <div id="time-entries-container">
+                        <table id="table-container" width="100%">
+                            <th>User</th>
+                            <th>Start at</th>
+                            <th>Stop at</th>
+                            <th>Duration</th>
+                        {% for time_entry in story.time_entries.all.select_related %}
+                            {% include 'agile/story/time_entry.html' %}
+                        {% empty %}
+                            {% trans 'This story has no time entries yet.' %}
+                        {% endfor %}
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -56,7 +56,14 @@ def click_on_a_story(step):
     story = world.wait_for_element("div.story-header a", 5, 0.5)
     assert story, 'There are no stories.'
     world.story = world.wait_for_element("div.story-header a", 5, 0.5).value
-    story.click()
+    def ensure_story_opens():
+        loaded = None
+        try:
+            link = world.browser.find_link_by_text(world.story).first.click()
+        except:
+            loaded = world.wait_for_element('#story-main')
+        return loaded is not None
+    world.wait_for_condition(ensure_story_opens, 10, 0.1)
 
 @step(u'see the story page')
 def see_the_story_page(step):
@@ -95,7 +102,7 @@ def click_the_stop_button(step):
 @step(u'see the right stop and duration time')
 def see_the_right_stop_and_duration_time(step):
     stop_cell = world.wait_for_element('#stop-%s' % world.rows, 5, 0.5)
-    assert that(stop_cell.text).equals(datetime.datetime.now().strftime("%B %e, %Y,%l:%M %P")), \
+    assert that(stop_cell.text).equals(datetime.datetime.now().strftime("%B%e, %Y,%l:%M %P")), \
         'The stop time is not current'
     duration_cell = world.wait_for_element('#duration-%s' % world.rows, 5, 0.5)
     assert that(duration_cell.text).equals("00:00:03"), \
