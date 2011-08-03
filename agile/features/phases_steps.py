@@ -6,24 +6,24 @@ from agile.models import Phase
 
 @step(u'click on a project')
 def click_on_a_project(step):
-    projects = world.browser.find_by_css("#projects ul li a")
+    projects = world.wait_for_many_elements("#projects ul li a")
     assert projects, 'There are no projects.'
     projects[0].click()
 
 @step(u'wait for the "(.+)" port')
 def wait_for_the_requested_port(step, port):
-    found = world.wait_for_many_elements('#%s' % port, 5, 0.5)
+    found = world.wait_for_element('#%s' % port)
     assert found, 'This is not the %s port'
 
 @step(u'see the "(.+)" port')
 def see_the_requested_port(step, port):
-    port = world.browser.find_by_css("#%s" % port)
+    port = world.wait_for_element("#%s" % port)
     assert port, 'The requested port does not exist in this page.'
 
 @step(u'see the "(.+)" phase form')
 def see_the_phase_form(step, form):
-    found = world.wait_for_many_elements('#add-phase-dialog', 5, 0.5)
-    assert found, 'The %s Form was not found' % form.capitalize()
+    found = world.wait_for_element('#%s-phase-dialog' % form)
+    assert found.visible, 'The %s Form was not found' % form.capitalize()
     name = step.given(u'see the form field "name"')
     description = step.given(u'see the form field "description"')
     strories_limit = step.given(u'see the form field "stories_limit"')
@@ -67,13 +67,13 @@ def fill_a_form_with_the_next_info(step, form):
     for data in form_data:
         name = data['name']
         value = data['value']
-        is_input = world.browser.find_by_css_selector(
+        is_input = world.wait_for_many_elements(
                         '#%s-phase-dialog input[name=%s]' % (form, name))
         if is_input:
             is_input.first.value = value
             continue
         
-        is_select = world.browser.find_by_css_selector(
+        is_select = world.wait_for_many_elements(
                         '#%s-phase-dialog select[name=%s]' % (form, name))
         if is_select:
             world.browser.select(name, value)
@@ -81,18 +81,20 @@ def fill_a_form_with_the_next_info(step, form):
 
 @step(u'check that the phase has the edited info:')
 def check_that_the_phase_has_the_edited_info(step):
+#    import pdb
+#    pdb.set_trace()
     form_data = step.hashes
     for data in form_data:
         name = data['name']
         value = data['value']
-        is_input = world.browser.find_by_css('div#"edit-phase-dialog" ' +
+        is_input = world.wait_for_many_elements('div#edit-phase-dialog ' +
                                              'input[name=%s]' % name)
         if is_input:
             assert is_input.first.value == value, \
                 '%s has not the expected value'
             continue
         
-        is_select = world.browser.find_by_css('select[name=%s]' % name)
+        is_select = world.wait_for_many_elements('select[name=%s]' % name)
         if is_select:
             assert is_select.first.value == value, \
                     '%s has not the expected value'
@@ -100,13 +102,13 @@ def check_that_the_phase_has_the_edited_info(step):
 
 @step(u'see a dialog')
 def see_a_dialog(step):
-    dialog = world.browser.find_by_css('div.confirm')
+    dialog = world.wait_for_many_elements('div.confirm')
     assert dialog, 'There is no dialog'
     assert dialog.first.visible, 'The dialog exists, but was not shown'
 
 @step(u'click the "(.+)" button of the dialog')
 def click_a_button_of_the_dialog(step, button_name):
-    buttons = world.browser.find_by_css('div.confirm ~ div '
+    buttons = world.wait_for_many_elements('div.confirm ~ div '
                                         'div.ui-dialog-buttonset button')
     if buttons[0].text.lower() == button_name.lower():
         button = buttons[0]
@@ -117,7 +119,7 @@ def click_a_button_of_the_dialog(step, button_name):
 
 @step(u'see that no error is reported')
 def see_that_no_error_is_reported(step):
-    error_message = world.browser.find_by_css('#agile-message')
+    error_message = world.wait_for_many_elements('#agile-message')
     message_is_hidden = not error_message.first.visible
     assert message_is_hidden, 'An unexpected error was shown'
 

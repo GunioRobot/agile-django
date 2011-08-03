@@ -17,7 +17,7 @@ def initial_setup(server):
     #call_command('migrate', interactive=False, verbosity=0)
     call_command('loaddata', 'all', verbosity=0)
     setup_test_environment()
-    world.browser = Browser()
+    world.browser = Browser('webdriver.chrome')
 
 @after.harvest
 def cleanup(server):
