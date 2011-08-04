@@ -20,6 +20,17 @@ body {
     font-size: 22px;
     float: left;
 }
+@font-face {
+	font-family: "header";
+	src: url("guevara_.ttf");
+}
+#name{
+	font-family:header;
+	font-size:30px;
+	font-weight:normal;
+	color:white;
+	letter-spacing:3px;
+}
 ul#topmenu {
     list-style: none;
     float: right;

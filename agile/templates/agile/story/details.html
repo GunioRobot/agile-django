@@ -152,16 +152,9 @@
 	margin: 0 auto;
 	margin-bottom: 10px;
 }
-@font-face {
-	font-family: "header";
-	src: url("{{ MEDIA_URL }}agile/css/guevara_.ttf");
+.ui-icon-pencil{
+	cursor: pointer;
 }
-#name{
-	font-family:header;
-	font-size:30px;
-	font-weight:normal;
-	color:white;
-}	
 </style>
 {% endblock %}
 {% block javascript %}
@@ -314,8 +307,41 @@ $(function(){
    
 	/* Task js code begins */
    
+   $('#dialog-for-edit-task').dialog({
+		autoOpen:false,
+		modal:true,
+		title:'edit task',
+		buttons: {
+				Ok: function() {
+					var story_id = $('#story').attr('data-number');
+					$var_dialog = $(this);
+					$.ajax({
+						url:story_id + '/task/' + $('textarea',$(this)).attr('task-id')+'/edit',
+						type:'POST',
+						data: "description=" + $('textarea',$(this)).val(),
+						success: function(data){
+							if(data.success){
+								$('div[data-id="'+$('textarea',$var_dialog).attr('task-id')+'"]').find('.task-description').html(data.description);
+								$var_dialog.dialog("close");
+							}	
+						}
+					});
+				},
+				Cancel: function() {
+					$( this ).dialog( "close" );
+				}
+			}
+
+   });
+   
+   /*Edit task*/
+   $('.ui-icon-pencil').live('click',function(){
+		$('#dialog-for-edit-task').dialog('open');
+		$('#dialog-for-edit-task textarea').attr('task-id',$(this).parent().attr('data-id'));
+		$('#dialog-for-edit-task textarea').attr('value',$(this).parent().find('.task-description').html());
+   });
 	/* Delete Task */
-	$("body").delegate('.task-delete', "click", function(){
+	$('.task-delete').live('click',function(){	
 		$cross_sign = $(this).parent();
 		var task_id = $(this).parent().attr('data-id');
 		var story_id = $('#story').attr('data-number');
@@ -341,12 +367,13 @@ $(function(){
 				success: function(data){
 					if(data.success){
 						$('#tasks').append("<div class = 'task ui-widget-content ui-corner-all' data-id = '" 
-							+ data.index+ "' >" 
+							+ data.index+ "' ><span class='ui-icon ui-icon-pencil'></span>" 
 							+ '<span class="ui-icon ui-icon-arrow-4"></span><input type="checkbox">' 
 							+ '<span class = "task-description"> ' + data.description + "</span>" 
 							+ '<span class="task-delete ui-icon ui-icon-circle-close"></span></div>');
 						$('#id_description').attr('value','');
 						alert("Task added");
+						
 					}		
 				} 
 			});
@@ -356,7 +383,8 @@ $(function(){
 	});
 	
 	/* Check task */
-	$("body").delegate('.task input[type="checkbox"]', "click", function(){
+	
+	$('.task input[type="checkbox"]').live('click',function(){
 		var $input =$(this); 
 		var story_id = $('#story').attr('data-number');
 		var task_id = $(this).parent().attr('data-id');
@@ -508,6 +536,7 @@ $(function(){
 			<div id="tasks">
 				{% for task in story.tasks.all.select_related %}
 					<div class="task ui-widget-content ui-corner-all" data-id="{{ task.id }}">
+						<span class="ui-icon ui-icon-pencil"></span>
 						<span class="ui-icon ui-icon-arrow-4"></span>
 							{% if task.finished_at %}
 								<input type="checkbox" checked="checked" />
@@ -543,5 +572,8 @@ $(function(){
 			</div>
 		</div>
 	</div>
+</div>
+<div id = 'dialog-for-edit-task' >
+	<textarea></textarea>
 </div>
 {% endblock %}

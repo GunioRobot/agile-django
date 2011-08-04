@@ -414,14 +414,28 @@ def task(request, project_id, story_number, task_id=None, action=None):
 				description = request.POST.get('description')
 			
 			Task.objects.count()		
-			Task(	index = Task.objects.count(), 
+			task = Task(	index = Task.objects.count(), 
 					description = description,
-					story = story).save()
+					story = story)
+			task.save()		
+			
+			print task.id
 					
-			return {'description':description, 'index':Task.objects.count()}
+			return {'description':description, 'index':task.id}
 		
 		def edit():
-			return {'edit':'edit'}
+			project = request.user.projects.get(id = project_id)
+			task = project.stories.get(number = story_number).tasks.get(id = task_id)
+			
+			description = 'not assigned' 
+			
+			if 	request.POST.has_key('description') and request.POST.get('description'):
+				description = request.POST.get('description')
+			
+			task.description = description
+			task.save()
+				
+			return {'edit':'edit', 'description': description}
 			
 		def check_task():
 			project = request.user.projects.get(id = project_id)
@@ -471,3 +485,4 @@ def task(request, project_id, story_number, task_id=None, action=None):
 	return_dictionary = action_task(action)     
 	
 	return return_dictionary
+	#return HttpResponse(return_dictionary)
