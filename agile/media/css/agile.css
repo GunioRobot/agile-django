@@ -1,5 +1,6 @@
 body {
     background: #f0f0f0;
+    background:url('14.png');
 }
 
 * {
@@ -15,20 +16,19 @@ body {
 }
 
 #name {
-    color: blue;
-    text-shadow: #fff 0px 1px 0, #000 0 -1px 0;
+    /*color: blue;
+    text-shadow: #fff 0px 1px 0, #000 0 -1px 0;*/
     font-size: 22px;
     float: left;
 }
 @font-face {
 	font-family: "header";
-	src: url("guevara_.ttf");
+	src: url("3.ttf");
 }
 #name{
 	font-family:header;
 	font-size:30px;
 	font-weight:normal;
-	color:white;
 	letter-spacing:3px;
 }
 ul#topmenu {
