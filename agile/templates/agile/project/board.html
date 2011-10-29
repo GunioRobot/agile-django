@@ -114,7 +114,7 @@ $(function(){
         var phase_width = Math.floor(($("#phases").width() - 20) / phases_number);
         $('#phases').height($window.height() - 130);
         $('.phase').width(phase_width);
-        
+
         var min_height = 0;
         $('.phase').each(function(){
             var height = $(this).height();
@@ -182,11 +182,11 @@ $(function(){
             $('#add-story-form-errors').hide();
             $('#id_phase, #id_owner').selectmenu('value', '');
             $('#id_creator').selectmenu('value', USER_ID);
-            
+
             $('#add-story-dialog form')[0].reset();
         }
     });
-    
+
     $('#add-story-dialog form').submit(function(){
         var $this = $(this);
         $.ajax({
@@ -205,17 +205,17 @@ $(function(){
                     $.each(response.error, function(index, value){
                         $('#add-story-form-errors .errors').append(index + ": " + value + '<br/>')
                     })
-                    
+
                 }
             }
         });
         return false;
     });
-    
+
     $('#add-story').click(function(){
         $('#add-story-dialog').dialog('open');
     });
-    
+
     $('.left-hide').click(function(){
         var $current_phase = $(this).parent().parent();
         var $next_phase = $current_phase.next();

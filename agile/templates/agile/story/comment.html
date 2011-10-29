@@ -2,7 +2,7 @@
 <div class="comment ui-widget-content ui-corner-all" id="comment-{{ comment.id }}" data-id="{{ comment.id }}">
     {% gravatar comment.user 32 %}
     <div class="comment-user">
-        <a href="#comment-{{ comment.id }}">{{ comment.user.agile_get_name }} @ {{ comment.datetime }}</a> 
+        <a href="#comment-{{ comment.id }}">{{ comment.user.agile_get_name }} @ {{ comment.datetime }}</a>
         {% if user == comment.user %}
         <span class="button comment-delete">{% trans 'Delete' %}</span>
         {% endif %}

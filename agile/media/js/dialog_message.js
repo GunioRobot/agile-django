@@ -3,7 +3,7 @@ var delayTime = 5;
 /**
  * This function displays a floating message to inform the user about
  * an event that either occurred, succeeded or failed.
- * 
+ *
  * @param {Number} message: The message to display.
  * @param {Number} delay: The optional time the message will delay on screen.
  * @param {String} type: The type of format the message will get.
@@ -25,7 +25,7 @@ var openMessage = function(message, delay, type) {
 
 /**
  * This function displays a message indicating an action succeeded.
- * 
+ *
  * @param {Number} message: The message to display.
  * @param {Number} delay: The optional time the message will delay on screen.
  */
@@ -36,7 +36,7 @@ var showSuccessMessage = function(message, delay) {
 
 /**
  * This function displays a message indicating something happened.
- * 
+ *
  * @param {Number} message: The message to display.
  * @param {Number} delay: The optional time the message will delay on screen.
  */
@@ -46,7 +46,7 @@ var showInformationMessage = function(message, delay) {
 
 /**
  * This function displays a message indicating something may happen happened.
- * 
+ *
  * @param {Number} message: The message to display.
  * @param {Number} delay: The optional time the message will delay on screen.
  */
@@ -57,7 +57,7 @@ var showWarningMessage = function(message, delay) {
 
 /**
  * This function displays a message indicating an action failed.
- * 
+ *
  * @param {Number} message: The message to display.
  * @param {Number} delay: The time the message will delay on screen.
  */
@@ -77,11 +77,11 @@ var closeMessage = function() {
 
 $(function() {
   $('#agile-close-message').live('click', closeMessage);
-  
+
   $('#agile-error-message').mouseover(function() {
     clearTimeout(timeoutId);
   });
-  
+
   $('#agile-error-message').mouseout(function() {
     timeoutId = setTimeout(closeMessage, delayTime * 1000);
   });

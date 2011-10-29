@@ -16,7 +16,7 @@
         <li><a href="#projects">{% trans 'Projects' %}</a></li>
         <li><a href="#add-project">{% trans 'Add project' %}</a></li>
     </ul>
-    
+
     <div id="projects">
         <ul id="sortable">
         {% for project in user.projects %}
@@ -39,7 +39,7 @@
         {% endfor %}
         </ul>
     </div>
-    
+
     <div id="add-project">
         <form method="post" style="width:370px;">
             {% csrf_token %}

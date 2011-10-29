@@ -19,7 +19,7 @@ Feature: Phases
       | name          | value                 |
       | name          | To check              |
       | stories_limit | 20                    |
-  
+
   Scenario: #2 Add Phase Empty Name
     Given I am logged in
     Then I click on the link "Projects"
@@ -36,7 +36,7 @@ Feature: Phases
       | stories_limit | 20                    |
     And I submit the "add-phase-dialog" form
     Then I see the "Add" validation error "Name: This field is required."
-  
+
   Scenario: 3# Add Phase Invalid Stories Limit
     Given I am logged in
     Then I click on the link "Projects"
@@ -53,7 +53,7 @@ Feature: Phases
       | stories_limit | 20a                   |
     And I submit the "add-phase-dialog" form
     Then I see the "Add" validation error "Stories limit: Enter a whole number."
-  
+
   Scenario: #4 Edit Phase Correctly
     Given I am logged in
     Then I click on the link "Projects"
@@ -78,8 +78,8 @@ Feature: Phases
       | name          | Now Working           |
       | description   | Phases working on     |
       | stories_limit | 32                    |
-  
-  
+
+
   Scenario: #5 Edit Phase Empty Name
     Given I am logged in
     Then I click on the link "Projects"
@@ -95,7 +95,7 @@ Feature: Phases
       | name          |                       |
     And I submit the "edit-phase-dialog" form
     Then I see the "Edit" validation error "Name: This field is required."
-  
+
   Scenario: #6 Edit Phase Invalid Stories Limit
     Given I am logged in
     Then I click on the link "Projects"
@@ -111,7 +111,7 @@ Feature: Phases
       | stories_limit | dos                   |
     And I submit the "edit-phase-dialog" form
     Then I see the "Edit" validation error "Stories limit: Enter a whole number."
-  
+
   Scenario: #7 Delete a phase
     Given I am logged in
     Then I click on the link "Projects"
@@ -124,7 +124,7 @@ Feature: Phases
     And I see a dialog
     Then I click the "Delete" button of the dialog
     And I see that no error is reported
-  
+
   Scenario: #8 Delete a phase with stories
     Given I am logged in
     Then I click on the link "Projects"
@@ -137,7 +137,7 @@ Feature: Phases
     And I see a dialog
     Then I click the "Delete" button of the dialog
     And I see an error message that says "Cannot delete this phase. This phase has Stories."
-  
+
   Scenario: #9 Delete a backlog phase
     Given I am logged in
     Then I click on the link "Projects"
@@ -150,7 +150,7 @@ Feature: Phases
     And I see a dialog
     Then I click the "Delete" button of the dialog
     And I see an error message that says "Cannot delete this phase. This phase is Backlog."
-  
+
   Scenario: #10 Delete a archive phase
     Given I am logged in
     Then I click on the link "Projects"

@@ -1,7 +1,7 @@
 $(function(){
     /* Use jQuery UI buttons */
     $('input[type=submit], .button').button();
-    
+
     /* Use selectmenu jQuery UI plugin */
     $('select:not([multiple])').each(function(){
         var $this = $(this);
@@ -10,7 +10,7 @@ $(function(){
             menuWidth: $this.width()
         });
     });
-    
+
     /* Add jQuery UI tabs */
     $('#tabs').tabs({
         select: function(event, ui){
@@ -18,7 +18,7 @@ $(function(){
             window.location.hash = href;
         }
     });
-    
+
     /* Add X-CSRFToken to the request headers */
     $('html').ajaxSend(function(event, xhr, settings) {
         function getCookie(name) {
